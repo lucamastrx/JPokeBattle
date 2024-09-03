@@ -88,7 +88,6 @@ public class MenuController {
     @FXML
     public void arcade(ActionEvent e) throws IOException {
         soundMan.buttonClick();
-        soundMan.switchTrack(lastPickedProfile.getCurrentArea().getAudioSrcName());
 
         FXMLLoader loader = SceneManager.switchScene(e, "fxml.arcade", "css.arcade");
         NodeManager.setRoot(loader.getRoot());
@@ -98,7 +97,6 @@ public class MenuController {
         ArcadeController.setProfile(lastPickedProfile);
         ArcadeNodeManager.setController(loader.getController());
         arcNodMan.setNarratorLbl(lastPickedProfile.getNarratorTextHistory());
-        arcNodMan.updateChoiceButtons(lastPickedProfile.getCurrentArea());
     }
 
     /**

@@ -42,7 +42,4 @@ module it.jpokebattle {
 
     exports it.jpokebattle.controller.menu;
     opens it.jpokebattle.controller.menu;
-
-    exports it.jpokebattle.model.area;
-    opens it.jpokebattle.model.area;
 }

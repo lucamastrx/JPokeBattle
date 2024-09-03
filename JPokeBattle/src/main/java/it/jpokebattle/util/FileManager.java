@@ -2,7 +2,6 @@ package it.jpokebattle.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import it.jpokebattle.model.area.AreaData;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -26,37 +25,6 @@ public class FileManager {
     private final static File dataDir = new File(System.getProperty("user.dir"), "data");
     private final static String ROOT_PATH = "/it/jpokebattle/";
     private static Gson gson = new Gson();
-    private static HashMap<String, AreaData> areaDataMap = setAreasMap();
-
-
-    public static HashMap<String, AreaData> getAreaDataMap() {
-        return areaDataMap;
-    }
-
-
-    /**
-     *
-     */
-    private static HashMap<String, AreaData> setAreasMap() {
-        HashMap<String, AreaData> dataMap = new HashMap<>();
-        String path = getAbsPath("json.areas");
-        Type areaListType = new TypeToken<List<AreaData>>() {}.getType();
-
-        try {
-            FileReader reader = new FileReader(path);
-            List<AreaData> areasList = gson.fromJson(reader, areaListType);
-            reader.close();
-
-            for (AreaData area : areasList)
-                dataMap.put(area.name, area);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return dataMap;
-    }
-
 
 
 
@@ -110,7 +78,7 @@ public class FileManager {
      *
      * @param fxmlSrcName   nome di risorsa del file
      * @return              FXMLLoader contenente la scena caricata
-     * @see it.ml.jpokebattle.properties
+     * @see it.jpokebattle.properties
      * */
     public static FXMLLoader loadFXML(String fxmlSrcName) {
         String path =  ROOT_PATH + src.getString(fxmlSrcName);
@@ -123,7 +91,7 @@ public class FileManager {
      *
      * @param imageSrcName  nome di risorsa del file
      * @return              immagine caricata
-     * @see it.ml.jpokebattle.properties
+     * @see it.jpokebattle.properties
      * */
     public static Image loadImage(String imageSrcName) {
         String path = ROOT_PATH + src.getString(imageSrcName);
@@ -141,7 +109,7 @@ public class FileManager {
      * Restituisce il media player di un file audio.
      *
      * @param mediaSrcName  nome di risorsa del file
-     * @see it.ml.jpokebattle.properties
+     * @see it.jpokebattle.properties
      */
     public static MediaPlayer loadMP3(String mediaSrcName) {
         String path = ROOT_PATH + src.getString(mediaSrcName);
@@ -155,7 +123,7 @@ public class FileManager {
      *
      * @param serSrcName    nome di risorsa del file
      * @return              hashmap caricata
-     * @see it.ml.jpokebattle.properties
+     * @see it.jpokebattle.properties
      * */
     public static <V> HashMap<String, V> loadSER(String serSrcName) {
         String path = src.getString(serSrcName);
@@ -183,7 +151,7 @@ public class FileManager {
      *
      * @param map           hashmap da scrivere
      * @param serSrcName    nome di risorsa del file
-     * @see it.ml.jpokebattle.properties
+     * @see it.jpokebattle.properties
      * */
     public static <V> void writeSER(HashMap<String, V> map, String serSrcName) {
         String path = src.getString(serSrcName);

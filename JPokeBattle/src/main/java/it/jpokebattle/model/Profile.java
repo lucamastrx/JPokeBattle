@@ -1,6 +1,6 @@
 package it.jpokebattle.model;
 
-import it.jpokebattle.model.area.Area;
+
 import it.jpokebattle.util.FileManager;
 import javafx.scene.image.Image;
 import java.io.Serializable;
@@ -27,8 +27,6 @@ public class Profile implements Serializable, Identifiable, Saveable<Profile> {
 
     public Profile(String name, Image avatar) {
         this.name = name;
-        this.currentArea = Area.START.getName();
-        this.narratorTextHistory = Area.START.getDescription();
         setItemsMap();
         setAvatarSrcName(avatar.getUrl());
         save();
@@ -37,10 +35,6 @@ public class Profile implements Serializable, Identifiable, Saveable<Profile> {
 
     public String getAvatarSrcName() {
         return avatarSrcName;
-    }
-
-    public Area getCurrentArea() {
-        return Area.fromName(currentArea);
     }
 
     @Override
@@ -63,10 +57,6 @@ public class Profile implements Serializable, Identifiable, Saveable<Profile> {
     public void setAvatarSrcName(String avatarPath) {
         String[] path = avatarPath.split("jpokebattle/images/avatar/");
         this.avatarSrcName = path[1];
-    }
-
-    public void setCurrentArea(Area area) {
-        this.currentArea = area.getName();
     }
 
     private void setItemsMap() {
@@ -92,34 +82,6 @@ public class Profile implements Serializable, Identifiable, Saveable<Profile> {
             itemsMap.replace(itemName, total);
         }
     }
-
-    /**
-     * Viene impostata l'area corrente al nome dell'area successiva.
-     *
-     * @see Area
-     */
-    public void goToNextArea() {
-        setCurrentArea(Area.fromName(this.currentArea).getNextArea());
-    }
-
-    /**
-     * Viene impostata l'area corrente al nome dell'area successiva.
-     *
-     * @see Area
-     */
-    public void goToPrevArea() {
-        setCurrentArea(Area.fromName(this.currentArea).getPrevArea());
-    }
-
-    /**
-     * Viene impostata l'area corrente al nome dell'area successiva.
-     *
-     * @see Area
-     */
-    public void goToSpecialArea() {
-        setCurrentArea(Area.fromName(this.currentArea).getSpecialArea());
-    }
-
 
     /**
      * Imposta il nome e il percorso dell'avatar, dopodiché aggiorna il file.

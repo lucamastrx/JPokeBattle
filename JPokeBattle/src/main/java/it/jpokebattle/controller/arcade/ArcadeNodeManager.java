@@ -3,7 +3,6 @@ package it.jpokebattle.controller.arcade;
 import it.jpokebattle.controller.NodeManager;
 import it.jpokebattle.controller.menu.MenuController;
 import it.jpokebattle.model.Profile;
-import it.jpokebattle.model.area.Area;
 import javafx.application.Platform;
 
 /**
@@ -78,15 +77,6 @@ public class ArcadeNodeManager extends NodeManager {
     }
 
 
-    public void updateChoiceButtons(Area area) {
-        ctrl.nextAreaBtn.setText(area.getNextAreaButtonName());
-        ctrl.prevAreaBtn.setText(area.getPrevAreaButtonName());
-        ctrl.specialAreaBtn.setText(area.getSpecialAreaButtonName());
-
-        ctrl.prevAreaBtn.setVisible(!ctrl.prevAreaBtn.getText().isBlank());
-        ctrl.specialAreaBtn.setVisible(!ctrl.specialAreaBtn.getText().isBlank());
-
-    }
 
 
     /**

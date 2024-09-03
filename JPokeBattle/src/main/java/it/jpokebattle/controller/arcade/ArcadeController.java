@@ -4,7 +4,6 @@ import it.jpokebattle.controller.NodeManager;
 import it.jpokebattle.controller.SceneManager;
 import it.jpokebattle.controller.menu.MenuNodeManager;
 import it.jpokebattle.model.Profile;
-import it.jpokebattle.model.area.Area;
 import it.jpokebattle.util.AudioTrack;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
@@ -98,8 +97,8 @@ public class ArcadeController {
     @FXML
     public void nextArea(ActionEvent e) {
         soundMan.buttonClick();
-        profile.goToNextArea();
-        updateNarrator();
+
+
         nodeMan.updateNarratorScrollbarPosition();
     }
 
@@ -109,8 +108,8 @@ public class ArcadeController {
     @FXML
     public void prevArea(ActionEvent e) {
         soundMan.buttonClick();
-        profile.goToPrevArea();
-        updateNarrator();
+
+
         nodeMan.updateNarratorScrollbarPosition();
     }
 
@@ -120,8 +119,6 @@ public class ArcadeController {
     @FXML
     public void specialArea(ActionEvent e) {
         soundMan.buttonClick();
-        profile.goToSpecialArea();
-        updateNarrator();
         nodeMan.updateNarratorScrollbarPosition();
     }
 
@@ -129,12 +126,6 @@ public class ArcadeController {
      * Aggiorna il testo del narratore con la descrizione dell'area corrente in cui
      * il giocatore si trova.
      */
-    private void updateNarrator() {
-        Area area = profile.getCurrentArea();
-        nodeMan.updateNarratorLbl(area.getDescription());
-        profile.setNarratorTextHistory(narratorLbl.getText());
-        nodeMan.updateChoiceButtons(profile.getCurrentArea());
-    }
 
     /**
      * TODO: DA IMPLEMENTARE (PROVVISORIA)
