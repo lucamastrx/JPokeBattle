@@ -2,7 +2,7 @@ module it.jpokebattle {
     requires transitive javafx.controls;
     requires transitive javafx.fxml;
     requires transitive javafx.graphics;
-    // requires transitive javafx.web;
+    requires transitive javafx.web;
 
     requires transitive org.controlsfx.controls;
     // requires transitive com.dlsc.formsfx;
