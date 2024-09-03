@@ -2,8 +2,6 @@ package it.jpokebattle.controller.menu;
 
 import it.jpokebattle.controller.NodeManager;
 import it.jpokebattle.controller.SceneManager;
-import it.jpokebattle.controller.arcade.ArcadeController;
-import it.jpokebattle.controller.arcade.ArcadeNodeManager;
 import it.jpokebattle.util.AudioTrack;
 import it.jpokebattle.util.FileManager;
 import it.jpokebattle.model.Profile;
@@ -75,28 +73,6 @@ public class MenuController {
     public void addProf(ActionEvent e){
         soundMan.buttonClick();
         nodeMan.switchToAddProfile();
-    }
-
-    /**
-     * Metodo chiamato dal bottone 'arcade' nel menù di selezione della modalità di
-     * gioco: carica la scena della modalità arcade, aggiorna la root corrente nella
-     * classe astratta NodeManeger, passa al controller l'istanza del profilo
-     * selezionato, passa all'ArcadeNodeManager l'istanza del controller appena
-     * caricato e carica nella narratorLbl la cronologia del testo del narratore di
-     * quel profilo.
-     * */
-    @FXML
-    public void arcade(ActionEvent e) throws IOException {
-        soundMan.buttonClick();
-
-        FXMLLoader loader = SceneManager.switchScene(e, "fxml.arcade", "css.arcade");
-        NodeManager.setRoot(loader.getRoot());
-
-        ArcadeNodeManager arcNodMan = ArcadeNodeManager.getIstance();
-
-        ArcadeController.setProfile(lastPickedProfile);
-        ArcadeNodeManager.setController(loader.getController());
-        arcNodMan.setNarratorLbl(lastPickedProfile.getNarratorTextHistory());
     }
 
     /**

@@ -37,9 +37,6 @@ module it.jpokebattle {
     exports it.jpokebattle.util;
     opens it.jpokebattle.util;
 
-    exports it.jpokebattle.controller.arcade;
-    opens it.jpokebattle.controller.arcade;
-
     exports it.jpokebattle.controller.menu;
     opens it.jpokebattle.controller.menu;
 }
