@@ -21,7 +21,7 @@ public class Pokemon {
     protected int specialAtkIV;
     protected int specialDefIV;
     protected int speedIV;
-    protected int potenzialeDellaSpecie;
+
 
 
     /**

@@ -1,7 +1,5 @@
 package it.jpokebattle.util;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -15,6 +13,9 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import com.fasterxml.jackson.core.type.TypeReference; // Import per Jackson
+import com.fasterxml.jackson.databind.ObjectMapper; // Import per Jackson
+
 
 /**
  * Classe di utilità per il caricamento e la manipolazione di qualsiasi file esterno.
@@ -24,8 +25,74 @@ public class FileManager {
     private final static ResourceBundle src = ResourceBundle.getBundle("it/jpokebattle/properties/resources");
     private final static File dataDir = new File(System.getProperty("user.dir"), "data");
     private final static String ROOT_PATH = "/it/jpokebattle/";
-    private static Gson gson = new Gson();
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
+
+
+    /**
+     * Legge un file JSON e restituisce una mappa degli oggetti.
+     *
+     * @param jsonSrcName nome della risorsa del file JSON
+     * @return            hashmap con i dati letti dal JSON
+     */
+    public static <K, V> HashMap<K, V> readJSON(String jsonSrcName) {
+        // Ottieni il percorso dal file di proprietà
+        String relativePath = src.getString(jsonSrcName);
+        File file = new File(relativePath);
+        HashMap<K, V> map = new HashMap<>();
+
+        try {
+            // Controlla se il file esiste prima di leggerlo
+            if (!file.exists()) {
+                System.err.println("File non trovato: " + file.getAbsolutePath());
+                return map;
+            }
+
+            // Leggi i dati dal file JSON
+            map = objectMapper.readValue(file, new TypeReference<HashMap<K, V>>() {});
+            System.out.println("Dati letti con successo da " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Errore durante la lettura del file JSON.");
+            e.printStackTrace();
+        }
+
+        return map;
+    }
+
+    /**
+     * Scrive una mappa di oggetti su un file JSON.
+     *
+     * @param map         hashmap da scrivere
+     * @param jsonSrcName nome della risorsa del file JSON
+     */
+    public static <K, V> void writeJSON(HashMap<K, V> map, String jsonSrcName) {
+        // Ottieni il percorso dal file di proprietà
+        String relativePath = src.getString(jsonSrcName);
+        File file = new File(relativePath);
+
+        // Assicurati che la directory esista
+        if (!file.getParentFile().exists()) {
+            boolean dirsCreated = file.getParentFile().mkdirs();
+            if (!dirsCreated) {
+                System.err.println("Errore nella creazione delle directory: " + file.getParentFile().getAbsolutePath());
+            }
+        }
+
+        try {
+            // Controlla se la mappa è vuota
+            if (map == null || map.isEmpty()) {
+                System.err.println("La mappa è vuota o null.");
+                return;
+            }
+
+            // Scrivi i dati nel file JSON
+            objectMapper.writeValue(file, map);
+            // System.out.println("Mappa salvata con successo su " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Errore durante la scrittura del file JSON.");
+            e.printStackTrace();
+        }
+    }
 
 
 

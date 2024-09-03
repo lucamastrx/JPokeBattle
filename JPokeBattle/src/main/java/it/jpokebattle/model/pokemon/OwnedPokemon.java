@@ -166,12 +166,13 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      */
     private void levelUpAndStatsUp() {
         levelUp();
-        updateStat("hp", hpIV, potenzialeDellaSpecie);
-        updateStat("atk", atkIV, potenzialeDellaSpecie);
-        updateStat("def", defIV, potenzialeDellaSpecie);
-        updateStat("specialAtk", specialAtkIV, potenzialeDellaSpecie);
-        updateStat("specialDef", specialDefIV, potenzialeDellaSpecie);
-        updateStat("speed", speedIV, potenzialeDellaSpecie);
+        int baseStat = this.getBreed().getBaseStat();
+        updateStat("hp", hpIV, baseStat);
+        updateStat("atk", atkIV, baseStat);
+        updateStat("def", defIV, baseStat);
+        updateStat("specialAtk", specialAtkIV, baseStat);
+        updateStat("specialDef", specialDefIV, baseStat);
+        updateStat("speed", speedIV, baseStat);
     }
 
     /**

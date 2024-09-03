@@ -34,7 +34,7 @@ public class Main extends Application {
     private Scene mainScene;
 
     public static void main(String[] args) {
-        // myMetod();
+        Breed.dumpJSON();
         launch(args);
     }
 
