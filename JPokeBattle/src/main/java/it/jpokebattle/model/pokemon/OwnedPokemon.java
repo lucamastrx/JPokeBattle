@@ -1,0 +1,378 @@
+package it.jpokebattle.model.pokemon;
+
+import it.jpokebattle.model.Identifiable;
+import it.jpokebattle.model.Saveable;
+import java.io.Serializable;
+import java.util.HashMap;
+
+
+public class OwnedPokemon extends Pokemon implements Serializable, Identifiable, Saveable<OwnedPokemon> {
+    private final String SER_SRC_NAME = "ser.ownedPokemon";
+    private final String ID = setID(SER_SRC_NAME);
+    private String nickname;    // soprannome, se presente
+    private int exp = 0;            // esperienza attuale
+    private int expForNextLevel;
+    private int hpEV = 0;
+    private int atkEV = 0;
+    private int defEV = 0;
+    private int specialAtkEV = 0;
+    private int specialDefEV = 0;
+    private int speedEV = 0;
+    private int totalEVsUsed = 0;   // Contatore per il totale di EVs usati
+
+    /**
+     * Metodo Costruttore.
+     * Crea il pokemon e lo aggiunge alla mappa che mantiene tutti i pokemon.
+     *
+     * @param breed razza del pokemon
+     * @param nickname soprannome del pokemon
+     */
+    public OwnedPokemon(Breed breed, String nickname) {
+        super(breed);
+        this.nickname = nickname;  // setNickname(name); TODO qui va bene il setNickname? a pokemon catturato serve messaggio GUI per fare setNickname
+        this.expForNextLevel = calculateRequiredExpForNextLevel(this.level);
+        save();               // aggiunge il pokemon alla mappa e la salva nel file ser
+    }
+
+    /**
+     * Restituisce il nome visualizzato del Pokémon. Se il Pokémon ha un soprannome, viene restituito il soprannome.
+     * Altrimenti, viene restituito il nome della razza del Pokémon.
+     *
+     * @return Il soprannome se è impostato e non vuoto; altrimenti, il nome della razza del Pokémon.
+     */
+    @Override
+    public String getName() {
+        return (nickname != null && !nickname.isEmpty()) ? nickname : super.getName();
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+        save();
+    }
+
+    public int getExp() {return this.exp;}
+
+    public int getExpForNextLevel() {return expForNextLevel;}
+
+    public void setExp(int exp) {this.exp = exp;}
+
+    private void setExpForNextLevel(int expForNextLevel) {this.expForNextLevel = expForNextLevel;}
+
+    public void addExp(int expGuadaganti) {
+        if (this.getLevel() < 100)
+            this.exp += expGuadaganti;
+    }
+
+    protected void addHpEV(int evAmountDropped) {
+        int total = hpEV + evAmountDropped;
+        if (total < 256 && totalEVsUsed <= 510) hpEV += evAmountDropped;
+    }
+
+    protected void addAtkEV(int evAmountDropped) {
+        int total = atkEV + evAmountDropped;
+        if (total < 256 && totalEVsUsed <= 510) atkEV += evAmountDropped;
+    }
+
+    protected void addDefEV(int evAmountDropped) {
+        int total = defEV + evAmountDropped;
+        if (total < 256 && totalEVsUsed <= 510) defEV += evAmountDropped;
+    }
+
+    protected void addSpecialAtkEV(int evAmountDropped) {
+        int total = specialAtkEV + evAmountDropped;
+        if (total < 256 && totalEVsUsed <= 510) specialAtkEV += evAmountDropped;
+    }
+
+    protected void addSpecialDefEV(int evAmountDropped) {
+        int total = specialDefEV + evAmountDropped;
+        if (total < 256 && totalEVsUsed <= 510) specialDefEV += evAmountDropped;
+    }
+
+    protected void addSpeedEV(int evAmountDropped) {
+        int total = speedEV + evAmountDropped;
+        if (total < 256 && totalEVsUsed <= 510) speedEV += evAmountDropped;
+    }
+
+    /**
+     * Aumenta il livello del pokemon di 1.
+     */
+    private void increaseLevelByOne() {this.level++;}
+
+    /**
+     * Controlla se il pokemon ha raggiunto la soglia di ex per salire di livello.
+     * Il livello massimo è 100, dopo la quale il livello non aumenterà.
+     */
+    public void canLevelUp() {
+        if (this.exp >= this.expForNextLevel && this.level < 100) {
+            levelUpAndStatsUp();
+        }
+    }
+    /**
+     * Aggiorna il valore di una statistica specifica dell'entità basandosi su IV (Individual Values),
+     * base stat (statistica di base) e il livello dell'entità.
+     *
+     * Il valore calcolato viene utilizzato per aggiornare la statistica corrispondente. Le statistiche
+     * che possono essere aggiornate includono punti vita (hp), attacco (atk), difesa (def), attacco speciale
+     * (specialAtk), difesa speciale (specialDef) e velocità (speed).
+     *
+     * @param statType Il tipo di statistica da aggiornare. Deve essere uno dei seguenti valori:
+     *                 <ul>
+     *                   <li>"hp" - Punti vita</li>
+     *                   <li>"atk" - Attacco</li>
+     *                   <li>"def" - Difesa</li>
+     *                   <li>"specialAtk" - Attacco speciale</li>
+     *                   <li>"specialDef" - Difesa speciale</li>
+     *                   <li>"speed" - Velocità</li>
+     *                 </ul>
+     * @param iv Il valore IV (Individual Value) della statistica. Rappresenta la variabilità individuale
+     *           della statistica e influisce sul calcolo finale.
+     * @param baseStat Il valore di base della statistica. Questo valore è comune per tutte le entità
+     *                 della stessa specie e viene utilizzato come base per il calcolo del valore finale.
+     *
+     * @throws IllegalArgumentException Se il valore di `statType` non è uno dei valori previsti.
+     */
+    private void updateStat(String statType, int iv, int baseStat) {
+        int usedEVs = useEVs(statType);
+        int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * level) / 100) + 5;
+
+        switch (statType) {
+            case "hp":
+                newValue += level + 5;
+                setHp(newValue);
+                break;
+            case "atk":
+                setAtk(newValue);
+                break;
+            case "def":
+                setDef(newValue);
+                break;
+            case "specialAtk":
+                setSpecialAtk(newValue);
+                break;
+            case "specialDef":
+                setSpecialDef(newValue);
+                break;
+            case "speed":
+                setSpeed(newValue);
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
+        }
+    }
+
+
+    /**
+     * Metodo principale per aumentare il livello e le statistiche del Pokémon.
+     */
+    private void levelUpAndStatsUp() {
+        levelUp();
+        updateStat("hp", hpIV, potenzialeDellaSpecie);
+        updateStat("atk", atkIV, potenzialeDellaSpecie);
+        updateStat("def", defIV, potenzialeDellaSpecie);
+        updateStat("specialAtk", specialAtkIV, potenzialeDellaSpecie);
+        updateStat("specialDef", specialDefIV, potenzialeDellaSpecie);
+        updateStat("speed", speedIV, potenzialeDellaSpecie);
+    }
+
+    /**
+     * Verifica e utilizza gli EV in multipli di 4, riducendo il totale degli EV disponibili e aggiornando il contatore totale degli EV utilizzati.
+     *
+     * @param evType Il tipo di EV (ad esempio, "hp", "atk", "def", ecc.)
+     * @return Il numero di EV utilizzati.
+     * @throws IllegalArgumentException se gli EV non sono multipli di 4.
+     */
+    private int useEVs(String evType) {
+        int ev = 0;
+
+        // Ottieni il valore EV corrente basato sul tipo
+        switch (evType) {
+            case "hp":
+                ev = hpEV;
+                break;
+            case "atk":
+                ev = atkEV;
+                break;
+            case "def":
+                ev = defEV;
+                break;
+            case "specialAtk":
+                ev = specialAtkEV;
+                break;
+            case "specialDef":
+                ev = specialDefEV;
+                break;
+            case "speed":
+                ev = speedEV;
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di EV non valido: " + evType);
+        }
+
+        // Verifica se ci sono abbastanza EV per essere utilizzati
+        if (ev < 4) {
+            return 0; // Non c'è abbastanza EV per essere utilizzato
+        }
+
+        // Trova il multiplo di 4 più vicino
+        int usableEVs = (ev / 4) * 4;
+
+        // Aggiorna gli EV disponibili sottraendo gli EV usati
+        switch (evType) {
+            case "hp":
+                hpEV -= usableEVs;
+                break;
+            case "atk":
+                atkEV -= usableEVs;
+                break;
+            case "def":
+                defEV -= usableEVs;
+                break;
+            case "specialAtk":
+                specialAtkEV -= usableEVs;
+                break;
+            case "specialDef":
+                specialDefEV -= usableEVs;
+                break;
+            case "speed":
+                speedEV -= usableEVs;
+                break;
+        }
+
+        // Aggiungi gli EV usati al totale
+        addToTotalEVsUsed(usableEVs);
+
+        return usableEVs;
+    }
+
+    /**
+     * Aggiunge il numero di EV utilizzati al contatore totale degli EV utilizzati.
+     *
+     * @param ev Il numero di EV da aggiungere al contatore.
+     */
+    private void addToTotalEVsUsed(int ev) {
+        this.totalEVsUsed += ev;
+    }
+
+
+    /**
+     * Incrementa il livello del Pokémon e aggiorna i relativi valori di esperienza.
+     */
+    private void levelUp() {
+        increaseLevelByOne();
+        this.exp = 0;
+        if (this.level < 100) {
+            this.expForNextLevel = calculateRequiredExpForNextLevel(this.level);
+        }
+    }
+
+
+    /**
+     * Funzione di CRESCITA pokemon.
+     * È la funzione per calcolare quanti punti exp serviranno per salire al prossimo livello.
+     * @param currentLevel
+     * @return totale
+     */
+    private int calculateRequiredExpForNextLevel(int currentLevel) {
+        currentLevel++;
+        return 4 * (currentLevel * currentLevel * currentLevel) / 5;
+    }
+
+
+    /**
+     * Metodo che controlla se il livello del pokemon è sufficiente a
+     * permettere l'evoluzione.
+     *
+     * @return valore booleano che determina se il pokemon può evolvere
+     */
+    public boolean canEvolve(){                        // TODO aggiungere messaggio GUI
+        return this.getLevel() >= this.getBreed().getEvoThreshold();
+    }
+
+    /**
+     * Metodo che evolve il pokemon.
+     * Cambia il breed del pokemon con quella del suo successore,
+     * e inoltre modifica il nome del pokemon se non ha soprannome.
+     */
+    public void evolve() {                              // TODO l'allenatore vuole evolvere il pokemon?
+        if (this.canEvolve()) {
+            Breed succ = this.getBreed().getSuccessor();
+            this.setBreed(succ);   // cambia il Breed del Pokemon
+
+            if (this.nickname == null || this.nickname.isEmpty()) {
+                this.setName(succ.getName());  // cambia il nome solo se non c'è un soprannome
+            }
+            save();
+        }
+    }
+
+
+    /**
+     * Metodo che aggiunge una mossa al pokemon.
+     * Se il pokemon ha già 4 mosse, viene chiesta quale mossa sostituire.
+     *
+     * @param move Mossa che si vuole aggiungere
+     */
+    public void addMove(Move move) {
+        if (moves.size() > 3) {
+
+            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una..."); // TODO manu messaggio in GUI
+            // click per rimuovere una mossa                                               // in GUI
+            // removeMove(Move mossaDaDimenticare)
+            System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!"); // messaggio in GUI
+        }
+        else {
+            int ppMax = move.getPPDefault();
+            this.moves.put(move, ppMax);
+        }
+
+    }
+
+    public void removeMove(Move move){
+        this.moves.remove(move);
+    }
+
+    public HashMap<Move, Integer> getMoves() {
+        return moves;
+    }
+
+    /**
+     * Metodo che setta le mosse di un pokemon.
+     * Possono essere al massimo 4.
+     * @param moves HashMap<String, Integer> di mosse
+     * @throws IllegalArgumentException
+     */
+    public void setMoves(HashMap<Move, Integer> moves) {
+        if (moves.size() > 4) {
+            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
+        }
+        this.moves = moves;
+    }
+
+    /**
+     * Metodo che setta le mosse di un pokemon.
+     * Possono essere al massimo 4.
+     * @param moves Array di mosse
+     * @throws IllegalArgumentException
+     */
+    public void setMoves(Move[] moves) {
+        if (moves.length > 4) {
+            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
+        }
+
+        for (Move move : moves) {
+            this.moves.put(move, move.getPPDefault());
+        }
+    }
+
+
+    @Override
+    public String getID() {
+        return this.ID;
+    }
+
+    @Override
+    public void save() {
+        save(SER_SRC_NAME, this);
+    }
+
+}

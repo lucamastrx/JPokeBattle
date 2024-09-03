@@ -1,0 +1,29 @@
+
+########################################################################################
+
+
+
+Quando vuoi calcolare il danno di un attacco, puoi usare la tabella delle efficacie:
+
+
+public class Battaglia {
+    public static double calcolaDanno(Pokemon attaccante, Pokemon difensore, TipoPokemon mossaTipo) {
+        double moltiplicatore = 1.0;
+
+        for (TipoPokemon tipoDifensore : difensore.getTipi()) {
+            moltiplicatore *= EfficaciaTipi.getMoltiplicatore(mossaTipo, tipoDifensore);
+        }
+
+        // Calcola il danno totale (considerando altri fattori come l'attacco e la difesa)
+        double dannoBase = attaccante.getAttacco() - difensore.getDifesa();
+        return dannoBase * moltiplicatore;
+    }
+}
+
+
+
+
+
+
+
+############################################################################################

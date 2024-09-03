@@ -1,8 +1,48 @@
 module it.jpokebattle {
-    requires javafx.controls;
-    requires javafx.fxml;
+    requires transitive javafx.controls;
+    requires transitive javafx.fxml;
+    requires transitive javafx.graphics;
+    // requires transitive javafx.web;
+
+    requires transitive org.controlsfx.controls;
+    // requires transitive com.dlsc.formsfx;
+    // requires transitive net.synedra.validatorfx;
+    // requires transitive org.kordamp.ikonli.javafx;
+    // requires transitive org.kordamp.bootstrapfx.core;
+    // requires transitive eu.hansolo.tilesfx;
+    // requires transitive com.almasb.fxgl.all;
+    requires transitive javafx.media;
+    requires transitive com.google.gson;
+    requires transitive java.desktop;
+    requires transitive com.fasterxml.jackson.annotation;
+    requires transitive com.fasterxml.jackson.core;
+    requires transitive com.fasterxml.jackson.databind;
 
 
-    opens it.jpokebattle to javafx.fxml;
     exports it.jpokebattle;
+    opens it.jpokebattle;
+
+    exports it.jpokebattle.controller;
+    opens it.jpokebattle.controller;
+
+    exports it.jpokebattle.model;
+    opens it.jpokebattle.model;
+
+    exports it.jpokebattle.view;
+    opens it.jpokebattle.view;
+
+    exports it.jpokebattle.model.pokemon;
+    opens it.jpokebattle.model.pokemon;
+
+    exports it.jpokebattle.util;
+    opens it.jpokebattle.util;
+
+    exports it.jpokebattle.controller.arcade;
+    opens it.jpokebattle.controller.arcade;
+
+    exports it.jpokebattle.controller.menu;
+    opens it.jpokebattle.controller.menu;
+
+    exports it.jpokebattle.model.area;
+    opens it.jpokebattle.model.area;
 }
