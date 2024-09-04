@@ -48,7 +48,6 @@ public class MenuNodeManager extends NodeManager {
     public void switchToMainMenu(){
         hideAll();
         lengthensSeparators();
-        ctrl.selectGameProfileBtn.setVisible(true);
         ctrl.exitBtn.setVisible(true);
         ctrl.mainMenuLbl.setVisible(true);
         ctrl.gengarGif.setVisible(true);
@@ -65,13 +64,9 @@ public class MenuNodeManager extends NodeManager {
     public void switchToProfilesMenu(){
         hideAll();
         shortensSeparators();
-        ctrl.backToMainBtn3.setVisible(true);
-
 
         ctrl.gengarGif.setVisible(true);
         ctrl.snorlaxGif.setVisible(true);
-        ctrl.nicknameProfCardLbl.textProperty().unbind();
-        ctrl.nicknameProfCardLbl.setText("");
         ctrl.nicknameTxtFd.clear();
     }
 
@@ -111,10 +106,6 @@ public class MenuNodeManager extends NodeManager {
      */
     private void hideAllLabels(){
         ctrl.mainMenuLbl.setVisible(false);
-        ctrl.gameProfileLbl.setVisible(false);
-        ctrl.gameModeLbl.setVisible(false);
-        ctrl.nicknameLbl.setVisible(false);
-
     }
 
 

@@ -95,22 +95,7 @@
             <Insets right="130.0" top="20.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="gameProfileLbl" alignment="CENTER" text="Inizio: profilo" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-         <GridPane.margin>
-            <Insets right="130.0" top="20.0" />
-         </GridPane.margin>
-      </Label>
-      <Label fx:id="gameModeLbl" alignment="CENTER" text="Inizio: modalità" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-         <GridPane.margin>
-            <Insets right="130.0" top="20.0" />
-         </GridPane.margin>
-      </Label>
 
-      <Label fx:id="nicknameLbl" alignment="CENTER" text="Nickname" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
-         <GridPane.margin>
-            <Insets top="30.0" />
-         </GridPane.margin>
-      </Label>
       <ImageView fitHeight="63.0" fitWidth="57.0" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
          <image>
             <Image url="@../images/pokeball_2.gif" />

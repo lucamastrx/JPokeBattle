@@ -24,14 +24,14 @@ public class MenuController {
     @FXML
     protected Button
             // Menu principale
-            selectGameProfileBtn, exitBtn,
+             exitBtn,
             // Impostazioni
             volumeBtn,
             // Ritorno
-            mainMenuBtn, backToMainBtn2, backToMainBtn3;
+            mainMenuBtn;
     @FXML
     protected Label
-            titleLbl, mainMenuLbl, gameProfileLbl, gameModeLbl, nicknameLbl, nicknameProfCardLbl;
+            titleLbl, mainMenuLbl;
     @FXML
     protected Line leftSeparatorLn, rightSeparatorLn;
     @FXML
