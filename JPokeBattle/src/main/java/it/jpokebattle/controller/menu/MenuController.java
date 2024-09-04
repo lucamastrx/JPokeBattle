@@ -25,17 +25,11 @@ public class MenuController {
     @FXML
     protected Button
             // Menu principale
-            selectGameProfileBtn, profileBtn, settingsBtn, exitBtn,
+            selectGameProfileBtn, exitBtn,
             // Impostazioni
-            volumeBtn, creditBtn, languageBtn,
+            volumeBtn,
             // Menu di selezione del profilo di gioco
             selectGameModeBtn,
-            // Menu di selezione modalità
-            arcadeBtn, pvpBtn, changeProfileBtn,
-            // Visualizzazione profili
-            addProfBtn, modifyProfBtn, displayProfInfoBtn,
-            // Aggiungi/modifica profilo
-            confirmCreationBtn, confirmChangesBtn, deleteProfBtn,
             // Ritorno
             mainMenuBtn, backToMainBtn2, backToMainBtn3, backToProfilesCancelBtn, backToProfilesBtn;
     @FXML
