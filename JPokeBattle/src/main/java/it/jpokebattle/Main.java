@@ -3,8 +3,6 @@ package it.jpokebattle;
 import it.jpokebattle.controller.NodeManager;
 import it.jpokebattle.controller.menu.MenuNodeManager;
 import it.jpokebattle.model.pokemon.Breed;
-import it.jpokebattle.model.pokemon.Move;
-import it.jpokebattle.model.type.Type;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
@@ -15,10 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Set;
+
+
 
 
 
@@ -34,7 +31,7 @@ public class Main extends Application {
     private Scene mainScene;
 
     public static void main(String[] args) {
-        Breed.dumpJSON();
+        // Breed.dumpJSON();
         launch(args);
     }
 
