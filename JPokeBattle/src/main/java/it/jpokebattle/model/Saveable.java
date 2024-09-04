@@ -1,5 +1,6 @@
 package it.jpokebattle.model;
 
+import it.jpokebattle.model.player.HumanPlayer;
 import it.jpokebattle.util.FileManager;
 import java.util.HashMap;
 

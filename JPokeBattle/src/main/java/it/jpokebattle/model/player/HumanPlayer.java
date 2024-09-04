@@ -1,10 +1,9 @@
-package it.jpokebattle.model;
+package it.jpokebattle.model.player;
 
 
 import javafx.scene.image.Image;
-import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**

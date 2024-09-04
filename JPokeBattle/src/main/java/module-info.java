@@ -45,4 +45,7 @@ module it.jpokebattle {
 
     exports it.jpokebattle.controller.leaderboard;
     opens it.jpokebattle.controller.leaderboard;
+
+    exports it.jpokebattle.model.player;
+    opens it.jpokebattle.model.player;
 }
