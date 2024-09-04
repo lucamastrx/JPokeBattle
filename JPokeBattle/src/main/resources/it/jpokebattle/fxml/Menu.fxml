@@ -7,14 +7,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 
 <?import javafx.scene.control.ScrollPane?>
@@ -187,13 +185,6 @@
                <bumpInput>
                   <BoxBlur height="255.0" iterations="3" width="255.0" />
                </bumpInput>
-               <light>
-                  <Light.Distant>
-                     <color>
-                        <Color red="0.6000000238418579" />
-                     </color>
-                  </Light.Distant>
-               </light>
             </Lighting>
          </effect>
          <GridPane.margin>
