@@ -15,9 +15,6 @@ import java.io.IOException;
 
 
 
-
-
-
 /**
  * Classe principale da cui parte l'esecuzione del codice.
  *
@@ -42,7 +39,7 @@ public class Main extends Application {
         setMainStage();
 
         NodeManager.setRoot(mainScene.getRoot());
-        
+
 
         SoundManager.getInstance();
     }

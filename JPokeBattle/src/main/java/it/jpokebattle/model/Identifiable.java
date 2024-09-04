@@ -30,7 +30,7 @@ public interface Identifiable {
      * @see FileManager
      */
     default String setID(String serSrcName){
-        HashMap<String, Profile> map = FileManager.loadSER(serSrcName);
+        HashMap<String, HumanPlayer> map = FileManager.loadSER(serSrcName);
         Optional<Integer> max;
 
         if (map == null)

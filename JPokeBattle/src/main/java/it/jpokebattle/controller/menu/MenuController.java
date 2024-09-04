@@ -2,7 +2,6 @@ package it.jpokebattle.controller.menu;
 
 import it.jpokebattle.util.FileManager;
 import it.jpokebattle.util.SoundManager;
-import it.jpokebattle.view.AlertMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -17,20 +16,18 @@ import javafx.stage.Stage;
 public class MenuController {
 
     private SoundManager soundMan = SoundManager.getInstance();
-    private AlertMessage alert = new AlertMessage();
 
     @FXML
     protected ImageView volumeImg, gengarGif, snorlaxGif;
-    @FXML
-    protected Button exitBtn;
 
     @FXML
-    protected Label
-            titleLbl, mainMenuLbl;
+    protected Button battleButton, leaderboardButton, exitBtn;
+
+    @FXML
+    protected Label titleLbl, mainMenuLbl;
+
     @FXML
     protected Line leftSeparatorLn, rightSeparatorLn;
-    @FXML
-    protected TextField nicknameTxtFd;
 
 
 

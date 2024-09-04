@@ -7,8 +7,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public enum AudioTrack {
-    TITLE_MENU("mp3.title"),
-    BARK_TOWN("mp3.barkTown"),
+    MENU("mp3.title"),
     BUTTON("wav.btn");
 
     private String srcName;
@@ -55,6 +54,7 @@ public enum AudioTrack {
         mediaPlayer.play();
         mediaPlayer.seek(Duration.ZERO);
     }
+
 
     public void switchToTrack(AudioTrack newTrack) {
         MediaPlayer newMP = newTrack.getMediaPlayer();

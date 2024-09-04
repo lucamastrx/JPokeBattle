@@ -51,7 +51,7 @@ public interface Saveable<V extends Identifiable> {
      * @see FileManager
      */
     default void delete(String serSrcName, V istance) {
-        HashMap<String, Profile> map = FileManager.loadSER(serSrcName);
+        HashMap<String, HumanPlayer> map = FileManager.loadSER(serSrcName);
         map.remove(istance.getID()); // Rimuove l'istanza dalla mappa utilizzando il suo ID
 
         if (map.isEmpty()) {

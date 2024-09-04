@@ -8,8 +8,8 @@ import javafx.scene.media.MediaPlayer;
 public class SoundManager {
     private static SoundManager instance;    // Unica istanza della classe
     private boolean isVolumeOn = true;
-    private AudioTrack currentTrack = AudioTrack.fromSrcName("mp3.title");
-    private AudioTrack buttonPlayer = AudioTrack.fromSrcName("wav.btn");
+    private AudioTrack currentTrack = AudioTrack.MENU;
+    private AudioTrack buttonPlayer = AudioTrack.BUTTON;
 
     private SoundManager() {
         currentTrack.playLoop();
