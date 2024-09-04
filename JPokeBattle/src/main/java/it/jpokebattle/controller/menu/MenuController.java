@@ -22,13 +22,8 @@ public class MenuController {
     @FXML
     protected ImageView volumeImg, gengarGif, snorlaxGif;
     @FXML
-    protected Button
-            // Menu principale
-             exitBtn,
-            // Impostazioni
-            volumeBtn,
-            // Ritorno
-            mainMenuBtn;
+    protected Button exitBtn;
+
     @FXML
     protected Label
             titleLbl, mainMenuLbl;
@@ -38,28 +33,6 @@ public class MenuController {
     protected TextField nicknameTxtFd;
 
 
-
-
-
-    /**
-     * Visualizza il menù principale.
-     * */
-    @FXML
-    public void mainMenu(ActionEvent e){
-        soundMan.buttonClick();
-        nodeMan.switchToMainMenu();
-    }
-
-
-
-    /**
-     * TODO: da implementare!
-     * */
-    @FXML
-    public void pvp(ActionEvent e){
-        soundMan.buttonClick();
-        System.out.println("PvP");
-    }
 
     /**
      * Chiude la finestra e termina il programma.
@@ -98,12 +71,4 @@ public class MenuController {
         volumeImg.setImage(img);
     }
 
-    /**
-     * TODO: da implementare!
-     * */
-    @FXML
-    public void volume(ActionEvent e){
-        soundMan.buttonClick();
-        System.out.println("Volume");
-    }
 }
