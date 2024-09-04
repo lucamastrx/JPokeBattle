@@ -136,7 +136,6 @@ public class MenuNodeManager extends NodeManager {
         ctrl.backToMainBtn3.setVisible(true);
         ctrl.addProfBtn.setVisible(true);
         ctrl.profileLbl.setVisible(true);
-        ctrl.profilesScrlPane.setVisible(true);
 
         ctrl.gengarGif.setVisible(true);
         ctrl.snorlaxGif.setVisible(true);
@@ -291,8 +290,7 @@ public class MenuNodeManager extends NodeManager {
     private void hideAllPanes() {
         ctrl.profileCardGrid.setVisible(false);
         ctrl.avatarGrid.setVisible(false);
-        ctrl.profilesScrlPane.setVisible(false);
-        ctrl.profilesScrlPane.setVvalue(0);
+        
     }
 
     /**

@@ -56,14 +56,7 @@
          </cursor>
       </Button>
 
-      <Button fx:id="creditBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#credits" prefHeight="40.0" prefWidth="150.0" text="Crediti" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-       <Button fx:id="languageBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#language" prefHeight="40.0" prefWidth="150.0" text="Lingua" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
+
        <Button fx:id="volumeBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#volume" prefHeight="40.0" prefWidth="150.0" text="Volume" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -85,27 +78,9 @@
          </cursor>
       </Button>
 
-      <Button fx:id="addProfBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#addProf" prefHeight="40.0" prefWidth="150.0" text="Aggiungi" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="9" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="modifyProfBtn" alignment="CENTER" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#modifyProf" prefHeight="40.0" prefWidth="130.0" text="Modifica" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <GridPane.margin>
-            <Insets right="90.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="displayProfInfoBtn" alignment="CENTER" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#displayProfileInfo" prefHeight="40.0" prefWidth="130.0" text="Informazioni" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <GridPane.margin>
-            <Insets left="20.0" />
-         </GridPane.margin>
-      </Button>
+
+
+
 
 
 
@@ -290,78 +265,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <ImageView fitHeight="51.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/pokeball.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/superball.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/ultra-ball.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/mega-ball.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/crown.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/jigglypuff.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/psyduck.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/meowth.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/eevee.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/snorlax.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/squirtle.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/bulbasaur.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/charmander.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="55.0" fitWidth="50.0" onMouseClicked="#setAvatarProfileCard" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@../images/avatar/pikachu.png" />
-               </image>
-            </ImageView>
-         </children>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
