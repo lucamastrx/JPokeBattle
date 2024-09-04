@@ -1,8 +1,6 @@
 package it.jpokebattle.controller.menu;
 
 import it.jpokebattle.controller.NodeManager;
-import it.jpokebattle.util.FileManager;
-import it.jpokebattle.model.Profile;
 
 
 /**
@@ -41,33 +39,6 @@ public class MenuNodeManager extends NodeManager {
     }
 
 
-    /**
-     * Nasconde tutte le componenti della scena e mostra solo quelle del menù di aggiunta
-     * profilo (tra cui la griglia per la selezione dell'avatar, il text field per la
-     * scelta del nome e il pannello che mostra la grafica attuale del profilo).
-     *
-     * @see MenuController
-     */
-    public void switchToAddProfile(){
-        hideAll();
-        ctrl.backToProfilesCancelBtn.setVisible(true);
-
-        ctrl.addProfLbl.setVisible(true);
-        ctrl.nicknameLbl.setVisible(true);
-        ctrl.avatarLbl.setVisible(true);
-
-        ctrl.nicknameTxtFd.setVisible(true);
-
-        ctrl.profileCardGrid.setVisible(true);
-        ctrl.avatarGrid.setVisible(true);
-
-        ctrl.gengarGif.setVisible(false);
-        ctrl.snorlaxGif.setVisible(false);
-
-        ctrl.nicknameTxtFd.clear();
-        ctrl.avatarViewImg.setImage(null);
-        ctrl.nicknameProfCardLbl.textProperty().bind(ctrl.nicknameTxtFd.textProperty());
-    }
 
     /**
      * Nasconde tutte le componenti della scena e mostra solo quelle del menù principale.
@@ -84,37 +55,6 @@ public class MenuNodeManager extends NodeManager {
         ctrl.snorlaxGif.setVisible(true);
     }
 
-    /**
-     * Mostra la stessa schermata di aggiunta del profilo, modificando solo le componenti
-     * e le impostazioni necessarie al corretto funzionamento e alla corretta
-     * visualizzazione.
-     *
-     * @param pickedProf Profilo da cui prendere avatar e nome
-     * @see MenuController
-     */
-    public void switchToModifyProfile(Profile pickedProf) {
-        hideAll();
-        switchToAddProfile();
-        ctrl.addProfLbl.setVisible(false);
-        ctrl.modifyProfLbl.setVisible(true);
-        ctrl.nicknameTxtFd.setText(pickedProf.getName());
-        ctrl.avatarViewImg.setImage(FileManager.loadImage(pickedProf.getAvatarSrcName()));
-    }
-
-    /**
-     * TODO: DA IMPLEMENTARE
-     * Nasconde tutte le componenti della scena e mostra solo quelle del menù di
-     * visualizzazione delle informazioni del profilo selezionato.
-     * Tra le informazioni troviamo:
-     *  -
-     *
-     */
-    public void switchToProfileInfo() {
-        hideAll();
-        ctrl.backToProfilesBtn.setVisible(true);
-        ctrl.profileCardGrid.setVisible(true);
-        ctrl.displayProfInfoLbl.setVisible(true);
-    }
 
     /**
      * Nasconde tutte le componenti della scena e mostra solo quelle del menù principale
@@ -126,7 +66,7 @@ public class MenuNodeManager extends NodeManager {
         hideAll();
         shortensSeparators();
         ctrl.backToMainBtn3.setVisible(true);
-        ctrl.profileLbl.setVisible(true);
+
 
         ctrl.gengarGif.setVisible(true);
         ctrl.snorlaxGif.setVisible(true);
@@ -135,84 +75,6 @@ public class MenuNodeManager extends NodeManager {
         ctrl.nicknameProfCardLbl.textProperty().unbind();
         ctrl.nicknameProfCardLbl.setText("");
         ctrl.nicknameTxtFd.clear();
-    }
-
-    /**
-     * Nasconde tutte le componenti della scena e mostra solo quelle del menù di
-     * selezione della modalità di gioco.
-     *
-     * @see MenuController
-     */
-    public void switchToSelectGameMode(){
-        hideAll();
-        lengthensSeparators();
-        ctrl.mainMenuBtn.setVisible(true);
-        ctrl.gameModeLbl.setVisible(true);
-        ctrl.profileCardGrid.setVisible(true);
-    }
-
-    /**
-     * Nasconde tutte le componenti della scena e mostra solo quelle del menù di
-     * selezione del profilo di gioco.
-     *
-     * @see MenuController
-     */
-    public void switchToSelectGameProfile() {
-        switchToProfilesMenu();
-        ctrl.profileLbl.setVisible(false);
-
-        ctrl.backToMainBtn3.setVisible(true);
-        ctrl.gameProfileLbl.setVisible(true);
-    }
-
-    /**
-     * Nasconde tutte le componenti della scena e mostra solo quelle del menù impostazioni.
-     *
-     * @see MenuController
-     */
-    public void switchToSettsMenu(){
-        hideAll();
-        ctrl.volumeBtn.setVisible(true);
-        ctrl.backToMainBtn2.setVisible(true);
-        ctrl.settingsLbl.setVisible(true);
-    }
-
-
-    /**
-     * Visualizza, all'interno della schermata di visualizzazione dei profili, la scheda
-     * del profilo selezionato sulla destra insieme ai bottoni 'modifica' e 'visualizza'.
-     *
-     * @param pickedProf Profilo da cui prendere avatar e nome
-     * @see MenuController
-     */
-    public void showModifyProfPreview(Profile pickedProf) {
-        showProfileCard(pickedProf);
-    }
-
-    /**
-     * Visualizza, all'interno della schermata di selezione del profilo di gioco, la
-     * scheda del profilo sulla destra insieme al bottone 'continua'.
-     *
-     * @see MenuController
-     */
-    public void showStartPreview(Profile pickedProf) {
-        showProfileCard(pickedProf);
-        ctrl.selectGameModeBtn.setVisible(true);
-    }
-
-    /**
-     * Imposta avatar e nome della profile card, rendendola poi visibile e nascondendo
-     * le gif sottostanti.
-     *
-     * @param prof Profilo da cui prendere avatar e nome
-     */
-    public void showProfileCard(Profile prof) {
-        ctrl.avatarViewImg.setImage(FileManager.loadImage(prof.getAvatarSrcName()));
-        ctrl.nicknameProfCardLbl.setText(prof.getName());
-        ctrl.profileCardGrid.setVisible(true);
-
-        ctrl.gengarGif.setVisible(false);
-        ctrl.snorlaxGif.setVisible(false);
     }
 
 
@@ -241,7 +103,6 @@ public class MenuNodeManager extends NodeManager {
         hideAllButtons();
         hideAllLabels();
         hideAllTextFields();
-        hideAllPanes();
     }
 
     /**
@@ -254,27 +115,10 @@ public class MenuNodeManager extends NodeManager {
         ctrl.mainMenuLbl.setVisible(false);
         ctrl.gameProfileLbl.setVisible(false);
         ctrl.gameModeLbl.setVisible(false);
-        ctrl.profileLbl.setVisible(false);
-        ctrl.settingsLbl.setVisible(false);
-        ctrl.addProfLbl.setVisible(false);
         ctrl.nicknameLbl.setVisible(false);
-        ctrl.avatarLbl.setVisible(false);
-        ctrl.profileLbl.setVisible(false);
-        ctrl.modifyProfLbl.setVisible(false);
-        ctrl.displayProfInfoLbl.setVisible(false);
-    }
-
-    /**
-     * Nasconde e resetta tutti i pannelli della scena la cui
-     * variabile è stata definita nel controller del menù.
-     *
-     * @see MenuController
-     */
-    private void hideAllPanes() {
-        ctrl.profileCardGrid.setVisible(false);
-        ctrl.avatarGrid.setVisible(false);
 
     }
+
 
     /**
      * Nasconde e resetta tutti i campi di testo della scena la cui

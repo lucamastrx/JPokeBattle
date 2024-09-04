@@ -31,17 +31,15 @@ public class MenuController {
             // Menu di selezione del profilo di gioco
             selectGameModeBtn,
             // Ritorno
-            mainMenuBtn, backToMainBtn2, backToMainBtn3, backToProfilesCancelBtn, backToProfilesBtn;
+            mainMenuBtn, backToMainBtn2, backToMainBtn3;
     @FXML
     protected Label
-            titleLbl, mainMenuLbl, gameProfileLbl, gameModeLbl, profileLbl, settingsLbl,
-            addProfLbl, nicknameLbl, nicknameProfCardLbl, avatarLbl, modifyProfLbl, displayProfInfoLbl;
+            titleLbl, mainMenuLbl, gameProfileLbl, gameModeLbl, nicknameLbl, nicknameProfCardLbl;
     @FXML
     protected Line leftSeparatorLn, rightSeparatorLn;
     @FXML
     protected TextField nicknameTxtFd;
-    @FXML
-    protected GridPane profileCardGrid, avatarGrid;
+
 
 
 
