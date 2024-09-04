@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.ColorAdjust?>
@@ -13,10 +14,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 
-<?import javafx.scene.control.ScrollPane?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.jpokebattle.controller.menu.MenuController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
@@ -40,9 +39,9 @@
   </rowConstraints>
    <children>
 
-      <ImageView fitHeight="774.0" fitWidth="1266.0" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
+      <ImageView fitHeight="720.0" fitWidth="1094.0" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
          <image>
-            <Image url="@../images/background/menu.png" />
+            <Image url="@../images/background/menuimage.jpg" />
          </image>
          <GridPane.margin>
             <Insets bottom="50.0" />
@@ -51,16 +50,7 @@
             <ColorAdjust brightness="-0.59" saturation="-0.59" />
          </effect>
       </ImageView>
-
-
-
-
-      <Button fx:id="settingsBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#settings" prefHeight="40.0" prefWidth="150.0" text="Impostazioni" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="exitBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0" prefWidth="150.0" text="Esci" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+      <Button fx:id="exitBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0" prefWidth="150.0" text="Esci" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -83,7 +73,7 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
 
-      <Button fx:id="pvpBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#pvp" prefHeight="40.0" prefWidth="150.0" text="PvP" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" >
+      <Button fx:id="pvpBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#pvp" prefHeight="40.0" prefWidth="150.0" text="PvP" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -100,7 +90,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="modifyProfBtn" alignment="CENTER" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#modifyProf" prefHeight="40.0" prefWidth="130.0" text="Modifica" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.columnSpan="2">
+      <Button fx:id="modifyProfBtn" alignment="CENTER" minHeight="40.0" minWidth="150.0" mnemonicParsing="false" onAction="#modifyProf" prefHeight="40.0" prefWidth="130.0" text="Modifica" textAlignment="CENTER" textOverrun="CLIP" visible="false" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -131,7 +121,7 @@
 
 
 
-       <Label fx:id="titleLbl" alignment="CENTER" prefHeight="53.0" prefWidth="995.0" text="JP keBattle" textAlignment="CENTER" wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+       <Label fx:id="titleLbl" alignment="CENTER" prefHeight="53.0" prefWidth="995.0" text="JP keBattle" textAlignment="CENTER" wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowSpan="2" />
        <ImageView fx:id="volumeImg" fitHeight="36.0" fitWidth="32.0" onMouseClicked="#switchVolume" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
          <image>
             <Image url="@../images/Volume.png" />
@@ -207,7 +197,7 @@
       </Label>
 
 
-      <ImageView fitHeight="63.0" fitWidth="57.0" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+      <ImageView fitHeight="63.0" fitWidth="57.0" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
          <image>
             <Image url="@../images/pokeball_2.gif" />
          </image>
@@ -276,7 +266,7 @@
          <children>
             <ImageView fx:id="avatarViewImg" fitHeight="46.0" fitWidth="45.0" preserveRatio="true" GridPane.halignment="RIGHT">
                <GridPane.margin>
-                  <Insets right="15.0"/>
+                  <Insets right="15.0" />
                </GridPane.margin>
             </ImageView>
             <Label fx:id="nicknameProfCardLbl" text="${nicknameTxtFd.text}" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
@@ -377,7 +367,7 @@
          </cursor>
       </GridPane>
 
-      <ScrollPane fx:id="profilesScrlPane" maxHeight="320.0" maxWidth="300.0" minHeight="320.0" minWidth="300.0" prefHeight="320.0" prefWidth="300.0" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="6" GridPane.valignment="CENTER" pannable="true" vbarPolicy="ALWAYS">
+      <ScrollPane fx:id="profilesScrlPane" maxHeight="320.0" maxWidth="300.0" minHeight="320.0" minWidth="300.0" pannable="true" prefHeight="320.0" prefWidth="300.0" vbarPolicy="ALWAYS" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="6" GridPane.valignment="CENTER">
          <content>
 
          </content>
