@@ -1,18 +1,11 @@
 package it.jpokebattle.controller.menu;
 
-import it.jpokebattle.controller.NodeManager;
-import it.jpokebattle.controller.SceneManager;
-import it.jpokebattle.util.AudioTrack;
 import it.jpokebattle.util.FileManager;
 import it.jpokebattle.model.Profile;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.view.AlertMessage;
-import it.jpokebattle.view.ProfileBox;
-import it.jpokebattle.view.ProfileBoxFunction;
-import it.jpokebattle.view.ProfilesContainer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -21,8 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 
 public class MenuController {
@@ -61,8 +52,6 @@ public class MenuController {
     protected GridPane profileCardGrid, avatarGrid;
     @FXML
     protected ScrollPane profilesScrlPane;
-    @FXML
-    protected ProfilesContainer profContBox;
 
 
     /**
@@ -75,53 +64,9 @@ public class MenuController {
         nodeMan.switchToAddProfile();
     }
 
-    /**
-     * Metodo chiamato dal bottone 'conferma' nel menù di modifica del profilo:
-     * aggiorna le variabili di nome e avatar nel profilo, aggiorna il container
-     * delle profile box e torna alla schermata di visualizzazione dei profili.
-     * Se l'input dell'utente non è corretto resta nella schermata e mostra una
-     * finestra di errore.
-     *
-     * @see ProfilesContainer
-     * @see ProfileBox
-     * @see AlertMessage
-     */
-    @FXML
-    public void confirmProfChanges(ActionEvent e) {
-        soundMan.buttonClick();
-        if (!nicknameTxtFd.getText().isBlank() && avatarViewImg.getImage() != null) {
-            lastPickedProfile.updateProfileInfo(
-                    nicknameTxtFd.getText(),
-                    avatarViewImg.getImage().getUrl());
-            profContBox.updateProfileContainer(ProfileBoxFunction.SHOW_PROFILES);
-            nodeMan.switchToProfilesMenu();
-        } else {
-            alert.notExhaustiveProfileCompilation();
-        }
-    }
 
-    /**
-     * Metodo chiamato dal bottone 'conferma' nel menù di modifica del profilo:
-     * crea un nuovo profilo a partire dai dati in input, aggiorna il container
-     * delle profile box e torna alla schermata di visualizzazione dei profili.
-     * Se l'input dell'utente non è corretto resta nella schermata e mostra una
-     * finestra di errore.
-     *
-     * @see ProfilesContainer
-     * @see ProfileBox
-     * @see AlertMessage
-     */
-    @FXML
-    public void confirmProfCreation(ActionEvent e) {
-        soundMan.buttonClick();
-        if (!nicknameTxtFd.getText().isBlank() && avatarViewImg.getImage() != null) {
-            new Profile(nicknameTxtFd.getText(), avatarViewImg.getImage());
-            profContBox.updateProfileContainer(ProfileBoxFunction.SHOW_PROFILES);
-            nodeMan.switchToProfilesMenu();
-        } else {
-            alert.notExhaustiveProfileCompilation();
-        }
-    }
+
+
 
     /**
      * TODO: da implementare!
@@ -132,21 +77,7 @@ public class MenuController {
         System.out.println("Crediti");
     }
 
-    /**
-     * Metodo chiamato dal bottone 'elimina' nel menù di modifica del profilo:
-     * prima di procedere chiede conferma, in caso affermativo elimina il profilo,
-     * aggiorna il profiles container e torna alla schermata di selezione del profilo.
-     */
-    @FXML
-    public void deleteProf(ActionEvent e) {
-        soundMan.buttonClick();
 
-        if (alert.confirmDeleteProfile()) {
-            //lastPickedProfile.delete();
-            profContBox.updateProfileContainer(ProfileBoxFunction.SHOW_PROFILES);
-            nodeMan.switchToProfilesMenu();
-        }
-    }
 
     /**
      * TODO: DA IMPLEMENTARE
@@ -201,16 +132,7 @@ public class MenuController {
         lastPickedProfile = prof;
     }
 
-    /**
-     * Metodo chiamato dal bottone 'profili' nel menù pricipale: passa alla schermata
-     * di selezione dei profili.
-     * */
-    @FXML
-    public void profiles(ActionEvent e){
-        soundMan.buttonClick();
-        profContBox.updateProfileContainer(ProfileBoxFunction.SHOW_PROFILES);
-        nodeMan.switchToProfilesMenu();
-    }
+
 
     /**
      * TODO: da implementare!
@@ -231,27 +153,9 @@ public class MenuController {
         stage.close();
     }
 
-    /**
-     * Metodo chiamato dal bottone "continua" nella schermata di selezione del
-     * profilo: passa alla schermata di selezione della modalità di gioco.
-     * */
-    @FXML
-    public void selectGameMode(ActionEvent e){
-        soundMan.buttonClick();
-        profContBox.updateProfileContainer(ProfileBoxFunction.START);
-        nodeMan.switchToSelectGameMode();
-    }
 
-    /**
-     * Metodo chiamato dal bottone 'inizio' nel menù principale: passa
-     * alla schermata di selezione del profilo.
-     * */
-    @FXML
-    public void selectGameProfile(ActionEvent e){
-        soundMan.buttonClick();
-        profContBox.updateProfileContainer(ProfileBoxFunction.START);
-        nodeMan.switchToSelectGameProfile();
-    }
+
+
 
     /**
      * Metodo chiamato dalle ImageView nel menù di creazione/modifica del
