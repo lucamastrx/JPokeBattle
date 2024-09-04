@@ -70,8 +70,6 @@ public class MenuNodeManager extends NodeManager {
 
         ctrl.gengarGif.setVisible(true);
         ctrl.snorlaxGif.setVisible(true);
-
-        ctrl.avatarViewImg.setImage(null);
         ctrl.nicknameProfCardLbl.textProperty().unbind();
         ctrl.nicknameProfCardLbl.setText("");
         ctrl.nicknameTxtFd.clear();

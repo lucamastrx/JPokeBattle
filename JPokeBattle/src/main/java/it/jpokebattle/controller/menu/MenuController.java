@@ -21,15 +21,13 @@ public class MenuController {
     private AlertMessage alert = new AlertMessage();
 
     @FXML
-    protected ImageView volumeImg, avatarViewImg, gengarGif, snorlaxGif;
+    protected ImageView volumeImg, gengarGif, snorlaxGif;
     @FXML
     protected Button
             // Menu principale
             selectGameProfileBtn, exitBtn,
             // Impostazioni
             volumeBtn,
-            // Menu di selezione del profilo di gioco
-            selectGameModeBtn,
             // Ritorno
             mainMenuBtn, backToMainBtn2, backToMainBtn3;
     @FXML
