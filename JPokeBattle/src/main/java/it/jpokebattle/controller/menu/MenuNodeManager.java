@@ -40,35 +40,7 @@ public class MenuNodeManager extends NodeManager {
 
 
 
-    /**
-     * Nasconde tutte le componenti della scena e mostra solo quelle del menù principale.
-     *
-     * @see MenuController
-     */
-    public void switchToMainMenu(){
-        hideAll();
-        lengthensSeparators();
-        ctrl.exitBtn.setVisible(true);
-        ctrl.mainMenuLbl.setVisible(true);
-        ctrl.gengarGif.setVisible(true);
-        ctrl.snorlaxGif.setVisible(true);
-    }
 
-
-    /**
-     * Nasconde tutte le componenti della scena e mostra solo quelle del menù principale
-     * dei profili (dove vengono visualizzati i profili per aggiunta e modifica).
-     *
-     * @see MenuController
-     */
-    public void switchToProfilesMenu(){
-        hideAll();
-        shortensSeparators();
-
-        ctrl.gengarGif.setVisible(true);
-        ctrl.snorlaxGif.setVisible(true);
-        ctrl.nicknameTxtFd.clear();
-    }
 
 
     /**
