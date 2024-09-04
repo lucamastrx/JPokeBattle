@@ -1,8 +1,6 @@
 package it.jpokebattle;
 
 import it.jpokebattle.controller.NodeManager;
-import it.jpokebattle.controller.menu.MenuNodeManager;
-import it.jpokebattle.model.pokemon.Breed;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
@@ -44,7 +42,7 @@ public class Main extends Application {
         setMainStage();
 
         NodeManager.setRoot(mainScene.getRoot());
-        MenuNodeManager.setController(loader.getController());
+        
 
         SoundManager.getInstance();
     }

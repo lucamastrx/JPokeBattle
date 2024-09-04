@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 
 public class MenuController {
-    private MenuNodeManager nodeMan = MenuNodeManager.getInstance();
+
     private SoundManager soundMan = SoundManager.getInstance();
     private AlertMessage alert = new AlertMessage();
 
