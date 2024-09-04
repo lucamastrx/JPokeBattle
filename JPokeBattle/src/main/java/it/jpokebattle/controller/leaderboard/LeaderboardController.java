@@ -19,5 +19,7 @@ public class LeaderboardController {
     public void backToMenu(ActionEvent event) throws IOException {
         soundMan.buttonClick();
         SceneManager.switchScene(event, "fxml.menu", "css.menu");
+        if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.menu");
+
     }
 }

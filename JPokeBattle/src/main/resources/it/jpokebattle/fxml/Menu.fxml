@@ -124,7 +124,7 @@
             <Insets top="9.0" />
          </GridPane.margin>
       </ImageView>
-      <Button fx:id="leaderboardButton" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Leaderboard" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+      <Button fx:id="leaderboardButton" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#switchToLeaderboard" prefHeight="40.0" prefWidth="150.0" text="Leaderboard" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

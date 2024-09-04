@@ -39,8 +39,17 @@ public class MenuController {
     public void switchToBattle(ActionEvent event) throws IOException {
         soundMan.buttonClick();
         SceneManager.switchScene(event, "fxml.battle");
+        if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.battle");
+
     }
 
+
+    @FXML
+    public void switchToLeaderboard(ActionEvent event) throws IOException {
+        soundMan.buttonClick();
+        SceneManager.switchScene(event, "fxml.leaderboard");
+        if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.leaderboard");
+    }
 
 
     /**

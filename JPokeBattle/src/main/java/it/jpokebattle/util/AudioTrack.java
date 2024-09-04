@@ -68,7 +68,7 @@ public enum AudioTrack {
 
         // Timeline per il crossfade
         Timeline fadeOutIn = new Timeline(
-                new KeyFrame(Duration.millis(50),
+                new KeyFrame(Duration.millis(30),
                         event -> {
                             double currentVolume = mediaPlayer.getVolume();
                             double nextVolume = newMP.getVolume();
