@@ -1,6 +1,5 @@
 package it.jpokebattle;
 
-import it.jpokebattle.controller.NodeManager;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
@@ -24,6 +23,7 @@ public class Main extends Application {
     private FXMLLoader loader;
     private Stage mainStage;
     private Scene mainScene;
+    private static Parent root;
 
     public static void main(String[] args) {
         // Breed.dumpJSON();
@@ -36,9 +36,9 @@ public class Main extends Application {
         mainStage = stage;
         loader = FileManager.loadFXML("fxml.menu");
         setScene(loader.load());
-        setMainStage();
+        setStage();
 
-        NodeManager.setRoot(mainScene.getRoot());
+        setRoot(mainScene.getRoot());
 
 
         SoundManager.getInstance();
@@ -54,9 +54,9 @@ public class Main extends Application {
     }
 
     /**
-     * Imposta parametri e valori della finestra principale.
+     * Imposta parametri, loghi, immagini e valori della finestra principale.
      */
-    private void setMainStage() {
+    private void setStage() {
         Image icon = FileManager.loadImage("img.logo");
         mainStage.getIcons().add(icon);
         mainStage.setTitle("JPokeBattle");
@@ -64,5 +64,14 @@ public class Main extends Application {
         mainStage.setResizable(false);
         mainStage.setScene(mainScene);
         mainStage.show();
+    }
+
+    /**
+     * Salva la scena principale.
+     *
+     * @param sceneRoot     Radice della scena
+     */
+    public static void setRoot(Parent sceneRoot) {
+        root = sceneRoot;
     }
 }

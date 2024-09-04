@@ -39,4 +39,10 @@ module it.jpokebattle {
 
     exports it.jpokebattle.controller.menu;
     opens it.jpokebattle.controller.menu;
+
+    exports it.jpokebattle.controller.battle;
+    opens it.jpokebattle.controller.battle;
+
+    exports it.jpokebattle.controller.leaderboard;
+    opens it.jpokebattle.controller.leaderboard;
 }

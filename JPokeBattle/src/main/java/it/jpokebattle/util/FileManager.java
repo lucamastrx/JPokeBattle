@@ -6,12 +6,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 import com.fasterxml.jackson.core.type.TypeReference; // Import per Jackson
 import com.fasterxml.jackson.databind.ObjectMapper; // Import per Jackson

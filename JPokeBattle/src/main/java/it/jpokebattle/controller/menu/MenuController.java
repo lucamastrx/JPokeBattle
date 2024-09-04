@@ -1,5 +1,6 @@
 package it.jpokebattle.controller.menu;
 
+import it.jpokebattle.controller.SceneManager;
 import it.jpokebattle.util.FileManager;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
@@ -11,6 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+
 
 
 public class MenuController {
@@ -31,13 +35,21 @@ public class MenuController {
 
 
 
+    @FXML
+    public void switchToBattle(ActionEvent event) throws IOException {
+        soundMan.buttonClick();
+        SceneManager.switchScene(event, "fxml.battle");
+    }
+
+
+
     /**
      * Chiude la finestra e termina il programma.
      * */
     @FXML
-    public void quit(ActionEvent e){
+    public void quit(ActionEvent event){
         soundMan.buttonClick();
-        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 

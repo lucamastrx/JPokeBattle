@@ -7,8 +7,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public enum AudioTrack {
-    MENU("mp3.title"),
-    BUTTON("wav.btn");
+    MENU("audio.menu"),
+    BUTTON("audio.button"),
+    BATTLE("audio.battle"),
+    VICTORY("audio.victory"),
+    LEADERBOARD("audio.leaderboard"),
+    LEVELUP("audio.levelup");
 
     private String srcName;
     private MediaPlayer mediaPlayer;
