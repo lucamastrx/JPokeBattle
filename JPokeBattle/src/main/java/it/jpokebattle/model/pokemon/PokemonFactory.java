@@ -1,9 +1,7 @@
 package it.jpokebattle.model.pokemon;
 
-public class PokemonFactory {
+public abstract class PokemonFactory {
 
 
-    public Pokemon createRandomPokemon() {
-        return null;
-    }
+    public abstract Pokemon createPokemon();
 }

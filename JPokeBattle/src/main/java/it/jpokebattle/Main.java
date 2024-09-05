@@ -1,6 +1,8 @@
 package it.jpokebattle;
 
-import it.jpokebattle.model.pokemon.Move;
+
+import it.jpokebattle.model.pokemon.Pokemon;
+import it.jpokebattle.model.pokemon.RandomWildPokemonFactory;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
@@ -27,8 +29,9 @@ public class Main extends Application {
     private static Parent root;
 
     public static void main(String[] args) {
-        // Breed.dumpJSON();
-        Move.dumpJSON();
+        RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
+        Pokemon pokmn= rwpf.createPokemon();
+        System.out.println(pokmn.getBreed());
         launch(args);
     }
 

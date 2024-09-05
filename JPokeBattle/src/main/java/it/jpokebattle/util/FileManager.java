@@ -4,15 +4,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import java.lang.reflect.Type;
+import java.io.File;
+import java.io.IOException;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import com.fasterxml.jackson.core.type.TypeReference; // Import per Jackson
-import com.fasterxml.jackson.databind.ObjectMapper; // Import per Jackson
+
 
 
 /**
@@ -33,7 +37,7 @@ public class FileManager {
      * @param jsonSrcName nome della risorsa del file JSON
      * @return            hashmap con i dati letti dal JSON
      */
-    public static <K, V> HashMap<K, V> readJSON(String jsonSrcName) {
+    public static <K, V> HashMap<K, V> readJSON(String jsonSrcName, Class<V> valueType) {
         // Ottieni il percorso dal file di proprietà
         String relativePath = src.getString(jsonSrcName);
         File file = new File(relativePath);
@@ -46,8 +50,14 @@ public class FileManager {
                 return map;
             }
 
-            // Leggi i dati dal file JSON
-            map = objectMapper.readValue(file, new TypeReference<HashMap<K, V>>() {});
+            // Usa una TypeReference specifica per deserializzare la mappa
+            map = objectMapper.readValue(file, new TypeReference<HashMap<K, V>>() {
+                @Override
+                public Type getType() {
+                    return TypeFactory.defaultInstance().constructMapType(HashMap.class, String.class, valueType);
+                }
+            });
+
             System.out.println("Dati letti con successo da " + file.getAbsolutePath());
         } catch (IOException e) {
             System.err.println("Errore durante la lettura del file JSON.");

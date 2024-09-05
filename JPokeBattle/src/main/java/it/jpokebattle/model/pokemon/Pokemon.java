@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 
-public class Pokemon {
+public abstract class Pokemon {
     protected String name;
     protected Breed breed;        // specie
     protected HashMap<Move, Integer> moves;        // {codice mossa: pp attuali}
@@ -32,7 +32,7 @@ public class Pokemon {
      *
      * @param breed Specie del pokemon
      */
-    public Pokemon(Breed breed, int level) {
+    public Pokemon(Breed breed) {
         this.breed = breed;
         this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
         setDefaultValues();               // TODO
@@ -40,31 +40,12 @@ public class Pokemon {
         this.strength = hp + atk + def + specialAtk + specialDef + speed + level;
     }
 
-    /**
-     * Metodo Costruttore.
-     * Setta automaticamente il nome del pokemon con il nome della specie.
-     * Gli altri attributi sono valori di default.
-     *
-     * @param breed Specie del pokemon
-     */
-    protected Pokemon(Breed breed) {
-        this.breed = breed;
-        this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
-        setDefaultValues();               // TODO
-        setRandomIVs();
-        this.strength = hp + atk + def + specialAtk + specialDef + speed + level;
-    }
 
     /**
      * Controlla se il pokemon ha ancora le forze
      */
     public boolean isAlive() {
         return hp > 0;
-    }
-
-    public void takeDamage(int damage) {
-        this.hp -= damage;
-        if (this.hp < 0) this.hp = 0;
     }
 
     public String getName() {return name;}
@@ -181,6 +162,4 @@ public class Pokemon {
                 throw new IllegalArgumentException("Tipo di EV non valido: " + this.getBreed().getEvTypeDropped());
         }
     }
-
-
 }

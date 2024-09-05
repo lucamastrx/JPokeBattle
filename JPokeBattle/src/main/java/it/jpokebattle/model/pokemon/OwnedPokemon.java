@@ -34,7 +34,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     public OwnedPokemon(Breed breed, String nickname) {
         super(breed);
         this.level = super.getLevel();
-        this.nickname = nickname;  // setNickname(name); TODO qui va bene il setNickname? a pokemon catturato serve messaggio GUI per fare setNickname
+        this.nickname = nickname;  // setNickname(name); TODO pokemon catturato serve messaggio GUI per fare setNickname
         this.ID = name + Instant.now();
         this.expForNextLevel = calculateRequiredExpForNextLevel(this.level);
         save();               // aggiunge il pokemon alla mappa e la salva nel file ser

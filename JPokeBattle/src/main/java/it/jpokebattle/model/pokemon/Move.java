@@ -111,7 +111,7 @@ public class Move implements Identifiable {
 
 
 
-    public static void dumpJSON(){
+    private void dumpJSON(){
         Move growl = new Move("Growl", Type.NORMAL, "Reduces the foe’s Attack.",0, 100,40, true, "atk", -10, null, 0 );
         Move growth = new Move("Growth", Type.NORMAL, "Raises the user's Attack.",0, 100,20, false, null, 0, "atk", 10 );
         Move tackle = new Move("Tackle", Type.NORMAL, "A full-body charge attack.",40, 100,35, false, null, 0, null, 0);
@@ -139,7 +139,7 @@ public class Move implements Identifiable {
 
 
         // Crea una HashMap di razze Pokémon con nome come chiave
-        HashMap<String, Move> movesMap = new HashMap<>();
+        HashMap<String, Move> movesMap = new HashMap<>();           // {ID : Mossa}
         movesMap.put("Growl", growl);
         movesMap.put("Growth", growth);
         movesMap.put("Tackle", tackle);

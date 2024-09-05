@@ -3,7 +3,7 @@
     "name":"Squirtle",
     "types":["WATER"],
     "evoThreshold":16,
-    "successor":{"name":"Wartortle","types":["WATER"],"evoThreshold":36,"successor":{"name":"Blastoise","types":["WATER"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialDef","evAmountDropped":3,"baseStat":530,"moves":{"-1":{"name":"Bubble","type":"WATER","description":"An attack using bubbles.","power":40,"precision":100,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":40,"special":true},"-2":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"-3":{"name":"Tail Whip","type":"NORMAL","description":"Wags the tail to lower the foe’s defense.","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},"-4":{"name":"Water Gun","type":"WATER","description":"Squirts water to attack.","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},"52":{"name":"Hydro Pump","type":"WATER","description":"Blasts water at high power to strike the foe.","power":110,"precision":80,"ppDefault":5,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":5,"damage":110,"special":true},"24":{"name":"Bite","type":"NORMAL","description":"Bites with vicious fangs.","power":60,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":60,"special":false},"42":{"name":"Skull Bash","type":"NORMAL","description":"Tucks in the head, then attacks.","power":130,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":10,"damage":130,"special":false},"31":{"name":"Withdraw","type":"WATER","description":"Withdraws the body into its hard shell to raise defense.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":40,"damage":0,"special":true}}},"evTypeDropped":"def","evAmountDropped":1,"baseStat":405,"moves":{"-1":{"name":"Bubble","type":"WATER","description":"An attack using bubbles.","power":40,"precision":100,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":40,"special":true},"-2":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"-3":{"name":"Tail Whip","type":"NORMAL","description":"Wags the tail to lower the foe’s defense.","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},"39":{"name":"Skull Bash","type":"NORMAL","description":"Tucks in the head, then attacks.","power":130,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":10,"damage":130,"special":false},"24":{"name":"Bite","type":"NORMAL","description":"Bites with vicious fangs.","power":60,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":60,"special":false},"15":{"name":"Water Gun","type":"WATER","description":"Squirts water to attack.","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},"31":{"name":"Withdraw","type":"WATER","description":"Withdraws the body into its hard shell to raise defense.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":40,"damage":0,"special":true},"47":{"name":"Hydro Pump","type":"WATER","description":"Blasts water at high power to strike the foe.","power":110,"precision":80,"ppDefault":5,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":5,"damage":110,"special":true}}},
+    "successor":{"name":"Wartortle","types":["WATER"],"evoThreshold":36,"successor":{"name":"Blastoise","types":["WATER"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialDef","evAmountDropped":3,"hpBaseStat": 79,"atkBaseStat": 83,"defBaseStat": 100,"specialAtkBaseStat": 85,"specialDefBaseStat": 105,"speedBaseStat": 78,"moves":{"-1":"Bubble","-2":"Tackle","-3":"Tail Whip","-4":"Water Gun","52":"Hydro Pump","24":"Bite","42":"Skull Bash","31":"Withdraw"}},"evTypeDropped":"def","evAmountDropped":1,"hpBaseStat": 59,"atkBaseStat": 63,"defBaseStat": 80,"specialAtkBaseStat": 65,"specialDefBaseStat": 80,"speedBaseStat": 58,"moves":{"-1":"Bubble","-2":"Tackle","-3":"Tail Whip","39":"Skull Bash","24":"Bite","15":"Water Gun","31":"Withdraw","47":"Hydro Pump"}},
     "evTypeDropped":"def",
     "evAmountDropped":1,
     "hpBaseStat": 44,
@@ -13,21 +13,21 @@
     "specialDefBaseStat": 64,
     "speedBaseStat": 43,
     "moves":{
-      "-1":{"name":"Tail Whip","type":"NORMAL","description":"Wags the tail to lower the foe’s defense.","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},
-      "-2":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "35":{"name":"Skull Bash","type":"NORMAL","description":"Tucks in the head, then attacks.","power":130,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":10,"damage":130,"special":false},
-      "22":{"name":"Bite","type":"NORMAL","description":"Bites with vicious fangs.","power":60,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":60,"special":false},
-      "8":{"name":"Bubble","type":"WATER","description":"An attack using bubbles.","power":40,"precision":100,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":40,"special":true},
-      "42":{"name":"Hydro Pump","type":"WATER","description":"Blasts water at high power to strike the foe.","power":110,"precision":80,"ppDefault":5,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":5,"damage":110,"special":true},
-      "28":{"name":"Withdraw","type":"WATER","description":"Withdraws the body into its hard shell to raise defense.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":40,"damage":0,"special":true},
-      "15":{"name":"Water Gun","type":"WATER","description":"Squirts water to attack.","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true}}
+      "-1":"Tail Whip",
+      "-2":"Tackle",
+      "35":"Skull Bash",
+      "22":"Bite",
+       "8":"Bubble",
+      "42":"Hydro Pump",
+      "28":"Withdraw",
+      "15":"Water Gun"}
   },
 
   "Wartortle":{
     "name":"Wartortle",
     "types":["WATER"],
     "evoThreshold":36,
-    "successor":{"name":"Blastoise","types":["WATER"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialDef","evAmountDropped":3,"baseStat":530,"moves":{"-1":{"name":"Bubble","type":"WATER","description":"An attack using bubbles.","power":40,"precision":100,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":40,"special":true},"-2":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"-3":{"name":"Tail Whip","type":"NORMAL","description":"Wags the tail to lower the foe’s defense.","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},"-4":{"name":"Water Gun","type":"WATER","description":"Squirts water to attack.","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},"52":{"name":"Hydro Pump","type":"WATER","description":"Blasts water at high power to strike the foe.","power":110,"precision":80,"ppDefault":5,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":5,"damage":110,"special":true},"24":{"name":"Bite","type":"NORMAL","description":"Bites with vicious fangs.","power":60,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":60,"special":false},"42":{"name":"Skull Bash","type":"NORMAL","description":"Tucks in the head, then attacks.","power":130,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":10,"damage":130,"special":false},"31":{"name":"Withdraw","type":"WATER","description":"Withdraws the body into its hard shell to raise defense.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":40,"damage":0,"special":true}}},
+    "successor":{"name":"Blastoise","types":["WATER"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialDef","evAmountDropped":3,"hpBaseStat": 79,"atkBaseStat": 83,"defBaseStat": 100,"specialAtkBaseStat": 85,"specialDefBaseStat": 105,"speedBaseStat": 78,"moves":{"-1":"Bubble","-2":"Tackle","-3":"Tail Whip","-4":"Water Gun","52":"Hydro Pump","24":"Bite","42":"Skull Bash","31":"Withdraw"}},
     "evTypeDropped":"def",
     "evAmountDropped":1,
     "hpBaseStat": 59,
@@ -37,14 +37,14 @@
     "specialDefBaseStat": 80,
     "speedBaseStat": 58,
     "moves":{
-      "-1":{"name":"Bubble","type":"WATER","description":"An attack using bubbles.","power":40,"precision":100,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":40,"special":true},
-      "-2":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "-3":{"name":"Tail Whip","type":"NORMAL","description":"Wags the tail to lower the foe’s defense.","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},
-      "39":{"name":"Skull Bash","type":"NORMAL","description":"Tucks in the head, then attacks.","power":130,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":10,"damage":130,"special":false},
-      "24":{"name":"Bite","type":"NORMAL","description":"Bites with vicious fangs.","power":60,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":60,"special":false},
-      "15":{"name":"Water Gun","type":"WATER","description":"Squirts water to attack.","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},
-      "31":{"name":"Withdraw","type":"WATER","description":"Withdraws the body into its hard shell to raise defense.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":40,"damage":0,"special":true},
-      "47":{"name":"Hydro Pump","type":"WATER","description":"Blasts water at high power to strike the foe.","power":110,"precision":80,"ppDefault":5,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":5,"damage":110,"special":true}}
+      "-1":"Bubble",
+      "-2":"Tackle",
+      "-3":"Tail Whip",
+      "39":"Skull Bash",
+      "24":"Bite",
+      "15":"Water Gun",
+      "31":"Withdraw",
+      "47":"Hydro Pump"}
   },
 
   "Blastoise":{
@@ -61,21 +61,21 @@
     "specialDefBaseStat": 105,
     "speedBaseStat": 78,
     "moves":{
-      "-1":{"name":"Bubble","type":"WATER","description":"An attack using bubbles.","power":40,"precision":100,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":40,"special":true},
-      "-2":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "-3":{"name":"Tail Whip","type":"NORMAL","description":"Wags the tail to lower the foe’s defense.","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},
-      "-4":{"name":"Water Gun","type":"WATER","description":"Squirts water to attack.","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},
-      "52":{"name":"Hydro Pump","type":"WATER","description":"Blasts water at high power to strike the foe.","power":110,"precision":80,"ppDefault":5,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":5,"damage":110,"special":true},
-      "24":{"name":"Bite","type":"NORMAL","description":"Bites with vicious fangs.","power":60,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":60,"special":false},
-      "42":{"name":"Skull Bash","type":"NORMAL","description":"Tucks in the head, then attacks.","power":130,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":10,"damage":130,"special":false},
-      "31":{"name":"Withdraw","type":"WATER","description":"Withdraws the body into its hard shell to raise defense.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"def","personalModificatorValue":10,"ppdefault":40,"damage":0,"special":true}}
+      "-1":"Bubble",
+      "-2":"Tackle",
+      "-3":"Tail Whip",
+      "-4":"Water Gun",
+      "52":"Hydro Pump",
+      "24":"Bite",
+      "42":"Skull Bash",
+      "31":"Withdraw"}
   },
 
   "Bulbasaur":{
     "name":"Bulbasaur",
     "types":["GRASS","POISON"],
     "evoThreshold":16,
-    "successor":{"name":"Ivysaur","types":["GRASS","POISON"],"evoThreshold":32,"successor":{"name":"Venusaur","types":["GRASS","POISON"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":2,"baseStat":525,"moves":{"1":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"65":{"name":"Solar Beam","type":"GRASS","description":"Absorbs light in one turn, then attacks next turn","power":120,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":10,"damage":120,"special":true},"2":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},"34":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},"3":{"name":"Vine Whip","type":"GRASS","description":"Whips the foe with slender vines.","power":45,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":45,"special":true},"22":{"name":"Poison Powder","type":"POISON","description":"A move that may poison the foe.","power":50,"precision":75,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":50,"special":true},"38":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},"40":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},"30":{"name":"Razor Leaf","type":"GRASS","description":"Has a high critical hit ratio","power":55,"precision":95,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":55,"special":false}}},"evTypeDropped":"specialAtk","evAmountDropped":1,"baseStat":405,"moves":{"1":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"2":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},"50":{"name":"Solar Beam","type":"GRASS","description":"Absorbs light in one turn, then attacks next turn","power":120,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":10,"damage":120,"special":true},"22":{"name":"Poison Powder","type":"POISON","description":"A move that may poison the foe.","power":50,"precision":75,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":50,"special":true},"13":{"name":"Vine Whip","type":"GRASS","description":"Whips the foe with slender vines.","power":45,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":45,"special":true},"30":{"name":"Razor Leaf","type":"GRASS","description":"Has a high critical hit ratio","power":55,"precision":95,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":55,"special":false}}},
+    "successor":{"name":"Ivysaur","types":["GRASS","POISON"],"evoThreshold":32,"successor":{"name":"Venusaur","types":["GRASS","POISON"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":2,"hpBaseStat": 80,"atkBaseStat": 82,"defBaseStat": 83,"specialAtkBaseStat": 100,"specialDefBaseStat": 100,"speedBaseStat": 80,"moves":{"1":"Tackle","65":"Solar Beam","2":"Growl","3":"Vine Whip","22":"Poison Powder","40":"Growth","30":"Razor Leaf"}},"evTypeDropped":"specialAtk","evAmountDropped":1,"hpBaseStat": 60,"atkBaseStat": 62,"defBaseStat": 63,"specialAtkBaseStat": 80,"specialDefBaseStat": 80,"speedBaseStat": 60,"moves":{"1":"Tackle","2":"Growl","50":"Solar Beam","22":"Poison Powder","13":"Vine Whip","30":"Razor Leaf"}},
     "evTypeDropped":"specialAtk",
     "evAmountDropped":1,
     "hpBaseStat": 45,
@@ -85,19 +85,19 @@
     "specialDefBaseStat": 65,
     "speedBaseStat": 45,
     "moves":{
-      "-1":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},
-      "-2":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "50":{"name":"Solar Beam","type":"GRASS","description":"Absorbs light in one turn, then attacks next turn","power":120,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":10,"damage":120,"special":true},
-      "22":{"name":"Poison Powder","type":"POISON","description":"A move that may poison the foe.","power":50,"precision":75,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":50,"special":true},
-      "13":{"name":"Vine Whip","type":"GRASS","description":"Whips the foe with slender vines.","power":45,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":45,"special":true},
-      "30":{"name":"Razor Leaf","type":"GRASS","description":"Has a high critical hit ratio","power":55,"precision":95,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":55,"special":false}}
+      "-1":"Growl",
+      "-2":"Tackle",
+      "50":"Solar Beam",
+      "22":"Poison Powder",
+      "13":"Vine Whip",
+      "30":"Razor Leaf"}
   },
 
   "Ivysaur":{
     "name":"Ivysaur",
     "types":["GRASS","POISON"],
     "evoThreshold":32,
-    "successor":{"name":"Venusaur","types":["GRASS","POISON"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":2,"baseStat":525,"moves":{"1":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"65":{"name":"Solar Beam","type":"GRASS","description":"Absorbs light in one turn, then attacks next turn","power":120,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":10,"damage":120,"special":true},"2":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},"34":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},"3":{"name":"Vine Whip","type":"GRASS","description":"Whips the foe with slender vines.","power":45,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":45,"special":true},"22":{"name":"Poison Powder","type":"POISON","description":"A move that may poison the foe.","power":50,"precision":75,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":50,"special":true},"38":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},"40":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},"30":{"name":"Razor Leaf","type":"GRASS","description":"Has a high critical hit ratio","power":55,"precision":95,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":55,"special":false}}},
+    "successor":{"name":"Venusaur","types":["GRASS","POISON"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":2,"hpBaseStat": 80,"atkBaseStat": 82,"defBaseStat": 83,"specialAtkBaseStat": 100,"specialDefBaseStat": 100,"speedBaseStat": 80,"moves":{"1":"Tackle","65":"Solar Beam","2":"Growl","3":"Vine Whip","22":"Poison Powder","40":"Growth","30":"Razor Leaf"}},
     "evTypeDropped":"specialAtk",
     "evAmountDropped":1,
     "hpBaseStat": 60,
@@ -107,12 +107,12 @@
     "specialDefBaseStat": 80,
     "speedBaseStat": 60,
     "moves":{
-      "1":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "2":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},
-      "50":{"name":"Solar Beam","type":"GRASS","description":"Absorbs light in one turn, then attacks next turn","power":120,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":10,"damage":120,"special":true},
-      "22":{"name":"Poison Powder","type":"POISON","description":"A move that may poison the foe.","power":50,"precision":75,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":50,"special":true},
-      "13":{"name":"Vine Whip","type":"GRASS","description":"Whips the foe with slender vines.","power":45,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":45,"special":true},
-      "30":{"name":"Razor Leaf","type":"GRASS","description":"Has a high critical hit ratio","power":55,"precision":95,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":55,"special":false}}
+       "1":"Tackle",
+       "2":"Growl",
+      "50":"Solar Beam",
+      "22":"Poison Powder",
+      "13":"Vine Whip",
+      "30":"Razor Leaf"}
   },
 
   "Venusaur":{
@@ -129,22 +129,21 @@
     "specialDefBaseStat": 100,
     "speedBaseStat": 80,
     "moves":{
-      "1":{"name":"Tackle","type":"NORMAL","description":"A full-body charge attack.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "65":{"name":"Solar Beam","type":"GRASS","description":"Absorbs light in one turn, then attacks next turn","power":120,"precision":100,"ppDefault":10,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":10,"damage":120,"special":true},
-      "2":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},
-      "34":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},
-      "3":{"name":"Vine Whip","type":"GRASS","description":"Whips the foe with slender vines.","power":45,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":45,"special":true},
-      "22":{"name":"Poison Powder","type":"POISON","description":"A move that may poison the foe.","power":50,"precision":75,"ppDefault":30,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":50,"special":true},
-      "38":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},
-      "40":{"name":"Growth","type":"NORMAL","description":"Raises the user's Attack.","power":0,"precision":100,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"atk","personalModificatorValue":10,"ppdefault":20,"damage":0,"special":false},
-      "30":{"name":"Razor Leaf","type":"GRASS","description":"Has a high critical hit ratio","power":55,"precision":95,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":55,"special":false}}
+       "1":"Tackle",
+      "65":"Solar Beam",
+       "2":"Growl",
+       "3":"Vine Whip",
+      "22":"Poison Powder",
+      "40":"Growth",
+      "30":"Razor Leaf"}
   },
 
   "Charmander":{
     "name":"Charmander",
     "types":["FIRE"],
     "evoThreshold":16,
-    "successor":{"name":"Charmeleon","types":["FIRE"],"evoThreshold":36,"successor":{"name":"Charizard","types":["FIRE","FLYING"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":3,"baseStat":543,"moves":{"-1":{"name":"Ember","type":"FIRE","description":"Burns the target","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},"-2":{"name":"Leer","type":"NORMAL","description":"Lowers the target's Defense","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},"-3":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},"-4":{"name":"Scratch","type":"NORMAL","description":"Scratches with sharp claws.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"36":{"name":"Slash","type":"NORMAL","description":"Has a high critical hit ratio.","power":70,"precision":75,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":20,"damage":70,"special":false},"24":{"name":"Rage","type":"NORMAL","description":"Raises the user’s ATTACK every time it is hit.","power":20,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":20,"special":false},"46":{"name":"Flame Thrower","type":"FIRE","description":"The foe is scorched with intense flames.","power":95,"precision":100,"ppDefault":15,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":15,"damage":95,"special":true}}},"evTypeDropped":"atk","evAmountDropped":2,"baseStat":405,"moves":{"-1":{"name":"Ember","type":"FIRE","description":"Burns the target","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},"-2":{"name":"Scratch","type":"NORMAL","description":"Scratches with sharp claws.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"-3":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},"36":{"name":"Slash","type":"NORMAL","description":"Has a high critical hit ratio.","power":70,"precision":75,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":20,"damage":70,"special":false},"24":{"name":"Rage","type":"NORMAL","description":"Raises the user’s ATTACK every time it is hit.","power":20,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":20,"special":false},"43":{"name":"Flame Thrower","type":"FIRE","description":"The foe is scorched with intense flames.","power":95,"precision":100,"ppDefault":15,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":15,"damage":95,"special":true},"15":{"name":"Leer","type":"NORMAL","description":"Lowers the target's Defense","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true}}},
+    "successor":{
+      "name":"Charmeleon","types":["FIRE"],"evoThreshold":36,"successor":{"name":"Charizard","types":["FIRE","FLYING"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":3,"hpBaseStat": 78,"atkBaseStat": 84,"defBaseStat": 78,"specialAtkBaseStat": 109,"specialDefBaseStat": 85,"speedBaseStat": 100,"moves":{"-1":"Ember","-2":"Leer","-3":"Growl","-4":"Scratch","36":"Slash","24":"Rage","46":"Flame Thrower"}},"evTypeDropped":"atk","evAmountDropped":2,"hpBaseStat": 58,"atkBaseStat": 64,"defBaseStat": 58,"specialAtkBaseStat": 80,"specialDefBaseStat": 65,"speedBaseStat": 80,"moves":{"-1":"Ember","-2":"Scratch","-3":"Growl","36":"Slash","24":"Rage","43":"Flame Thrower","15":"Leer"}},
     "evTypeDropped":"speed",
     "evAmountDropped":1,
     "hpBaseStat": 39,
@@ -154,20 +153,21 @@
     "specialDefBaseStat": 50,
     "speedBaseStat": 65,
     "moves":{
-      "-1":{"name":"Scratch","type":"NORMAL","description":"Scratches with sharp claws.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "-2":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},
-      "22":{"name":"Rage","type":"NORMAL","description":"Raises the user’s ATTACK every time it is hit.","power":20,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":20,"special":false},
-      "38":{"name":"Flame Thrower","type":"FIRE","description":"The foe is scorched with intense flames.","power":95,"precision":100,"ppDefault":15,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":15,"damage":95,"special":true},
-      "9":{"name":"Ember","type":"FIRE","description":"Burns the target","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},
-      "30":{"name":"Slash","type":"NORMAL","description":"Has a high critical hit ratio.","power":70,"precision":75,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":20,"damage":70,"special":false},
-      "15":{"name":"Leer","type":"NORMAL","description":"Lowers the target's Defense","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true}}
+      "-1":"Scratch",
+      "-2":"Growl",
+      "22":"Rage",
+      "38":"Flame Thrower",
+       "9":"Ember",
+      "30":"Slash",
+      "15":"Leer"}
   },
 
   "Charmeleon":{
     "name":"Charmeleon",
     "types":["FIRE"],
     "evoThreshold":36,
-    "successor":{"name":"Charizard","types":["FIRE","FLYING"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":3,"baseStat":543,"moves":{"-1":{"name":"Ember","type":"FIRE","description":"Burns the target","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},"-2":{"name":"Leer","type":"NORMAL","description":"Lowers the target's Defense","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},"-3":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},"-4":{"name":"Scratch","type":"NORMAL","description":"Scratches with sharp claws.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},"36":{"name":"Slash","type":"NORMAL","description":"Has a high critical hit ratio.","power":70,"precision":75,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":20,"damage":70,"special":false},"24":{"name":"Rage","type":"NORMAL","description":"Raises the user’s ATTACK every time it is hit.","power":20,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":20,"special":false},"46":{"name":"Flame Thrower","type":"FIRE","description":"The foe is scorched with intense flames.","power":95,"precision":100,"ppDefault":15,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":15,"damage":95,"special":true}}},
+    "successor":{
+      "name":"Charizard","types":["FIRE","FLYING"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":3,"hpBaseStat": 78,"atkBaseStat": 84,"defBaseStat": 78,"specialAtkBaseStat": 109,"specialDefBaseStat": 85,"speedBaseStat": 100,"moves":{"-1":"Ember","-2":"Leer","-3":"Growl","-4":"Scratch","36":"Slash","24":"Rage","46":"Flame Thrower"}},
     "evTypeDropped":"atk",
     "evAmountDropped":2,
     "hpBaseStat": 58,
@@ -177,13 +177,13 @@
     "specialDefBaseStat": 65,
     "speedBaseStat": 80,
     "moves":{
-      "-1":{"name":"Ember","type":"FIRE","description":"Burns the target","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},
-      "-2":{"name":"Scratch","type":"NORMAL","description":"Scratches with sharp claws.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "-3":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},
-      "36":{"name":"Slash","type":"NORMAL","description":"Has a high critical hit ratio.","power":70,"precision":75,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":20,"damage":70,"special":false},
-      "24":{"name":"Rage","type":"NORMAL","description":"Raises the user’s ATTACK every time it is hit.","power":20,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":20,"special":false},
-      "43":{"name":"Flame Thrower","type":"FIRE","description":"The foe is scorched with intense flames.","power":95,"precision":100,"ppDefault":15,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":15,"damage":95,"special":true},
-      "15":{"name":"Leer","type":"NORMAL","description":"Lowers the target's Defense","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true}}
+      "-1":"Ember",
+      "-2":"Scratch",
+      "-3":"Growl",
+      "36":"Slash",
+      "24":"Rage",
+      "43":"Flame Thrower",
+      "15":"Leer"}
   },
 
   "Charizard":{
@@ -200,13 +200,13 @@
     "specialDefBaseStat": 85,
     "speedBaseStat": 100,
     "moves":{
-      "-1":{"name":"Ember","type":"FIRE","description":"Burns the target","power":40,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":25,"damage":40,"special":true},
-      "-2":{"name":"Leer","type":"NORMAL","description":"Lowers the target's Defense","power":0,"precision":100,"ppDefault":30,"opponentModificatorType":"def","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":30,"damage":0,"special":true},
-      "-3":{"name":"Growl","type":"NORMAL","description":"Reduces the foe’s Attack.","power":0,"precision":100,"ppDefault":40,"opponentModificatorType":"atk","opponentModificatorValue":-10,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":40,"damage":0,"special":true},
-      "-4":{"name":"Scratch","type":"NORMAL","description":"Scratches with sharp claws.","power":40,"precision":100,"ppDefault":35,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":35,"damage":40,"special":false},
-      "36":{"name":"Slash","type":"NORMAL","description":"Has a high critical hit ratio.","power":70,"precision":75,"ppDefault":20,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":20,"damage":70,"special":false},
-      "24":{"name":"Rage","type":"NORMAL","description":"Raises the user’s ATTACK every time it is hit.","power":20,"precision":100,"ppDefault":25,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":"hit","personalModificatorValue":10,"ppdefault":25,"damage":20,"special":false},
-      "46":{"name":"Flame Thrower","type":"FIRE","description":"The foe is scorched with intense flames.","power":95,"precision":100,"ppDefault":15,"opponentModificatorType":null,"opponentModificatorValue":0,"personalModificatorType":null,"personalModificatorValue":0,"ppdefault":15,"damage":95,"special":true}}
+      "-1":"Ember",
+      "-2":"Leer",
+      "-3":"Growl",
+      "-4":"Scratch",
+      "36":"Slash",
+      "24":"Rage",
+      "46":"Flame Thrower"}
   }
 
 }

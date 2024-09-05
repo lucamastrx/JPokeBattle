@@ -102,12 +102,9 @@ public class Breed implements Identifiable { //
         this.types = new HashSet<>(types);   // crea un HashSet a partire dal Set fornito
     }
 
-    public void setThreshold(int threshold) {this.evoThreshold = threshold;}
-
-    public void setSuccessor(Breed successor) {this.successor = successor;}
 
 
-    public static void dumpJSON() {
+    private void dumpJSON() {
 
         Move growl = new Move("Growl", Type.NORMAL, "Reduces the foe’s Attack.",0, 100,40, true, "atk", -10, null, 0 );
         Move growth = new Move("Growth", Type.NORMAL, "Raises the user's Attack.",0, 100,20, false, null, 0, "atk", 10 );

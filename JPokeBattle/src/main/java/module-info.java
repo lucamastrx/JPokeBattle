@@ -34,6 +34,9 @@ module it.jpokebattle {
     exports it.jpokebattle.model.pokemon;
     opens it.jpokebattle.model.pokemon;
 
+    exports it.jpokebattle.model.type;
+    opens it.jpokebattle.model.type;
+
     exports it.jpokebattle.util;
     opens it.jpokebattle.util;
 
