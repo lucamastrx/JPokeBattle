@@ -19,6 +19,9 @@ public interface Identifiable {
      */
     String getID();
 
+
+
+/*
     /**
      * Genera un nuovo ID univoco basato sui profili esistenti memorizzati in un file serializzato.
      * Questo metodo carica una mappa di profili da un file specificato, trova l'ID numerico massimo tra i profili
@@ -29,7 +32,7 @@ public interface Identifiable {
      * @return Una stringa che rappresenta il nuovo ID generato.
      *
      * @see FileManager
-     */
+
     default String setID(String serSrcName){
         HashMap<String, HumanPlayer> map = FileManager.loadSER(serSrcName);
         Optional<Integer> max;
@@ -42,4 +45,5 @@ public interface Identifiable {
             return String.valueOf(max.get() + 1);
         }
     }
+*/
 }

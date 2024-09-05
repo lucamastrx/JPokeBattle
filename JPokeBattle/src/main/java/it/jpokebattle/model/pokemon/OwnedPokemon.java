@@ -4,11 +4,15 @@ import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.Saveable;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.time.Instant;
+
 
 
 public class OwnedPokemon extends Pokemon implements Serializable, Identifiable, Saveable<OwnedPokemon> {
+
     private final String SER_SRC_NAME = "ser.ownedPokemon";
-    private final String ID = setID(SER_SRC_NAME);
+    private final String ID;            // è composto dal nome del pokemon + il timestamp dell'istante di creazione
+
     private String nickname;    // soprannome, se presente
     private int exp = 0;            // esperienza attuale
     private int expForNextLevel;
@@ -24,12 +28,14 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * Metodo Costruttore.
      * Crea il pokemon e lo aggiunge alla mappa che mantiene tutti i pokemon.
      *
-     * @param breed razza del pokemon
+     * @param breed    razza del pokemon
      * @param nickname soprannome del pokemon
      */
     public OwnedPokemon(Breed breed, String nickname) {
         super(breed);
+        this.level = super.getLevel();
         this.nickname = nickname;  // setNickname(name); TODO qui va bene il setNickname? a pokemon catturato serve messaggio GUI per fare setNickname
+        this.ID = name + Instant.now();
         this.expForNextLevel = calculateRequiredExpForNextLevel(this.level);
         save();               // aggiunge il pokemon alla mappa e la salva nel file ser
     }
@@ -50,18 +56,27 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         save();
     }
 
-    public int getExp() {return this.exp;}
+    public int getExp() {
+        return this.exp;
+    }
 
-    public int getExpForNextLevel() {return expForNextLevel;}
+    public int getExpForNextLevel() {
+        return expForNextLevel;
+    }
 
-    public void setExp(int exp) {this.exp = exp;}
-
-    private void setExpForNextLevel(int expForNextLevel) {this.expForNextLevel = expForNextLevel;}
+    private void setExpForNextLevel(int expForNextLevel) {
+        this.expForNextLevel = expForNextLevel;
+    }
 
     public void addExp(int expGuadaganti) {
         if (this.getLevel() < 100)
             this.exp += expGuadaganti;
     }
+
+
+
+
+
 
     protected void addHpEV(int evAmountDropped) {
         int total = hpEV + evAmountDropped;
@@ -93,87 +108,6 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         if (total < 256 && totalEVsUsed <= 510) speedEV += evAmountDropped;
     }
 
-    /**
-     * Aumenta il livello del pokemon di 1.
-     */
-    private void increaseLevelByOne() {this.level++;}
-
-    /**
-     * Controlla se il pokemon ha raggiunto la soglia di ex per salire di livello.
-     * Il livello massimo è 100, dopo la quale il livello non aumenterà.
-     */
-    public void canLevelUp() {
-        if (this.exp >= this.expForNextLevel && this.level < 100) {
-            levelUpAndStatsUp();
-        }
-    }
-    /**
-     * Aggiorna il valore di una statistica specifica dell'entità basandosi su IV (Individual Values),
-     * base stat (statistica di base) e il livello dell'entità.
-     *
-     * Il valore calcolato viene utilizzato per aggiornare la statistica corrispondente. Le statistiche
-     * che possono essere aggiornate includono punti vita (hp), attacco (atk), difesa (def), attacco speciale
-     * (specialAtk), difesa speciale (specialDef) e velocità (speed).
-     *
-     * @param statType Il tipo di statistica da aggiornare. Deve essere uno dei seguenti valori:
-     *                 <ul>
-     *                   <li>"hp" - Punti vita</li>
-     *                   <li>"atk" - Attacco</li>
-     *                   <li>"def" - Difesa</li>
-     *                   <li>"specialAtk" - Attacco speciale</li>
-     *                   <li>"specialDef" - Difesa speciale</li>
-     *                   <li>"speed" - Velocità</li>
-     *                 </ul>
-     * @param iv Il valore IV (Individual Value) della statistica. Rappresenta la variabilità individuale
-     *           della statistica e influisce sul calcolo finale.
-     * @param baseStat Il valore di base della statistica. Questo valore è comune per tutte le entità
-     *                 della stessa specie e viene utilizzato come base per il calcolo del valore finale.
-     *
-     * @throws IllegalArgumentException Se il valore di `statType` non è uno dei valori previsti.
-     */
-    private void updateStat(String statType, int iv, int baseStat) {
-        int usedEVs = useEVs(statType);
-        int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * level) / 100) + 5;
-
-        switch (statType) {
-            case "hp":
-                newValue += level + 5;
-                setHp(newValue);
-                break;
-            case "atk":
-                setAtk(newValue);
-                break;
-            case "def":
-                setDef(newValue);
-                break;
-            case "specialAtk":
-                setSpecialAtk(newValue);
-                break;
-            case "specialDef":
-                setSpecialDef(newValue);
-                break;
-            case "speed":
-                setSpeed(newValue);
-                break;
-            default:
-                throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
-        }
-    }
-
-
-    /**
-     * Metodo principale per aumentare il livello e le statistiche del Pokémon.
-     */
-    private void levelUpAndStatsUp() {
-        levelUp();
-        int baseStat = this.getBreed().getBaseStat();
-        updateStat("hp", hpIV, baseStat);
-        updateStat("atk", atkIV, baseStat);
-        updateStat("def", defIV, baseStat);
-        updateStat("specialAtk", specialAtkIV, baseStat);
-        updateStat("specialDef", specialDefIV, baseStat);
-        updateStat("speed", speedIV, baseStat);
-    }
 
     /**
      * Verifica e utilizza gli EV in multipli di 4, riducendo il totale degli EV disponibili e aggiornando il contatore totale degli EV utilizzati.
@@ -255,14 +189,58 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     }
 
 
+
+
     /**
-     * Incrementa il livello del Pokémon e aggiorna i relativi valori di esperienza.
+     * Aggiorna il valore di una statistica specifica dell'entità basandosi su IV (Individual Values),
+     * base stat (statistica di base) e il livello dell'entità.
+     *
+     * Il valore calcolato viene utilizzato per aggiornare la statistica corrispondente. Le statistiche
+     * che possono essere aggiornate includono punti vita (hp), attacco (atk), difesa (def), attacco speciale
+     * (specialAtk), difesa speciale (specialDef) e velocità (speed).
+     *
+     * @param statType Il tipo di statistica da aggiornare. Deve essere uno dei seguenti valori:
+     *                 <ul>
+     *                   <li>"hp" - Punti vita</li>
+     *                   <li>"atk" - Attacco</li>
+     *                   <li>"def" - Difesa</li>
+     *                   <li>"specialAtk" - Attacco speciale</li>
+     *                   <li>"specialDef" - Difesa speciale</li>
+     *                   <li>"speed" - Velocità</li>
+     *                 </ul>
+     * @param iv Il valore IV (Individual Value) della statistica. Rappresenta la variabilità individuale
+     *           della statistica e influisce sul calcolo finale.
+     * @param baseStat Il valore di base della statistica. Questo valore è comune per tutte le entità
+     *                 della stessa specie e viene utilizzato come base per il calcolo del valore finale.
+     *
+     * @throws IllegalArgumentException Se il valore di `statType` non è uno dei valori previsti.
      */
-    private void levelUp() {
-        increaseLevelByOne();
-        this.exp = 0;
-        if (this.level < 100) {
-            this.expForNextLevel = calculateRequiredExpForNextLevel(this.level);
+    private void updateStat(String statType, int iv, int baseStat) {
+        int usedEVs = useEVs(statType);
+        int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * level) / 100) + 5;
+
+        switch (statType) {
+            case "hp":
+                newValue += level + 5;
+                setHp(newValue);
+                break;
+            case "atk":
+                setAtk(newValue);
+                break;
+            case "def":
+                setDef(newValue);
+                break;
+            case "specialAtk":
+                setSpecialAtk(newValue);
+                break;
+            case "specialDef":
+                setSpecialDef(newValue);
+                break;
+            case "speed":
+                setSpeed(newValue);
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
         }
     }
 
@@ -280,12 +258,52 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
 
     /**
+     * Controlla se il pokemon ha raggiunto la soglia di ex per salire di livello.
+     * Il livello massimo è 100, dopo la quale il livello non aumenterà.
+     */
+    private boolean canLevelUp() {
+        return this.exp >= this.expForNextLevel && this.level < 100;
+    }
+
+    /**
+     * Incrementa il livello del Pokémon e aggiorna i relativi valori di esperienza.
+     */
+    private void levelUp() {
+        this.level++;
+        this.exp = 0;
+        if (this.level < 100) {
+            setExpForNextLevel(calculateRequiredExpForNextLevel(this.level));
+        }
+    }
+
+    /**
+     * Metodo principale per aumentare il livello e le statistiche del Pokémon.
+     */
+    public void levelUpAndStatsUp() {
+        if (canLevelUp()) {
+            levelUp();
+            updateStat("hp", hpIV, this.getBreed().getHpBaseStat());
+            updateStat("atk", atkIV, this.getBreed().getAtkBaseStat());
+            updateStat("def", defIV, this.getBreed().getDefBaseStat());
+            updateStat("specialAtk", specialAtkIV, this.getBreed().getSpecialAtkBaseStat());
+            updateStat("specialDef", specialDefIV, this.getBreed().getSpecialDefBaseStat());
+            updateStat("speed", speedIV, this.getBreed().getSpeedBaseStat());
+        }
+        save();
+    }
+
+
+
+
+
+
+    /**
      * Metodo che controlla se il livello del pokemon è sufficiente a
      * permettere l'evoluzione.
      *
      * @return valore booleano che determina se il pokemon può evolvere
      */
-    public boolean canEvolve(){                        // TODO aggiungere messaggio GUI
+    private boolean canEvolve(){
         return this.getLevel() >= this.getBreed().getEvoThreshold();
     }
 
@@ -294,7 +312,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * Cambia il breed del pokemon con quella del suo successore,
      * e inoltre modifica il nome del pokemon se non ha soprannome.
      */
-    public void evolve() {                              // TODO l'allenatore vuole evolvere il pokemon?
+    public void evolve() {
         if (this.canEvolve()) {
             Breed succ = this.getBreed().getSuccessor();
             this.setBreed(succ);   // cambia il Breed del Pokemon
@@ -325,11 +343,12 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             int ppMax = move.getPPDefault();
             this.moves.put(move, ppMax);
         }
-
+        save();
     }
 
     public void removeMove(Move move){
         this.moves.remove(move);
+        save();
     }
 
     public HashMap<Move, Integer> getMoves() {
@@ -347,6 +366,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
         }
         this.moves = moves;
+        save();
     }
 
     /**
@@ -363,6 +383,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         for (Move move : moves) {
             this.moves.put(move, move.getPPDefault());
         }
+        save();
     }
 
 

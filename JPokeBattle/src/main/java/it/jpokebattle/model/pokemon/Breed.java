@@ -2,6 +2,7 @@ package it.jpokebattle.model.pokemon;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.type.Type;
 
 import java.util.HashMap;
@@ -9,18 +10,21 @@ import java.util.Set;
 import java.util.HashSet;
 
 
-import it.jpokebattle.util.FileManager;
+public class Breed implements Identifiable { //
 
-public class Breed { //
-
-    private String name;
+    private final String name;            // è anche l'ID
     private HashSet<Type> types;
     private int evoThreshold;      // è il livello in cui il pokemon può evolve
     private Breed successor;
     private String evTypeDropped; // Tipo di EV che il Pokémon rilascia (es. "hp", "atk")
     private int evAmountDropped;  // Quantità di EV rilasciati
-    private int baseStat;
-    private HashMap<Integer, Move> moves = new HashMap<>();         // livello a cui impara la mossa : che mossa è
+    private int hpBaseStat;
+    private int atkBaseStat;
+    private int defBaseStat;
+    private int specialAtkBaseStat;
+    private int specialDefBaseStat;
+    private int speedBaseStat;
+    private HashMap<Integer, String> moves = new HashMap<>();         // livello a cui impara la mossa : ID mossa
 
 
     /**
@@ -37,15 +41,25 @@ public class Breed { //
                  @JsonProperty("successor") Breed successor,
                  @JsonProperty("evTypeDropped") String evTypeDropped,
                  @JsonProperty("evAmountDropped") int evAmountDropped,
-                 @JsonProperty("baseStat") int baseStat,
-                 @JsonProperty("moves") HashMap<Integer, Move> moves) {
+                 @JsonProperty("hpBaseStat") int hpBaseStat,
+                 @JsonProperty("atkBaseStat") int atkBaseStat,
+                 @JsonProperty("defBaseStat") int defBaseStat,
+                 @JsonProperty("specialAtkBaseStat") int specialAtkBaseStat,
+                 @JsonProperty("specialDefBaseStat") int specialDefBaseStat,
+                 @JsonProperty("speedBaseStat") int speedBaseStat,
+                 @JsonProperty("moves") HashMap<Integer, String> moves) {
         this.name = name;
         setTypes(types);
         this.evoThreshold = evoThreshold;                       //se 101 allora il pokemon è all'ultimo stadio evolutivo
         this.successor = successor;
         this.evTypeDropped = evTypeDropped;
         this.evAmountDropped = evAmountDropped;
-        this.baseStat = baseStat;
+        this.hpBaseStat = hpBaseStat;
+        this.atkBaseStat = atkBaseStat;
+        this.defBaseStat = defBaseStat;
+        this.specialAtkBaseStat = specialAtkBaseStat;
+        this.specialDefBaseStat = specialDefBaseStat;
+        this.speedBaseStat = speedBaseStat;
         this.moves = moves;
     }
 
@@ -58,15 +72,23 @@ public class Breed { //
 
     public Breed getSuccessor() {return successor;}
 
-    public void setName(String name) {this.name = name;}
-
     public String getEvTypeDropped() {return evTypeDropped;}
 
     public int getEvAmountDropped() {return evAmountDropped;}
 
-    public int getBaseStat() {return this.baseStat;}
+    public int getHpBaseStat() {return hpBaseStat;}
 
-    public HashMap<Integer, Move> getMoves() {return moves;}
+    public int getAtkBaseStat() {return atkBaseStat;}
+
+    public int getDefBaseStat() {return defBaseStat;}
+
+    public int getSpecialAtkBaseStat() {return specialAtkBaseStat;}
+
+    public int getSpecialDefBaseStat() {return specialDefBaseStat;}
+
+    public int getSpeedBaseStat() {return speedBaseStat;}
+
+    public HashMap<Integer, String> getMoves() {return moves;}
 
     /**
      * Metodo che setta i tipi della razza.
@@ -83,11 +105,6 @@ public class Breed { //
     public void setThreshold(int threshold) {this.evoThreshold = threshold;}
 
     public void setSuccessor(Breed successor) {this.successor = successor;}
-
-
-
-
-
 
 
     public static void dumpJSON() {
@@ -110,7 +127,7 @@ public class Breed { //
         venusaurMoves.put(30, razorLeaf);
         venusaurMoves.put(40, growth);
         venusaurMoves.put(65, solarBeam);
-        Breed venusaur = new Breed("Venusaur", Set.of(Type.GRASS, Type.POISON), 101, null, "specialAtk",2, 525, venusaurMoves);
+        // Breed venusaur = new Breed("Venusaur", Set.of(Type.GRASS, Type.POISON), 101, null, "specialAtk",2, 525, venusaurMoves);
 
 
         HashMap<Integer, Move> ivysaurMoves = new HashMap<>();
@@ -121,7 +138,7 @@ public class Breed { //
         ivysaurMoves.put(30, razorLeaf);
         venusaurMoves.put(38, growth);
         ivysaurMoves.put(50, solarBeam);
-        Breed ivysaur = new Breed("Ivysaur", Set.of(Type.GRASS, Type.POISON), 32, venusaur, "specialAtk",1, 405, ivysaurMoves);
+        // Breed ivysaur = new Breed("Ivysaur", Set.of(Type.GRASS, Type.POISON), 32, venusaur, "specialAtk",1, 405, ivysaurMoves);
 
 
         HashMap<Integer, Move> bulbasaurMoves = new HashMap<>();
@@ -132,7 +149,7 @@ public class Breed { //
         bulbasaurMoves.put(30, razorLeaf);
         venusaurMoves.put(34, growth);
         bulbasaurMoves.put(50, solarBeam);
-        Breed bulbasaur = new Breed("Bulbasaur", Set.of(Type.GRASS, Type.POISON), 16, ivysaur, "specialAtk",1, 318, bulbasaurMoves);
+        // Breed bulbasaur = new Breed("Bulbasaur", Set.of(Type.GRASS, Type.POISON), 16, ivysaur, "specialAtk",1, 318, bulbasaurMoves);
 
 
         // -------------------------------------------------------------------------------------------------------
@@ -154,7 +171,7 @@ public class Breed { //
         charizardMoves.put(24, rage);
         charizardMoves.put(36, slash);
         charizardMoves.put(46, flamethrower);
-        Breed charizard = new Breed("Charizard", Set.of(Type.FIRE, Type.FLYING), 101, null, "specialAtk", 3, 543, charizardMoves);
+        // Breed charizard = new Breed("Charizard", Set.of(Type.FIRE, Type.FLYING), 101, null, "specialAtk", 3, 543, charizardMoves);
 
 
 
@@ -168,7 +185,7 @@ public class Breed { //
         charmeleonMoves.put(36, slash);
         charmeleonMoves.put(43, flamethrower);
         // Crea l'oggetto Charmeleon
-        Breed charmeleon = new Breed("Charmeleon", Set.of(Type.FIRE), 36, charizard,"atk",2,405, charmeleonMoves);
+        // Breed charmeleon = new Breed("Charmeleon", Set.of(Type.FIRE), 36, charizard,"atk",2,405, charmeleonMoves);
 
 
 
@@ -185,7 +202,7 @@ public class Breed { //
 
 
         // Crea l'oggetto Charmander
-        Breed charmander = new Breed("Charmander", Set.of(Type.FIRE), 16, charmeleon,"speed",1,309, charmanderMoves);
+        // Breed charmander = new Breed("Charmander", Set.of(Type.FIRE), 16, charmeleon,"speed",1,309, charmanderMoves);
 
         // -------------------------------------------------------------------------------------------------------
 
@@ -208,7 +225,7 @@ public class Breed { //
         blastoiseMoves.put(31, withdraw);
         blastoiseMoves.put(42, skullBash);
         blastoiseMoves.put(52, hydroPump);
-        Breed blastoise = new Breed("Blastoise", Set.of(Type.WATER), 101, null, "specialDef", 3, 530, blastoiseMoves);
+        // Breed blastoise = new Breed("Blastoise", Set.of(Type.WATER), 101, null, "specialDef", 3, 530, blastoiseMoves);
 
 
 
@@ -221,7 +238,7 @@ public class Breed { //
         wartortleMoves.put(31, withdraw);
         wartortleMoves.put(39, skullBash);
         wartortleMoves.put(47, hydroPump);
-        Breed wartortle = new Breed("Wartortle", Set.of(Type.WATER), 36, blastoise, "def", 1, 405, wartortleMoves);
+        // Breed wartortle = new Breed("Wartortle", Set.of(Type.WATER), 36, blastoise, "def", 1, 405, wartortleMoves);
 
 
 
@@ -235,27 +252,32 @@ public class Breed { //
         squirtleMoves.put(28, withdraw);
         squirtleMoves.put(35, skullBash);
         squirtleMoves.put(42, hydroPump);
-        Breed squirtle = new Breed("Squirtle", Set.of(Type.WATER), 16, wartortle,"def", 1, 314, squirtleMoves);
+        // Breed squirtle = new Breed("Squirtle", Set.of(Type.WATER), 16, wartortle,"def", 1, 314, squirtleMoves);
 
         // --------------------------------------------------------------------------------------------------------
 
 
         // Crea una HashMap di razze Pokémon con nome come chiave
-        HashMap<String, Breed> breedsMap = new HashMap<>();
-        breedsMap.put(bulbasaur.getName(), bulbasaur);
-        breedsMap.put(ivysaur.getName(), ivysaur);
-        breedsMap.put(venusaur.getName(), venusaur);
-        breedsMap.put(charmander.getName(), charmander);
-        breedsMap.put(charmeleon.getName(), charmeleon);
-        breedsMap.put(charizard.getName(), charizard);
-        breedsMap.put(squirtle.getName(), squirtle);
-        breedsMap.put(wartortle.getName(), wartortle);
-        breedsMap.put(blastoise.getName(), blastoise);
+        // HashMap<String, Breed> breedsMap = new HashMap<>();
+        // breedsMap.put(bulbasaur.getName(), bulbasaur);
+        // breedsMap.put(ivysaur.getName(), ivysaur);
+        // breedsMap.put(venusaur.getName(), venusaur);
+        // breedsMap.put(charmander.getName(), charmander);
+        // breedsMap.put(charmeleon.getName(), charmeleon);
+        // breedsMap.put(charizard.getName(), charizard);
+        // breedsMap.put(squirtle.getName(), squirtle);
+        // breedsMap.put(wartortle.getName(), wartortle);
+        // breedsMap.put(blastoise.getName(), blastoise);
 
 
 
         // Serializza la mappa su un file JSON
-        FileManager.writeJSON(breedsMap, "json.breeds");
+        // FileManager.writeJSON(breedsMap, "json.breeds");
+    }
+
+    @Override
+    public String getID() {
+        return name;
     }
 
 }

@@ -1,5 +1,6 @@
 package it.jpokebattle;
 
+import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
@@ -27,6 +28,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         // Breed.dumpJSON();
+        Move.dumpJSON();
         launch(args);
     }
 

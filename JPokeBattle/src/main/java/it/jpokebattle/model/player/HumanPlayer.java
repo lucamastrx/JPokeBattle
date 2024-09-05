@@ -13,27 +13,9 @@ import java.util.ArrayList;
  */
 public class HumanPlayer  {
 
-    private String name;
+
     private ArrayList<String> pokemonTeam;
     private ArrayList<String> pokemonStorage;
-
-
-    public HumanPlayer(String name, Image avatar) {
-        this.name = name;
-    }
-
-
-
-    public String getName() {
-        return name;
-    }
-
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
 
 
 }

@@ -21,6 +21,7 @@ public class Pokemon {
     protected int specialAtkIV;
     protected int specialDefIV;
     protected int speedIV;
+    protected int strength;
 
 
 
@@ -31,11 +32,27 @@ public class Pokemon {
      *
      * @param breed Specie del pokemon
      */
-    public Pokemon(Breed breed) {
+    public Pokemon(Breed breed, int level) {
         this.breed = breed;
         this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
         setDefaultValues();               // TODO
         setRandomIVs();
+        this.strength = hp + atk + def + specialAtk + specialDef + speed + level;
+    }
+
+    /**
+     * Metodo Costruttore.
+     * Setta automaticamente il nome del pokemon con il nome della specie.
+     * Gli altri attributi sono valori di default.
+     *
+     * @param breed Specie del pokemon
+     */
+    protected Pokemon(Breed breed) {
+        this.breed = breed;
+        this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
+        setDefaultValues();               // TODO
+        setRandomIVs();
+        this.strength = hp + atk + def + specialAtk + specialDef + speed + level;
     }
 
     /**
@@ -80,6 +97,7 @@ public class Pokemon {
 
     public int getHpIV() {return hpIV;}
 
+    public int getStrength() {return strength;}
 
     /**
      * Setta i valori degli attributi del pokemon con i valori di default
@@ -134,6 +152,7 @@ public class Pokemon {
      *
      * @param receivingPokemon Il Pokémon che riceve gli EV rilasciati.
      */
+
     public void dropEVs(OwnedPokemon receivingPokemon) {
         if (this.getBreed().getEvAmountDropped() <= 0) {
             return;  // Non ci sono EV da rilasciare
