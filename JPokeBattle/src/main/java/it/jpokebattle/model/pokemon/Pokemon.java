@@ -7,23 +7,23 @@ import java.util.Random;
 
 
 public abstract class Pokemon {
-    protected String name;
-    protected Breed breed;        // specie
-    protected HashMap<Move, Integer> moves;        // {codice mossa: pp attuali}
-    protected int hp;             // punti salute
-    protected int atk;
-    protected int def;
-    protected int specialAtk;
-    protected int specialDef;
-    protected int speed;
-    protected int level;
-    protected int strength;
-    protected int hpIV;
-    protected int atkIV;
-    protected int defIV;
-    protected int specialAtkIV;
-    protected int specialDefIV;
-    protected int speedIV;
+    private String name;
+    private Breed breed;        // specie
+    private HashMap<Move, Integer> moves;        // {codice mossa: pp attuali}
+    private int hp;             // punti salute
+    private int atk;
+    private int def;
+    private int specialAtk;
+    private int specialDef;
+    private int speed;
+    private int level;
+    private int strength;
+    private int hpIV;
+    private int atkIV;
+    private int defIV;
+    private int specialAtkIV;
+    private int specialDefIV;
+    private int speedIV;
 
 
 
@@ -78,6 +78,8 @@ public abstract class Pokemon {
 
     public int getHpIV() {return hpIV;}
 
+    public HashMap<Move, Integer> getMoves() {return moves;}
+
     public int getStrength() {return strength;}
 
 
@@ -112,7 +114,39 @@ public abstract class Pokemon {
 
     public void setSpeed(int speed) {this.speed = speed;}
 
+    public void setLevel(int level) {this.level = level;}
 
+    public void setStrength(int strength) {this.strength = strength;}
+
+    /**
+     * Metodo che setta le mosse di un pokemon.
+     * Possono essere al massimo 4.
+     * @param moves HashMap<String, Integer> di mosse
+     * @throws IllegalArgumentException
+     */
+    public void setMoves(HashMap<Move, Integer> moves) {
+        if (moves.size() > 4) {
+            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
+        }
+        this.moves = moves;
+
+    }
+
+    /**
+     * Metodo che setta le mosse di un pokemon.
+     * Possono essere al massimo 4.
+     * @param moves Array di mosse
+     * @throws IllegalArgumentException
+     */
+    public void setMoves(Move[] moves) {
+        if (moves.length > 4) {
+            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
+        }
+
+        for (Move move : moves) {
+            this.moves.put(move, move.getPPDefault());
+        }
+    }
 
 
 

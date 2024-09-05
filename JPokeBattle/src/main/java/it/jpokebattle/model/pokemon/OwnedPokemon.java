@@ -35,11 +35,11 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      */
     public OwnedPokemon(Breed breed, String nickname) {
         super(breed);
-        this.level = super.getLevel();
+        setLevel(super.getLevel());
         this.nickname = nickname;  // setNickname(name); TODO pokemon catturato serve messaggio GUI per fare setNickname
-        this.ID = name + Instant.now();
-        this.expForNextLevel = calculateRequiredExpForNextLevel(this.level);
-        this.strength = hp + atk + def + specialAtk + specialDef + speed + level;
+        this.ID = getName() + Instant.now();
+        this.expForNextLevel = calculateRequiredExpForNextLevel(getLevel());
+        setStrength( getHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
         save();               // aggiunge il pokemon alla mappa e la salva nel file ser
     }
 
@@ -244,11 +244,11 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      */
     private void updateStat(String statType, int iv, int baseStat) {
         int usedEVs = useEVs(statType);
-        int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * level) / 100) + 5;
+        int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * getLevel()) / 100) + 5;
 
         switch (statType) {
             case "hp":
-                newValue += level + 5;
+                newValue += getLevel() + 5;
                 setHp(newValue);
                 break;
             case "atk":
@@ -289,17 +289,17 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * Il livello massimo è 100, dopo la quale il livello non aumenterà.
      */
     private boolean canLevelUp() {
-        return this.exp >= this.expForNextLevel && this.level < 100;
+        return this.exp >= this.expForNextLevel && getLevel() < 100;
     }
 
     /**
      * Incrementa il livello del Pokémon e aggiorna i relativi valori di esperienza.
      */
     private void levelUp() {
-        this.level++;
+        setLevel(getLevel() + 1);
         this.exp = 0;
-        if (this.level < 100) {
-            setExpForNextLevel(calculateRequiredExpForNextLevel(this.level));
+        if (getLevel() < 100) {
+            setExpForNextLevel(calculateRequiredExpForNextLevel(getLevel()));
         }
     }
 
@@ -309,12 +309,12 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     public void levelUpAndStatsUp() {
         if (canLevelUp()) {
             levelUp();
-            updateStat("hp", hpIV, this.getBreed().getHpBaseStat());
-            updateStat("atk", atkIV, this.getBreed().getAtkBaseStat());
-            updateStat("def", defIV, this.getBreed().getDefBaseStat());
-            updateStat("specialAtk", specialAtkIV, this.getBreed().getSpecialAtkBaseStat());
-            updateStat("specialDef", specialDefIV, this.getBreed().getSpecialDefBaseStat());
-            updateStat("speed", speedIV, this.getBreed().getSpeedBaseStat());
+            updateStat("hp", getHpIV(), this.getBreed().getHpBaseStat());
+            updateStat("atk", getAtkIV(), this.getBreed().getAtkBaseStat());
+            updateStat("def", getDefIV(), this.getBreed().getDefBaseStat());
+            updateStat("specialAtk", getSpecialAtkIV(), this.getBreed().getSpecialAtkBaseStat());
+            updateStat("specialDef", getSpecialDefIV(), this.getBreed().getSpecialDefBaseStat());
+            updateStat("speed", getSpeedIV(), this.getBreed().getSpeedBaseStat());
         }
         save();
     }
@@ -359,7 +359,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * @param move Mossa che si vuole aggiungere
      */
     public void addMove(Move move) {
-        if (moves.size() > 3) {
+        if (getMoves().size() > 3) {
 
             System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una..."); // TODO manu messaggio in GUI
             // click per rimuovere una mossa                                               // in GUI
@@ -368,50 +368,28 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         }
         else {
             int ppMax = move.getPPDefault();
-            this.moves.put(move, ppMax);
+            getMoves().put(move, ppMax);
         }
         save();
     }
 
     public void removeMove(Move move){
-        this.moves.remove(move);
+        getMoves().remove(move);
         save();
     }
 
-    public HashMap<Move, Integer> getMoves() {
-        return moves;
-    }
-
-    /**
-     * Metodo che setta le mosse di un pokemon.
-     * Possono essere al massimo 4.
-     * @param moves HashMap<String, Integer> di mosse
-     * @throws IllegalArgumentException
-     */
-    public void setMoves(HashMap<Move, Integer> moves) {
-        if (moves.size() > 4) {
-            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
-        }
-        this.moves = moves;
+    @Override
+    public void setMoves(HashMap<Move, Integer> moves){
+        super.setMoves(moves);
         save();
     }
 
-    /**
-     * Metodo che setta le mosse di un pokemon.
-     * Possono essere al massimo 4.
-     * @param moves Array di mosse
-     * @throws IllegalArgumentException
-     */
+    @Override
     public void setMoves(Move[] moves) {
-        if (moves.length > 4) {
-            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
-        }
-
-        for (Move move : moves) {
-            this.moves.put(move, move.getPPDefault());
-        }
+        super.setMoves(moves);
         save();
     }
+
 
 
     @Override

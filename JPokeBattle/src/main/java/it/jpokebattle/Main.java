@@ -1,6 +1,7 @@
 package it.jpokebattle;
 
 
+import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.pokemon.RandomWildPokemonFactory;
 import it.jpokebattle.util.SoundManager;
@@ -14,7 +15,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+import java.time.Instant;
+import java.util.*;
 
 
 /**
@@ -32,7 +34,30 @@ public class Main extends Application {
         RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
         Pokemon pokmn= rwpf.createPokemon();
         System.out.println(pokmn.getBreed());
+
+        /*
+        Move mv = createRandomMove();
+        System.out.println(mv.getID()); */
         launch(args);
+    }
+
+    private static Move createRandomMove() {
+        // Carica il JSON specificando il tipo di valore Breed
+        HashMap<String, Move> moveMap = FileManager.readJSON("json.moves", Move.class);
+
+        // Ottieni l'insieme delle chiavi
+        Set<String> keySet = moveMap.keySet();
+
+        // Converti l'insieme in una lista
+        List<String> keyList = new ArrayList<>(keySet);
+
+        // Genera un indice casuale
+        Random random = new Random();
+        int randomIndex = random.nextInt(keyList.size());
+
+        // Seleziona la chiave casuale
+        String randomKey = keyList.get(randomIndex);
+        return moveMap.get(randomKey);
     }
 
 
