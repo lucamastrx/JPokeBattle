@@ -1,5 +1,7 @@
 package it.jpokebattle.model.pokemon;
 
+import it.jpokebattle.util.EVDrop;
+
 import java.util.HashMap;
 import java.util.Random;
 
@@ -15,13 +17,13 @@ public abstract class Pokemon {
     protected int specialDef;
     protected int speed;
     protected int level;
+    protected int strength;
     protected int hpIV;
     protected int atkIV;
     protected int defIV;
     protected int specialAtkIV;
     protected int specialDefIV;
     protected int speedIV;
-    protected int strength;
 
 
 
@@ -35,9 +37,7 @@ public abstract class Pokemon {
     public Pokemon(Breed breed) {
         this.breed = breed;
         this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
-        setDefaultValues();               // TODO
         setRandomIVs();
-        this.strength = hp + atk + def + specialAtk + specialDef + speed + level;
     }
 
 
@@ -80,20 +80,6 @@ public abstract class Pokemon {
 
     public int getStrength() {return strength;}
 
-    /**
-     * Setta i valori degli attributi del pokemon con i valori di default
-     */
-    private void setDefaultValues(){
-        this.moves = new HashMap<>();
-        this.hp = 1;
-        this.atk = 1;
-        this.def = 1;
-        this.specialAtk = 1;
-        this.specialDef = 1;
-        this.speed = 1;
-        this.level = 1;
-    }
-
 
     /**
      * Vengono impostati gli IV a valori randomici tra 0 e 15
@@ -127,37 +113,32 @@ public abstract class Pokemon {
     public void setSpeed(int speed) {this.speed = speed;}
 
 
+
+
+
+
     /**
      * Rilascia EVs quando il Pokémon viene sconfitto.
-     * Gli EVs rilasciati vengono aggiunti al conteggio totale di EVs del giocatore o di un altro Pokémon.
-     *
-     * @param receivingPokemon Il Pokémon che riceve gli EV rilasciati.
+     * Gli EVs rilasciati vengono aggiunti al conteggio totale di EVs del Pokémon ancora in forze.
      */
-
-    public void dropEVs(OwnedPokemon receivingPokemon) {
+    public EVDrop dropEVs() {
         if (this.getBreed().getEvAmountDropped() <= 0) {
-            return;  // Non ci sono EV da rilasciare
+            return null;  // Non ci sono EV da rilasciare
         }
 
         switch (this.getBreed().getEvTypeDropped()) {
             case "hp":
-                receivingPokemon.addHpEV(getBreed().getEvAmountDropped());
-                break;
+                return new EVDrop("hp", this.getBreed().getEvAmountDropped());
             case "atk":
-                receivingPokemon.addAtkEV(getBreed().getEvAmountDropped());
-                break;
+                return new EVDrop("atk", this.getBreed().getEvAmountDropped());
             case "def":
-                receivingPokemon.addDefEV(getBreed().getEvAmountDropped());
-                break;
+                return new EVDrop("def", this.getBreed().getEvAmountDropped());
             case "specialAtk":
-                receivingPokemon.addSpecialAtkEV(getBreed().getEvAmountDropped());
-                break;
+                return new EVDrop("specialAtk", this.getBreed().getEvAmountDropped());
             case "specialDef":
-                receivingPokemon.addSpecialDefEV(getBreed().getEvAmountDropped());
-                break;
+                return new EVDrop("specialDef", this.getBreed().getEvAmountDropped());
             case "speed":
-                receivingPokemon.addSpeedEV(getBreed().getEvAmountDropped());
-                break;
+                return new EVDrop("speed", this.getBreed().getEvAmountDropped());
             default:
                 throw new IllegalArgumentException("Tipo di EV non valido: " + this.getBreed().getEvTypeDropped());
         }

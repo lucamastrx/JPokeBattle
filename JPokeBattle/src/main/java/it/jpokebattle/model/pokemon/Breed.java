@@ -24,6 +24,7 @@ public class Breed implements Identifiable { //
     private int specialAtkBaseStat;
     private int specialDefBaseStat;
     private int speedBaseStat;
+    private int totalBaseStat;
     private HashMap<Integer, String> moves = new HashMap<>();         // livello a cui impara la mossa : ID mossa
 
 
@@ -60,6 +61,7 @@ public class Breed implements Identifiable { //
         this.specialAtkBaseStat = specialAtkBaseStat;
         this.specialDefBaseStat = specialDefBaseStat;
         this.speedBaseStat = speedBaseStat;
+        this.totalBaseStat = hpBaseStat + atkBaseStat + defBaseStat + specialAtkBaseStat + specialDefBaseStat + speedBaseStat;
         this.moves = moves;
     }
 
@@ -87,6 +89,8 @@ public class Breed implements Identifiable { //
     public int getSpecialDefBaseStat() {return specialDefBaseStat;}
 
     public int getSpeedBaseStat() {return speedBaseStat;}
+
+    public int getTotalBaseStat() {return totalBaseStat;}
 
     public HashMap<Integer, String> getMoves() {return moves;}
 

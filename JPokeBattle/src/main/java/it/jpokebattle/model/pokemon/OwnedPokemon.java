@@ -2,6 +2,8 @@ package it.jpokebattle.model.pokemon;
 
 import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.Saveable;
+import it.jpokebattle.util.EVDrop;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.time.Instant;
@@ -37,6 +39,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         this.nickname = nickname;  // setNickname(name); TODO pokemon catturato serve messaggio GUI per fare setNickname
         this.ID = name + Instant.now();
         this.expForNextLevel = calculateRequiredExpForNextLevel(this.level);
+        this.strength = hp + atk + def + specialAtk + specialDef + speed + level;
         save();               // aggiunge il pokemon alla mappa e la salva nel file ser
     }
 
@@ -56,13 +59,9 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         save();
     }
 
-    public int getExp() {
-        return this.exp;
-    }
+    public int getExp() {return this.exp;}
 
-    public int getExpForNextLevel() {
-        return expForNextLevel;
-    }
+    public int getExpForNextLevel() {return expForNextLevel;}
 
     private void setExpForNextLevel(int expForNextLevel) {
         this.expForNextLevel = expForNextLevel;
@@ -76,34 +75,61 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
 
 
+    public void collectEVs(EVDrop evDrop) {
+        String evType = evDrop.getEvTypeDropped();
+        if (evType == null || evType.isEmpty()) {
+            return;
+        }
+        switch (evType) {
+            case "hp":
+                addHpEV(evDrop.getEvAmountDropped());
+                break;
+            case "atk":
+                addAtkEV(evDrop.getEvAmountDropped());
+                break;
+            case "def":
+                addDefEV(evDrop.getEvAmountDropped());
+                break;
+            case "specialAtk":
+                addSpecialAtkEV(evDrop.getEvAmountDropped());
+                break;
+            case "specialDef":
+                addSpecialDefEV(evDrop.getEvAmountDropped());
+                break;
+            case "speed":
+                addSpeedEV(evDrop.getEvAmountDropped());
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di EV non riconosciuto: " + evType);
+        }
+    }
 
-
-    protected void addHpEV(int evAmountDropped) {
+    private void addHpEV(int evAmountDropped) {
         int total = hpEV + evAmountDropped;
         if (total < 256 && totalEVsUsed <= 510) hpEV += evAmountDropped;
     }
 
-    protected void addAtkEV(int evAmountDropped) {
+    private void addAtkEV(int evAmountDropped) {
         int total = atkEV + evAmountDropped;
         if (total < 256 && totalEVsUsed <= 510) atkEV += evAmountDropped;
     }
 
-    protected void addDefEV(int evAmountDropped) {
+    private void addDefEV(int evAmountDropped) {
         int total = defEV + evAmountDropped;
         if (total < 256 && totalEVsUsed <= 510) defEV += evAmountDropped;
     }
 
-    protected void addSpecialAtkEV(int evAmountDropped) {
+    private void addSpecialAtkEV(int evAmountDropped) {
         int total = specialAtkEV + evAmountDropped;
         if (total < 256 && totalEVsUsed <= 510) specialAtkEV += evAmountDropped;
     }
 
-    protected void addSpecialDefEV(int evAmountDropped) {
+    private void addSpecialDefEV(int evAmountDropped) {
         int total = specialDefEV + evAmountDropped;
         if (total < 256 && totalEVsUsed <= 510) specialDefEV += evAmountDropped;
     }
 
-    protected void addSpeedEV(int evAmountDropped) {
+    private void addSpeedEV(int evAmountDropped) {
         int total = speedEV + evAmountDropped;
         if (total < 256 && totalEVsUsed <= 510) speedEV += evAmountDropped;
     }
@@ -114,7 +140,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      *
      * @param evType Il tipo di EV (ad esempio, "hp", "atk", "def", ecc.)
      * @return Il numero di EV utilizzati.
-     * @throws IllegalArgumentException se gli EV non sono multipli di 4.
+     * @throws IllegalArgumentException se gli EV non sono di un tipo valido.
      */
     private int useEVs(String evType) {
         int ev = 0;
@@ -178,6 +204,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
         return usableEVs;
     }
+
 
     /**
      * Aggiunge il numero di EV utilizzati al contatore totale degli EV utilizzati.
