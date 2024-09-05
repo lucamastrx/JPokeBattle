@@ -144,7 +144,7 @@ public abstract class Pokemon {
         }
 
         for (Move move : moves) {
-            this.moves.put(move, move.getPPDefault());
+            this.moves.put(move, move.getUtilizzi());
         }
     }
 

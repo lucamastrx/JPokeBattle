@@ -367,7 +367,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!"); // messaggio in GUI
         }
         else {
-            int ppMax = move.getPPDefault();
+            int ppMax = move.getUtilizzi();
             getMoves().put(move, ppMax);
         }
         save();

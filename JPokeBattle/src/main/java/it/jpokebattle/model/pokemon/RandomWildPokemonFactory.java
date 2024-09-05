@@ -7,6 +7,14 @@ import java.util.*;
 public class RandomWildPokemonFactory extends PokemonFactory {
 
 
+    /*  Codice che verrra usato per creare pokemon:
+        RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
+        Pokemon pokmn= rwpf.createPokemon();
+        System.out.println(pokmn.getBreed());
+        bla bla
+
+     */
+
 
     @Override
     public Pokemon createPokemon() {

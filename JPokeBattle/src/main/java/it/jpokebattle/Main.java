@@ -31,19 +31,23 @@ public class Main extends Application {
     private static Parent root;
 
     public static void main(String[] args) {
-        RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
-        Pokemon pokmn= rwpf.createPokemon();
-        System.out.println(pokmn.getBreed());
 
-        /*
+
         Move mv = createRandomMove();
-        System.out.println(mv.getID()); */
+        System.out.println(mv.getID());
         launch(args);
     }
 
+
     private static Move createRandomMove() {
-        // Carica il JSON specificando il tipo di valore Breed
+        // Carica il JSON specificando il tipo di valore Move
         HashMap<String, Move> moveMap = FileManager.readJSON("json.moves", Move.class);
+
+        // Controlla se la mappa è nulla o vuota
+        if (moveMap == null || moveMap.isEmpty()) {
+            System.err.println("Errore: mappa delle mosse vuota o non trovata.");
+            return null;  // O gestisci il caso in cui non ci sono mosse disponibili
+        }
 
         // Ottieni l'insieme delle chiavi
         Set<String> keySet = moveMap.keySet();
@@ -57,6 +61,8 @@ public class Main extends Application {
 
         // Seleziona la chiave casuale
         String randomKey = keyList.get(randomIndex);
+
+        // Restituisci la mossa corrispondente alla chiave casuale
         return moveMap.get(randomKey);
     }
 
