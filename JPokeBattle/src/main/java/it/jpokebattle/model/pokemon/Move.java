@@ -5,9 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.type.Type;
+import it.jpokebattle.util.FileManager;
+
+import java.util.HashMap;
 
 
 public class Move implements Identifiable {
+    @JsonIgnore
+    public static HashMap<String, Move> movesMap = new HashMap<>(FileManager.readJSON("json.moves", Move.class));
+
     private final String name;          // è anche l'ID
     private Type type;
     private String description;
@@ -101,6 +107,10 @@ public class Move implements Identifiable {
         return name;
     }
 
+    @Override
+    public String toString(){
+        return "Move: " + name;
+    }
 
     /*
     public static void dumpJSON() {

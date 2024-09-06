@@ -8,11 +8,11 @@ public class RandomWildPokemonFactory extends PokemonFactory {
 
 
     /*  Codice che verrra usato per creare pokemon:
+
         RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
         Pokemon pokmn= rwpf.createPokemon();
-        System.out.println(pokmn.getBreed());
-        bla bla
 
+        bla bla
      */
 
 
@@ -25,9 +25,7 @@ public class RandomWildPokemonFactory extends PokemonFactory {
         Random random = new Random();
         int randomLevel = random.nextInt(61) + 10;
 
-
-
-
+        // Costruisce e ritorna un WildPokemon
         return new WildPokemon(breed, randomLevel);
     }
 

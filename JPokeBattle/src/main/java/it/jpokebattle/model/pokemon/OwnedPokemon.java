@@ -102,6 +102,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             default:
                 throw new IllegalArgumentException("Tipo di EV non riconosciuto: " + evType);
         }
+        save();
     }
 
     private void addHpEV(int evAmountDropped) {
@@ -351,30 +352,15 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         }
     }
 
-
-    /**
-     * Metodo che aggiunge una mossa al pokemon.
-     * Se il pokemon ha già 4 mosse, viene chiesta quale mossa sostituire.
-     *
-     * @param move Mossa che si vuole aggiungere
-     */
-    public void addMove(Move move) {
-        if (getMoves().size() > 3) {
-
-            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una..."); // TODO manu messaggio in GUI
-            // click per rimuovere una mossa                                               // in GUI
-            // removeMove(Move mossaDaDimenticare)
-            System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!"); // messaggio in GUI
-        }
-        else {
-            int ppMax = move.getUtilizzi();
-            getMoves().put(move, ppMax);
-        }
+    @Override
+    public void addMove(Move move){
+        super.addMove(move);
         save();
     }
 
+    @Override
     public void removeMove(Move move){
-        getMoves().remove(move);
+        super.removeMove(move);
         save();
     }
 
@@ -389,8 +375,6 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         super.setMoves(moves);
         save();
     }
-
-
 
     @Override
     public String getID() {

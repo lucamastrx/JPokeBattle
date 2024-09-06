@@ -2,7 +2,9 @@ package it.jpokebattle.model.pokemon;
 
 import it.jpokebattle.util.EVDrop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 
@@ -37,6 +39,7 @@ public abstract class Pokemon {
     public Pokemon(Breed breed) {
         this.breed = breed;
         this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
+        this.moves = new HashMap<>();
         setRandomIVs();
     }
 
@@ -118,6 +121,8 @@ public abstract class Pokemon {
 
     public void setStrength(int strength) {this.strength = strength;}
 
+
+
     /**
      * Metodo che setta le mosse di un pokemon.
      * Possono essere al massimo 4.
@@ -130,6 +135,45 @@ public abstract class Pokemon {
         }
         this.moves = moves;
 
+    }
+
+
+    /**
+     * Metodo che aggiunge una mossa al pokemon.
+     * Se il pokemon ha già 4 mosse, viene chiesta quale mossa sostituire.
+     *
+     * @param move Mossa che si vuole aggiungere
+     */
+    public void addMove(Move move) {
+        if (getMoves().size() > 3) {
+
+            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una..."); // TODO messaggio in GUI
+            // click per rimuovere una mossa                                               // in GUI
+            // removeMove(Move mossaDaDimenticare)
+            System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!"); // messaggio in GUI
+        }
+        else {
+            int ppMax = move.getUtilizzi();
+            getMoves().put(move, ppMax);
+        }
+    }
+
+    public void addMove(String moveID) {
+        if (getMoves().size() > 3) {
+            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una..."); // TODO messaggio in GUI
+            // click per rimuovere una mossa                                               // in GUI
+            // removeMove(Move mossaDaDimenticare)
+            System.out.println(getName() + "ha imparato la mossa: " + moveID + "\nFantastico!"); // messaggio in GUI
+        }
+        else {
+            Move move = Move.movesMap.get(moveID);          // prende la mossa dalla mappa di tutte le mosse
+            int ppMax = move.getUtilizzi();
+            getMoves().put(move, ppMax);
+        }
+    }
+
+    public void removeMove(Move move){
+        getMoves().remove(move);
     }
 
     /**
@@ -176,5 +220,10 @@ public abstract class Pokemon {
             default:
                 throw new IllegalArgumentException("Tipo di EV non valido: " + this.getBreed().getEvTypeDropped());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon: " + name;
     }
 }

@@ -1,7 +1,5 @@
 package it.jpokebattle;
 
-
-import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.pokemon.RandomWildPokemonFactory;
 import it.jpokebattle.util.SoundManager;
@@ -15,8 +13,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.util.*;
 
 
 /**
@@ -31,13 +27,17 @@ public class Main extends Application {
     private static Parent root;
 
     public static void main(String[] args) {
+        RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
+        Pokemon pokmn= rwpf.createPokemon();
 
-
-        Move mv = createRandomMove();
-        System.out.println(mv.getID());
         launch(args);
     }
 
+
+
+    /*
+        Move mv = createRandomMove();
+        System.out.println(mv.getID());
 
     private static Move createRandomMove() {
         // Carica il JSON specificando il tipo di valore Move
@@ -64,7 +64,7 @@ public class Main extends Application {
 
         // Restituisci la mossa corrispondente alla chiave casuale
         return moveMap.get(randomKey);
-    }
+    }*/
 
 
     @Override
