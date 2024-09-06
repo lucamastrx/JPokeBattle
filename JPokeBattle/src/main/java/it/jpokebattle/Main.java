@@ -27,9 +27,6 @@ public class Main extends Application {
     private static Parent root;
 
     public static void main(String[] args) {
-        RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
-        Pokemon pokmn= rwpf.createPokemon();
-
         launch(args);
     }
 

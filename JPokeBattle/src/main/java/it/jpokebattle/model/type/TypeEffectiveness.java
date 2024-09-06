@@ -217,14 +217,14 @@ public class TypeEffectiveness {
      * Metodo che ritorna il moltiplicatore dei danni per capire l'efficacia di una mossa
      * su di un pokemon.
      *
-     * @param attacker è il Type della mossa del Pokemon attaccante.
+     * @param moveAttacker è il Type della mossa del Pokemon attaccante.
      * @param defenderTypes è il Set dei Type del Pokemon difensore.
      * @return double è il valore del moltiplicatore ai danni
      */
-    public double getEffectiveness(Type attacker, Set<Type> defenderTypes) {
+    public double getEffectiveness(Type moveAttacker, Set<Type> defenderTypes) {
         double totalEffectiveness = 1.0;        // valore base dell'efficacia
         for (Type defenderType : defenderTypes) {
-            totalEffectiveness *= getEffectiveness(attacker, defenderType);   // moltiplica l'efficacia per ogni tipo del difensore
+            totalEffectiveness *= getEffectiveness(moveAttacker, defenderType);   // moltiplica l'efficacia per ogni tipo del difensore
         }
         return totalEffectiveness;
     }

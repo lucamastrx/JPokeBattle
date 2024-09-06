@@ -67,12 +67,14 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         this.expForNextLevel = expForNextLevel;
     }
 
-    public void addExp(int expGuadaganti) {
-        if (this.getLevel() < 100)
-            this.exp += expGuadaganti;
+
+
+    public void collectExp(int dropStrenghtDefeated) {
+        if (this.getLevel() < 100) {
+            this.exp += dropStrenghtDefeated;
+            save();
+        }
     }
-
-
 
 
     public void collectEVs(EVDrop evDrop) {
@@ -352,9 +354,30 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         }
     }
 
+
+
+
+    private boolean canLearnMove(){ // TODO
+        getBreed().getMoves();
+        return false;
+    }
+
+
+    public void learnMove(){ // TODO
+
+    }
+
+
+
     @Override
     public void addMove(Move move){
         super.addMove(move);
+        save();
+    }
+
+    @Override
+    public void addMove(String moveID) {
+        super.addMove(moveID);
         save();
     }
 

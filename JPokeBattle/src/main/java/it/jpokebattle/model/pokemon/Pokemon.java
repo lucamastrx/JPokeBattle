@@ -139,6 +139,23 @@ public abstract class Pokemon {
 
 
     /**
+     * Metodo che setta le mosse di un pokemon.
+     * Possono essere al massimo 4.
+     * @param moves Array di mosse
+     * @throws IllegalArgumentException
+     */
+    public void setMoves(Move[] moves) {
+        if (moves.length > 4) {
+            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
+        }
+
+        for (Move move : moves) {
+            this.moves.put(move, move.getUtilizzi());
+        }
+    }
+
+
+    /**
      * Metodo che aggiunge una mossa al pokemon.
      * Se il pokemon ha già 4 mosse, viene chiesta quale mossa sostituire.
      *
@@ -176,21 +193,7 @@ public abstract class Pokemon {
         getMoves().remove(move);
     }
 
-    /**
-     * Metodo che setta le mosse di un pokemon.
-     * Possono essere al massimo 4.
-     * @param moves Array di mosse
-     * @throws IllegalArgumentException
-     */
-    public void setMoves(Move[] moves) {
-        if (moves.length > 4) {
-            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
-        }
 
-        for (Move move : moves) {
-            this.moves.put(move, move.getUtilizzi());
-        }
-    }
 
 
 

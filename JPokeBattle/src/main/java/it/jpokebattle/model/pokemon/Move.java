@@ -124,4 +124,7 @@ public class Move implements Identifiable {
         // Serializza la mappa su un file JSON
         FileManager.writeJSON(movesMap, "json.moves") oppure "json.prova";
     }*/
+
+
+    // TODO equals toHash
 }
