@@ -166,6 +166,7 @@ public abstract class Pokemon {
             // click per rimuovere una mossa                                               // in GUI
             // removeMove(Move mossaDaDimenticare)
             System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!"); // messaggio in GUI
+            // oppure "non ha imparato la mossa"!
         }
         else {
             int ppMax = move.getUtilizzi();
@@ -179,6 +180,8 @@ public abstract class Pokemon {
             // click per rimuovere una mossa                                               // in GUI
             // removeMove(Move mossaDaDimenticare)
             System.out.println(getName() + "ha imparato la mossa: " + moveID + "\nFantastico!"); // messaggio in GUI
+            // oppure "non ha imparato la mossa"!
+
         }
         else {
             Move move = Move.movesMap.get(moveID);          // prende la mossa dalla mappa di tutte le mosse

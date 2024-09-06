@@ -7,7 +7,7 @@ import it.jpokebattle.util.EVDrop;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.time.Instant;
-
+import java.util.Set;
 
 
 public class OwnedPokemon extends Pokemon implements Serializable, Identifiable, Saveable<OwnedPokemon> {
@@ -357,14 +357,16 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
 
 
-    private boolean canLearnMove(){ // TODO
-        getBreed().getMoves();
-        return false;
+    private boolean canLearnMove(){
+        Set<Integer> moveLevels =  getBreed().getMoves().keySet();
+        return moveLevels.contains(this.getLevel());
     }
 
 
-    public void learnMove(){ // TODO
-
+    public void learnMove(){
+        if (canLearnMove()) {
+            addMove(getBreed().getMoves().get(getLevel())); // aggiunge la mossa a quelle del pokemon, addMove si occupa se c'è mossa da rimuovere
+        }
     }
 
 

@@ -10,7 +10,7 @@ import it.jpokebattle.util.FileManager;
 import java.util.HashMap;
 
 
-public class Move implements Identifiable {
+public class Move implements Identifiable { // TODO aggiungere priorità
     @JsonIgnore
     public static HashMap<String, Move> movesMap = new HashMap<>(FileManager.readJSON("json.moves", Move.class));
 
