@@ -17,7 +17,7 @@ import java.io.IOException;
 
 
 
-public class MenuController {
+public class MenuController { // TODO bottone per curare i pokemon
 
     private SoundManager soundMan = SoundManager.getInstance();
 
