@@ -96,6 +96,10 @@ public class Team {
     // Metodo per visualizzare la squadra
     @Override
     public String toString() {
-        return pokemonList.toString();
+        StringBuilder sb = new StringBuilder();
+        for (Pokemon pokemon : pokemonList) {
+            sb.append(pokemon.toString()).append("\n");  // Aggiunge ogni Pokémon seguito da una nuova riga
+        }
+        return sb.toString().trim();  // Rimuove l'ultima nuova riga
     }
 }
