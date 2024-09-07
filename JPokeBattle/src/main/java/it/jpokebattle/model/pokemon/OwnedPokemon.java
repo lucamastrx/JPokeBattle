@@ -2,7 +2,6 @@ package it.jpokebattle.model.pokemon;
 
 import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.Saveable;
-import it.jpokebattle.util.EVDrop;
 
 import java.io.Serializable;
 import java.util.HashMap;

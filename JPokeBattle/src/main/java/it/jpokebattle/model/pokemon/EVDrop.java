@@ -1,4 +1,4 @@
-package it.jpokebattle.util;
+package it.jpokebattle.model.pokemon;
 
 /**
  * Classe Custom che contiene una Stringa (evTypeDropped) e un intero (evAmountDropped)

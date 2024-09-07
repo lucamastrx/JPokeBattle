@@ -105,6 +105,56 @@ public class FileManager {
 
 
     /**
+     * Restituisce una hashmap a partire da un file ser.
+     * Ogni hashmap è composta da stringhe e oggetti.
+     *
+     * @param serSrcName    nome di risorsa del file
+     * @return              hashmap caricata
+     * @see it.jpokebattle.properties
+     * */
+    public static <V> HashMap<String, V> loadSER(String serSrcName) {
+        String path = src.getString(serSrcName);
+        HashMap<String, V> map = null;
+
+        File file = new File(dataDir, path);
+        if (!file.exists())
+            return null;
+        if (file.length() == 0)
+            return null;
+
+        try (FileInputStream fileIn = new FileInputStream(file);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            map = (HashMap<String, V>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return map;
+    }
+
+    /**
+     * Scrive su un file ser una hashmap.
+     * Ogni hashmap è composta da stringhe e oggetti.
+     *
+     * @param map           hashmap da scrivere
+     * @param serSrcName    nome di risorsa del file
+     * @see it.jpokebattle.properties
+     * */
+    public static <V> void writeSER(HashMap<String, V> map, String serSrcName) {
+        String path = src.getString(serSrcName);
+        File file = new File(dataDir, path);
+
+        try (FileOutputStream fileOut = new FileOutputStream(file);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
      * Svuota il contenuto di un file.
      *
      * @param serSrcName
@@ -192,51 +242,5 @@ public class FileManager {
         return new MediaPlayer(media);
     }
 
-    /**
-     * Restituisce una hashmap a partire da un file ser.
-     * Ogni hashmap è composta da stringhe e oggetti.
-     *
-     * @param serSrcName    nome di risorsa del file
-     * @return              hashmap caricata
-     * @see it.jpokebattle.properties
-     * */
-    public static <V> HashMap<String, V> loadSER(String serSrcName) {
-        String path = src.getString(serSrcName);
-        HashMap<String, V> map = null;
 
-        File file = new File(dataDir, path);
-        if (!file.exists())
-            return null;
-        if (file.length() == 0)
-            return null;
-
-        try (FileInputStream fileIn = new FileInputStream(file);
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            map = (HashMap<String, V>) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return map;
-    }
-
-    /**
-     * Scrive su un file ser una hashmap.
-     * Ogni hashmap è composta da stringhe e oggetti.
-     *
-     * @param map           hashmap da scrivere
-     * @param serSrcName    nome di risorsa del file
-     * @see it.jpokebattle.properties
-     * */
-    public static <V> void writeSER(HashMap<String, V> map, String serSrcName) {
-        String path = src.getString(serSrcName);
-        File file = new File(dataDir, path);
-
-        try (FileOutputStream fileOut = new FileOutputStream(file);
-             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(map);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -1,7 +1,5 @@
 package it.jpokebattle.model.pokemon;
 
-import it.jpokebattle.util.EVDrop;
-
 import java.util.*;
 import java.util.stream.Collectors;
 

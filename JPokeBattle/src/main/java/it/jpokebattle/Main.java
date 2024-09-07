@@ -1,10 +1,6 @@
 package it.jpokebattle;
 
-import it.jpokebattle.model.player.BotPlayerFactory;
 import it.jpokebattle.model.player.HumanPlayer;
-import it.jpokebattle.model.player.Player;
-import it.jpokebattle.model.pokemon.PokemonFactory;
-import it.jpokebattle.model.pokemon.RandomPokemonFactory;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
