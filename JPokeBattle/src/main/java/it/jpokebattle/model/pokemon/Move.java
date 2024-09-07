@@ -118,7 +118,7 @@ public class Move implements Identifiable { // TODO aggiungere priorità
 
         // Crea una HashMap di razze Pokémon con nome come chiave
         HashMap<String, Move> movesMap = new HashMap<>();           // {ID : Mossa}
-        movesMap.put("Growl", growl);
+        movesMap.put(getID(), growl);
 
 
         // Serializza la mappa su un file JSON

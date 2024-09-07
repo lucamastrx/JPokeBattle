@@ -1,7 +1,10 @@
 package it.jpokebattle;
 
+import it.jpokebattle.model.player.HumanPlayer;
+import it.jpokebattle.model.pokemon.Breed;
+import it.jpokebattle.model.pokemon.OwnedPokemon;
 import it.jpokebattle.model.pokemon.Pokemon;
-import it.jpokebattle.model.pokemon.RandomWildPokemonFactory;
+import it.jpokebattle.model.pokemon.RandomPokemonFactory;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
@@ -13,6 +16,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -27,6 +32,18 @@ public class Main extends Application {
     private static Parent root;
 
     public static void main(String[] args) {
+
+        FileManager.clearSER("ser.ownedPokemon");
+
+        /*
+        Breed b1 = Breed.breedsMap.get("Charizard");
+        OwnedPokemon p1 = new OwnedPokemon(b1, "", 5);
+        System.out.println(p1);
+        */
+        //HumanPlayer player = HumanPlayer.getInstance();
+        //System.out.println(player.getTeam());
+
+
         launch(args);
     }
 

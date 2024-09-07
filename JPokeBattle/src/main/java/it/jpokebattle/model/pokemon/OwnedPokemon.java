@@ -33,13 +33,11 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * @param breed    razza del pokemon
      * @param nickname soprannome del pokemon
      */
-    public OwnedPokemon(Breed breed, String nickname) {
-        super(breed);
-        setLevel(super.getLevel());
-        this.nickname = nickname;  // setNickname(name); TODO pokemon catturato serve messaggio GUI per fare setNickname
+    public OwnedPokemon(Breed breed, String nickname, int level) {
+        super(breed, level);
+        if (nickname != null && !nickname.isEmpty() && !nickname.isBlank()) this.nickname = nickname;
         this.ID = getName() + Instant.now();
         this.expForNextLevel = calculateRequiredExpForNextLevel(getLevel());
-        setStrength( getHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
         save();               // aggiunge il pokemon alla mappa e la salva nel file ser
     }
 
@@ -51,13 +49,10 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      */
     @Override
     public String getName() {
-        return (nickname != null && !nickname.isEmpty()) ? nickname : super.getName();
+        return (nickname != null && !nickname.isEmpty() && !nickname.isBlank()) ? nickname : super.getName();
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-        save();
-    }
+    public String getNickname() {return nickname;}
 
     public int getExp() {return this.exp;}
 
@@ -252,7 +247,8 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         switch (statType) {
             case "hp":
                 newValue += getLevel() + 5;
-                setHp(newValue);
+                setCurrentHp(newValue);
+                setFullHp(newValue);
                 break;
             case "atk":
                 setAtk(newValue);
@@ -411,4 +407,21 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         save(SER_SRC_NAME, this);
     }
 
+    @Override
+    public String toString() {
+        return "OwnedPokemon{" +
+                ", ID='" + ID + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", exp=" + exp +
+                ", expForNextLevel=" + expForNextLevel +
+                ", hpEV=" + hpEV +
+                ", atkEV=" + atkEV +
+                ", defEV=" + defEV +
+                ", specialAtkEV=" + specialAtkEV +
+                ", specialDefEV=" + specialDefEV +
+                ", speedEV=" + speedEV +
+                ", totalEVsUsed=" + totalEVsUsed +
+                 super.toString() +
+                "} ";
+    }
 }

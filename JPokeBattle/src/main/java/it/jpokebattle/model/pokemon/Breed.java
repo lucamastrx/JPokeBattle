@@ -1,16 +1,20 @@
 package it.jpokebattle.model.pokemon;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.type.Type;
+import it.jpokebattle.util.FileManager;
 
 import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 
 
-public class Breed implements Identifiable { //
+public class Breed implements Identifiable {
+    @JsonIgnore
+    public static HashMap<String, Breed> breedsMap = new HashMap<>(FileManager.readJSON("json.breeds", Breed.class));
 
     private final String name;            // è anche l'ID
     private HashSet<Type> types;

@@ -2,15 +2,16 @@ package it.jpokebattle.model.pokemon;
 
 import it.jpokebattle.util.EVDrop;
 
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public abstract class Pokemon {
     private String name;
     private Breed breed;        // specie
     private HashMap<Move, Integer> moves;        // {codice mossa: pp attuali}
-    private int hp;             // punti salute
+    private int currentHp;             // punti salute attuali (variabili)
+    private int fullHp;                // punti salute del pokemon quando è curato
     private int atk;
     private int def;
     private int specialAtk;
@@ -26,7 +27,6 @@ public abstract class Pokemon {
     private int speedIV;
 
 
-
     /**
      * Metodo Costruttore.
      * Setta automaticamente il nome del pokemon con il nome della specie.
@@ -34,11 +34,15 @@ public abstract class Pokemon {
      *
      * @param breed Specie del pokemon
      */
-    public Pokemon(Breed breed) {
+    public Pokemon(Breed breed, int level) {
         this.breed = breed;
         this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
         this.moves = new HashMap<>();
+        this.level = level;
         setRandomIVs();
+        setStatsFromLevel(level);
+        setMovesFromLevel(level);
+        setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
     }
 
 
@@ -46,14 +50,16 @@ public abstract class Pokemon {
      * Controlla se il pokemon ha ancora le forze
      */
     public boolean isAlive() {
-        return hp > 0;
+        return currentHp > 0;
     }
 
     public String getName() {return name;}
 
     public Breed getBreed() {return this.breed;}
 
-    public int getHp() {return this.hp;}
+    public int getCurrentHp() {return this.currentHp;}
+
+    public int getFullHp() {return this.fullHp;}
 
     public int getAtk() {return this.atk;}
 
@@ -103,7 +109,9 @@ public abstract class Pokemon {
 
     public void setName(String name) {this.name = name;}
 
-    public void setHp(int hp) {this.hp = hp;}
+    public void setCurrentHp(int currentHp) {this.currentHp = currentHp;}
+
+    public void setFullHp(int fullHp) {this.fullHp = fullHp;}
 
     public void setAtk(int atk) {this.atk = atk;}
 
@@ -118,6 +126,67 @@ public abstract class Pokemon {
     public void setLevel(int level) {this.level = level;}
 
     public void setStrength(int strength) {this.strength = strength;}
+
+    private void setStatsFromLevel(int lvl){
+        setCurrentHp((((getBreed().getHpBaseStat() + getHpIV()) * 2 * lvl) / 100)+ lvl + 10);
+        setFullHp((((getBreed().getHpBaseStat() + getHpIV()) * 2 * lvl) / 100)+ lvl + 10);
+        setAtk((((getBreed().getAtkBaseStat() + getAtkIV()) * 2 * lvl) / 100) + 5);
+        setDef((((getBreed().getDefBaseStat() + getDefIV()) * 2 * lvl) / 100) + 5);
+        setSpecialAtk((((getBreed().getSpecialAtkBaseStat() + getSpecialAtkIV()) * 2 * lvl) / 100) + 5);
+        setSpecialDef((((getBreed().getSpecialDefBaseStat() + getSpecialDefIV()) * 2 * lvl) / 100) + 5);
+        setSpeed((((getBreed().getSpeedBaseStat() + getSpeedIV()) * 2 * lvl) / 100) + 5);
+    }
+
+    private void setMovesFromLevel(int lvl){
+        HashMap<Integer, String> breedMoves = getBreed().getMoves();
+
+        HashMap<Integer, String> filteredBreedMoves = breedMoves.entrySet()
+                .stream()                               // Otteniamo un flusso di entry della mappa (breedMoves.entrySet().stream())
+                .filter(entry -> entry.getKey() <= lvl) // Applichiamo il filtro per mantenere solo le entry con chiave <= lvl
+                .collect(Collectors.toMap(              // usiamo collect(Collectors.toMap()) per creare una nuova mappa
+                        Map.Entry::getKey,              // Map.Entry::getKey specifica che vogliamo usare le chiavi originali come chiavi nella nuova mappa.
+                        Map.Entry::getValue,            // specifica che vogliamo usare i valori originali come valori nella nuova mappa.
+                        (v1, v2) -> v1,                 // In caso di chiavi duplicate, mantiene il primo valore (è una funzione di merge)
+                        HashMap::new                    // Specifica che vogliamo una HashMap come tipo di mappa risultante
+                ));
+
+
+        if (filteredBreedMoves.size() <= 4 && !filteredBreedMoves.isEmpty()) {
+            getMoves().clear();
+            for (String moveID : filteredBreedMoves.values()) {
+                addMove(moveID);
+            }
+
+        } else if (filteredBreedMoves.size() > 4) {
+            getMoves().clear();
+
+            List<Map.Entry<Integer, String>> sortedEntries = new ArrayList<>(filteredBreedMoves.entrySet());
+            sortedEntries.sort(Map.Entry.comparingByKey());
+
+            List<String> movesToAdd = new ArrayList<>();
+
+            // Prendi le 2 mosse con chiave più piccola
+            movesToAdd.add(sortedEntries.get(0).getValue());
+            movesToAdd.add(sortedEntries.get(1).getValue());
+
+            // Prendi le 2 mosse con chiave più grande
+            movesToAdd.add(sortedEntries.get(sortedEntries.size() - 2).getValue());
+            movesToAdd.add(sortedEntries.get(sortedEntries.size() - 1).getValue());
+
+            // Usa il metodo addMove(String moveID) su ognuna di queste
+            for (String moveID : movesToAdd) {
+                addMove(moveID);
+            }
+
+
+        } else if (filteredBreedMoves.isEmpty()) {
+            throw new RuntimeException("Errore: Non ci sono mosse disponibili per il livello specificato.");
+        }
+
+
+        System.out.println("Mosse possibili per il livello " + lvl + ": " + filteredBreedMoves);
+        System.out.println(getMoves().keySet());
+    }
 
 
 
@@ -196,7 +265,9 @@ public abstract class Pokemon {
 
 
 
-
+    public void heal(){
+        setCurrentHp(getFullHp());
+    }
 
 
     /**
@@ -226,8 +297,28 @@ public abstract class Pokemon {
         }
     }
 
+
     @Override
     public String toString() {
-        return "Pokemon: " + name;
+        return "Pokemon{" +
+                "name='" + name + '\'' +
+                ", breed=" + breed +
+                ", moves=" + moves +
+                ", currentHp=" + currentHp +
+                ", fullHp=" + fullHp +
+                ", atk=" + atk +
+                ", def=" + def +
+                ", specialAtk=" + specialAtk +
+                ", specialDef=" + specialDef +
+                ", speed=" + speed +
+                ", level=" + level +
+                ", strength=" + strength +
+                ", hpIV=" + hpIV +
+                ", atkIV=" + atkIV +
+                ", defIV=" + defIV +
+                ", specialAtkIV=" + specialAtkIV +
+                ", specialDefIV=" + specialDefIV +
+                ", speedIV=" + speedIV +
+                '}';
     }
 }

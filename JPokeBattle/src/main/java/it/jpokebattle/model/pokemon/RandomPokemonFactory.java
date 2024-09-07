@@ -4,12 +4,12 @@ import it.jpokebattle.util.FileManager;
 
 import java.util.*;
 
-public class RandomWildPokemonFactory extends PokemonFactory {
+public class RandomPokemonFactory extends PokemonFactory {
 
 
     /*  Codice che verrra usato per creare pokemon:
 
-        RandomWildPokemonFactory rwpf = new RandomWildPokemonFactory();
+        RandomPokemonFactory rwpf = new RandomPokemonFactory();
         Pokemon pokmn= rwpf.createPokemon();
 
         bla bla
