@@ -8,9 +8,9 @@ public abstract class Player {
     private Team team;
 
 
-    public Player(String name, Team team) {
+    public Player(String name) {
         this.name = name;
-        this.team = team;
+        this.team = new Team();
     }
 
 

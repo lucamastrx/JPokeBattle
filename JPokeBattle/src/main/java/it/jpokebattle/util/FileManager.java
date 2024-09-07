@@ -58,7 +58,7 @@ public class FileManager {
                 }
             });
 
-            System.out.println("Dati letti con successo da " + file.getAbsolutePath());
+            // System.out.println("Dati letti con successo da " + file.getAbsolutePath());
         } catch (IOException e) {
             System.err.println("Errore durante la lettura del file JSON.");
             e.printStackTrace();

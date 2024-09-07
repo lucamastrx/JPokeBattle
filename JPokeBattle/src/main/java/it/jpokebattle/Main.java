@@ -33,15 +33,16 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        FileManager.clearSER("ser.ownedPokemon");
 
-        /*
-        Breed b1 = Breed.breedsMap.get("Charizard");
-        OwnedPokemon p1 = new OwnedPokemon(b1, "", 5);
-        System.out.println(p1);
-        */
-        //HumanPlayer player = HumanPlayer.getInstance();
-        //System.out.println(player.getTeam());
+        FileManager.clearSER("ser.ownedPokemon");
+        //
+        // Breed b1 = Breed.breedsMap.get("Charizard");
+        // OwnedPokemon p1 = new OwnedPokemon(b1, "", 5);
+        // System.out.println(p1);
+
+        HumanPlayer player = HumanPlayer.getInstance();
+        System.out.println(player.getTeam());
+        FileManager.clearSER("ser.ownedPokemon");
 
 
         launch(args);

@@ -109,7 +109,7 @@ public class Move implements Identifiable { // TODO aggiungere priorità
 
     @Override
     public String toString(){
-        return "Move: " + name;
+        return "Move:{" + name + "} ";
     }
 
     /*

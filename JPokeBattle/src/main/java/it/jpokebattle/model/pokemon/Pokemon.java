@@ -46,6 +46,8 @@ public abstract class Pokemon {
     }
 
 
+    protected Pokemon(){}
+
     /**
      * Controlla se il pokemon ha ancora le forze
      */
@@ -184,8 +186,8 @@ public abstract class Pokemon {
         }
 
 
-        System.out.println("Mosse possibili per il livello " + lvl + ": " + filteredBreedMoves);
-        System.out.println(getMoves().keySet());
+        // System.out.println("Mosse possibili per il livello " + lvl + ": " + filteredBreedMoves);
+        // System.out.println(getMoves().keySet());
     }
 
 
@@ -300,25 +302,25 @@ public abstract class Pokemon {
 
     @Override
     public String toString() {
-        return "Pokemon{" +
-                "name='" + name + '\'' +
-                ", breed=" + breed +
-                ", moves=" + moves +
-                ", currentHp=" + currentHp +
-                ", fullHp=" + fullHp +
-                ", atk=" + atk +
-                ", def=" + def +
-                ", specialAtk=" + specialAtk +
-                ", specialDef=" + specialDef +
-                ", speed=" + speed +
-                ", level=" + level +
-                ", strength=" + strength +
-                ", hpIV=" + hpIV +
-                ", atkIV=" + atkIV +
-                ", defIV=" + defIV +
-                ", specialAtkIV=" + specialAtkIV +
-                ", specialDefIV=" + specialDefIV +
-                ", speedIV=" + speedIV +
+        return "Pokemon:{" +
+                "name=" + name + ", " +
+                getBreed().toString() + ", " +
+                getMoves().toString() + ", " +
+                "currentHp=" + currentHp + ", " +
+                "fullHp=" + fullHp + ", " +
+                "atk=" + atk + ", " +
+                "def=" + def + ", " +
+                "specialAtk=" + specialAtk + ", " +
+                "specialDef=" + specialDef + ", " +
+                "speed=" + speed + ", " +
+                "level=" + level + ", " +
+                "strength=" + strength + ", " +
+                "hpIV=" + hpIV + ", " +
+                "atkIV=" + atkIV + ", " +
+                "defIV=" + defIV + ", " +
+                "specialAtkIV=" + specialAtkIV + ", " +
+                "specialDefIV=" + specialDefIV + ", " +
+                "speedIV=" + speedIV +
                 '}';
     }
 }

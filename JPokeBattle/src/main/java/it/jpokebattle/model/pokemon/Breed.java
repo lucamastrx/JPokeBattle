@@ -118,7 +118,7 @@ public class Breed implements Identifiable {
 
     @Override
     public String toString(){
-        return "Breed: " + name;
+        return "Breed:{" + name + "} ";
     }
 
 }

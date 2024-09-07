@@ -21,8 +21,8 @@ public class HumanPlayer extends Player {
 
     // Costruttore privato per impedire l'istanziamento esterno
     private HumanPlayer(String name) {
-        super(name, null);
-        // initializeStartingTeam();
+        super(name);
+        initializeStartingTeam();
     }
 
     // Metodo statico per ottenere l'istanza unica
@@ -33,7 +33,7 @@ public class HumanPlayer extends Player {
         return instance;
     }
 
-    /*
+
     private void initializeStartingTeam() {
         Breed charmander = Breed.breedsMap.get("Charmander");
         OwnedPokemon ownedCharmander = new OwnedPokemon(charmander, "",10);
@@ -47,7 +47,7 @@ public class HumanPlayer extends Player {
         getTeam().addPokemon(ownedCharmander);
         getTeam().addPokemon(ownedBulbasaur);
         getTeam().addPokemon(ownedSquirtle);
-    }*/
+    }
 
 }
 

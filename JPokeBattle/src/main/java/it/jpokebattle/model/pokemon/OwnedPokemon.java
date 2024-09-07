@@ -41,6 +41,10 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         save();               // aggiunge il pokemon alla mappa e la salva nel file ser
     }
 
+    // protected OwnedPokemon(){
+    //     this.ID = getName() + Instant.now();
+    // }
+
     /**
      * Restituisce il nome visualizzato del Pokémon. Se il Pokémon ha un soprannome, viene restituito il soprannome.
      * Altrimenti, viene restituito il nome della razza del Pokémon.
@@ -410,18 +414,35 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     @Override
     public String toString() {
         return "OwnedPokemon{" +
-                ", ID='" + ID + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", exp=" + exp +
-                ", expForNextLevel=" + expForNextLevel +
-                ", hpEV=" + hpEV +
-                ", atkEV=" + atkEV +
-                ", defEV=" + defEV +
-                ", specialAtkEV=" + specialAtkEV +
-                ", specialDefEV=" + specialDefEV +
-                ", speedEV=" + speedEV +
-                ", totalEVsUsed=" + totalEVsUsed +
-                 super.toString() +
+                "ID=" + ID + ", " +
+                "nickname=" + nickname + ", " +
+                "name=" + getName() + ", " +
+                getBreed().toString() + ", " +
+                getMoves().toString() + ", " +          // in alternativa getMoves().keySet()
+                "currentHp=" + getCurrentHp() + ", " +
+                "fullHp=" + getFullHp() + ", " +
+                "atk=" + getAtk() + ", " +
+                "def=" + getDef() + ", " +
+                "specialAtk=" + getSpecialAtk() + ", " +
+                "specialDef=" + getSpecialDef() + ", " +
+                "speed=" + getSpeed() + ", " +
+                "level=" + getLevel() + ", " +
+                "strength=" + getStrength() + ", " +
+                "hpIV=" + getHpIV() + ", " +
+                "atkIV=" + getAtkIV() + ", " +
+                "defIV=" + getDefIV() + ", " +
+                "specialAtkIV=" + getSpecialAtkIV() + ", " +
+                "specialDefIV=" + getSpecialDefIV() + ", " +
+                "speedIV=" + getSpeedIV() + ", " +
+                "exp=" + exp + ", " +
+                "expForNextLevel=" + expForNextLevel + ", " +
+                "hpEV=" + hpEV + ", " +
+                "atkEV=" + atkEV + ", " +
+                "defEV=" + defEV + ", " +
+                "specialAtkEV=" + specialAtkEV + ", " +
+                "specialDefEV=" + specialDefEV + ", " +
+                "speedEV=" + speedEV + ", " +
+                "totalEVsUsed= " + totalEVsUsed +
                 "} ";
     }
 }

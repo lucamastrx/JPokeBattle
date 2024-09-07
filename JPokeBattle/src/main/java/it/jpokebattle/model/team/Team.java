@@ -17,7 +17,7 @@ public class Team {
     public void addPokemon(Pokemon pokemon) {
         if (pokemonList.size() < 6) {  // Limitiamo la squadra a un massimo di 6 Pokémon, come nei giochi originali
             pokemonList.add(pokemon);
-            System.out.println(pokemon.getName() + " aggiunto alla squadra.");
+            // System.out.println(pokemon.getName() + " aggiunto alla squadra.");
         } else {
             System.out.println("La squadra è già completa. Non puoi aggiungere altri Pokémon.");
         }
