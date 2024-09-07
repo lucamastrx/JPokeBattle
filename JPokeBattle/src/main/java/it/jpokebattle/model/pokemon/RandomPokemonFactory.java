@@ -7,15 +7,6 @@ import java.util.*;
 public class RandomPokemonFactory extends PokemonFactory {
 
 
-    /*  Codice che verrra usato per creare pokemon:
-
-        RandomPokemonFactory rwpf = new RandomPokemonFactory();
-        Pokemon pokmn= rwpf.createPokemon();
-
-        bla bla
-     */
-
-
     @Override
     public Pokemon createPokemon() {
         // Genera una breed casuale
@@ -50,5 +41,12 @@ public class RandomPokemonFactory extends PokemonFactory {
         return breedMap.get(randomKey);
     }
 
-
 }
+
+    /*  Codice che verrra usato per creare pokemon:
+
+        RandomPokemonFactory rwpf = new RandomPokemonFactory();
+        Pokemon pokmn= rwpf.createPokemon();
+
+        bla bla
+     */

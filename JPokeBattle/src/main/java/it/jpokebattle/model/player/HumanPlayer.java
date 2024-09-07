@@ -4,9 +4,6 @@ package it.jpokebattle.model.player;
 import it.jpokebattle.model.pokemon.Breed;
 
 import it.jpokebattle.model.pokemon.OwnedPokemon;
-import it.jpokebattle.model.team.Team;
-
-
 
 
 /**
