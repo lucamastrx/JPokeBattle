@@ -47,7 +47,7 @@
             <ColorAdjust brightness="-0.59" saturation="-0.59" />
          </effect>
       </ImageView>
-      <Button fx:id="exitBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0" prefWidth="150.0" text="Esci" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+      <Button fx:id="exitBtn" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0" prefWidth="150.0" text="Esci" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -124,12 +124,17 @@
             <Insets top="9.0" />
          </GridPane.margin>
       </ImageView>
-      <Button fx:id="leaderboardButton" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#switchToLeaderboard" prefHeight="40.0" prefWidth="150.0" text="Leaderboard" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+      <Button fx:id="leaderboardButton" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#switchToLeaderboard" prefHeight="40.0" prefWidth="150.0" text="Leaderboard" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="battleButton" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#switchToBattle" prefHeight="40.0" prefWidth="150.0" text="Battle" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+      <Button fx:id="battleButton" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#switchToBattle" prefHeight="40.0" prefWidth="150.0" text="Battle!" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="cureTeamButton" alignment="CENTER" minHeight="40.0" minWidth="160.0" mnemonicParsing="false" onAction="#cureTeam" prefHeight="40.0" prefWidth="150.0" text="Cure Team!" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

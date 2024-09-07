@@ -4,10 +4,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public abstract class Pokemon {
+public abstract class Pokemon { // TODO usa mossa
     private String name;
     private Breed breed;        // specie
-    private HashMap<Move, Integer> moves;        // {codice mossa: pp attuali}
+    private HashMap<Move, Integer> moves;        // {mossa: pp attuali}
     private int currentHp;             // punti salute attuali (variabili)
     private int fullHp;                // punti salute del pokemon quando è curato
     private int atk;
@@ -44,34 +44,41 @@ public abstract class Pokemon {
     }
 
 
-    protected Pokemon(){}
+    protected Pokemon(){}   // serve solo per la serializzazione di java
 
     /**
      * Controlla se il pokemon ha ancora le forze
      */
-    public boolean isAlive() {
-        return currentHp > 0;
+    public boolean isFainted() {return currentHp > 0;}
+
+    public void heal() {
+        setCurrentHp(getFullHp());
+        for (Move move : moves.keySet()) {
+            moves.put(move, move.getUtilizzi());  // ripristina i PP al massimo
+        }
     }
+
+    public void takeDamage(int damage) {setCurrentHp(Math.max(0, currentHp - damage));}
 
     public String getName() {return name;}
 
-    public Breed getBreed() {return this.breed;}
+    public Breed getBreed() {return breed;}
 
-    public int getCurrentHp() {return this.currentHp;}
+    public int getCurrentHp() {return currentHp;}
 
-    public int getFullHp() {return this.fullHp;}
+    public int getFullHp() {return fullHp;}
 
-    public int getAtk() {return this.atk;}
+    public int getAtk() {return atk;}
 
-    public int getDef() {return this.def;}
+    public int getDef() {return def;}
 
-    public int getSpecialAtk() {return this.specialAtk;}
+    public int getSpecialAtk() {return specialAtk;}
 
-    public int getSpecialDef() {return this.specialDef;}
+    public int getSpecialDef() {return specialDef;}
 
-    public int getSpeed() {return this.speed;}
+    public int getSpeed() {return speed;}
 
-    public int getLevel() {return this.level;}
+    public int getLevel() {return level;}
 
     public int getSpeedIV() {return speedIV;}
 
@@ -263,11 +270,6 @@ public abstract class Pokemon {
         getMoves().remove(move);
     }
 
-
-
-    public void heal(){
-        setCurrentHp(getFullHp());
-    }
 
 
     /**

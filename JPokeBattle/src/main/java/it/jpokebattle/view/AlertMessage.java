@@ -6,7 +6,7 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
-public class AlertMessage {
+public class AlertMessage { // TODO
     private SoundManager soundMan = SoundManager.getInstance();
 
     /**

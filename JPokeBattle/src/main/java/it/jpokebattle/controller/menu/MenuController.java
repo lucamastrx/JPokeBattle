@@ -1,6 +1,7 @@
 package it.jpokebattle.controller.menu;
 
 import it.jpokebattle.controller.SceneManager;
+import it.jpokebattle.model.player.HumanPlayer;
 import it.jpokebattle.util.FileManager;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 
 
-public class MenuController { // TODO bottone per curare i pokemon
+public class MenuController {
 
     private SoundManager soundMan = SoundManager.getInstance();
 
@@ -25,7 +26,7 @@ public class MenuController { // TODO bottone per curare i pokemon
     protected ImageView volumeImg, gengarGif, snorlaxGif;
 
     @FXML
-    protected Button battleButton, leaderboardButton, exitBtn;
+    protected Button battleButton, cureTeamButton, leaderboardButton, exitBtn;
 
     @FXML
     protected Label titleLbl, mainMenuLbl;
@@ -51,6 +52,13 @@ public class MenuController { // TODO bottone per curare i pokemon
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.leaderboard");
     }
 
+
+    @FXML
+    public void cureTeam(ActionEvent event) throws IOException, InterruptedException {
+        soundMan.buttonClick();
+        soundMan.cureTeamClick();
+        HumanPlayer.getInstance().getTeam().healAllPokemon();
+    }
 
     /**
      * Chiude la finestra e termina il programma.

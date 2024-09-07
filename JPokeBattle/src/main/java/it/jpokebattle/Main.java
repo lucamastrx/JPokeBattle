@@ -1,6 +1,7 @@
 package it.jpokebattle;
 
 import it.jpokebattle.model.player.HumanPlayer;
+import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import javafx.application.Application;
@@ -26,7 +27,6 @@ public class Main extends Application {
     private static Parent root;
 
     public static void main(String[] args) {
-
 
 
         FileManager.clearSER("ser.ownedPokemon");

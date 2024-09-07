@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 
-public class Breed implements Identifiable {
+public class Breed implements Identifiable { // TODO equals toHash
     @JsonIgnore
     public static HashMap<String, Breed> breedsMap = new HashMap<>(FileManager.readJSON("json.breeds", Breed.class));
 

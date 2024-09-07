@@ -10,7 +10,7 @@ import it.jpokebattle.util.FileManager;
 import java.util.HashMap;
 
 
-public class Move implements Identifiable { // TODO aggiungere priorità
+public class Move implements Identifiable {  // TODO equals toHash
     @JsonIgnore
     public static HashMap<String, Move> movesMap = new HashMap<>(FileManager.readJSON("json.moves", Move.class));
 
@@ -21,6 +21,7 @@ public class Move implements Identifiable { // TODO aggiungere priorità
     private int precision;
     private int utilizzi;          // numero di utilizzi massimo di una mossa
     private boolean isSpecial;  // la mossa è speciale o fisica
+    private int priority;
     private String opponentModificatorType;     // la mossa modifica un qualche valore all'avversario
     private int opponentModificatorValue;       // di quanto la modifica
     private String personalModificatorType;     // la mossa modifica un qualche valore personale
@@ -44,6 +45,7 @@ public class Move implements Identifiable { // TODO aggiungere priorità
                  @JsonProperty("precision") int precision,
                  @JsonProperty("utilizzi") int utilizzi,
                  @JsonProperty("isSpecial") boolean isSpecial,
+                 @JsonProperty("priority") int priority,
                  @JsonProperty("opponentModificatorType") String opponentModificatorType,
                  @JsonProperty("opponentModificatorValue") int opponentModificatorValue,
                  @JsonProperty("personalModificatorType") String personalModificatorType,
@@ -55,6 +57,7 @@ public class Move implements Identifiable { // TODO aggiungere priorità
         this.precision = precision;
         this.utilizzi = utilizzi;
         this.isSpecial = isSpecial;
+        this.priority = priority;
         this.opponentModificatorType = opponentModificatorType;
         this.opponentModificatorValue = opponentModificatorValue;
         this.personalModificatorType = personalModificatorType;
@@ -79,6 +82,8 @@ public class Move implements Identifiable { // TODO aggiungere priorità
      */
     @JsonIgnore
     public boolean isSpecial() {return isSpecial;}
+
+    public int getPriority() {return priority;}
 
     public int getPower() {return power;}
 
@@ -126,5 +131,4 @@ public class Move implements Identifiable { // TODO aggiungere priorità
     }*/
 
 
-    // TODO equals toHash
 }

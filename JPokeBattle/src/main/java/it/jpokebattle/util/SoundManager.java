@@ -10,6 +10,7 @@ public class SoundManager {
     private static boolean isVolumeOn = true;
     private static AudioTrack currentTrack = AudioTrack.MENU;
     private static AudioTrack buttonPlayer = AudioTrack.BUTTON;
+    private static AudioTrack cureTeam = AudioTrack.CURETEAM;
 
     private SoundManager() {
         currentTrack.playLoop();
@@ -61,5 +62,12 @@ public class SoundManager {
      */
     public void buttonClick() {
         buttonPlayer.playOnce();
+    }
+
+    public void cureTeamClick() throws InterruptedException {
+        toggleVolume();
+        cureTeam.playOnce();
+        Thread.sleep(2000);
+        toggleVolume();
     }
 }

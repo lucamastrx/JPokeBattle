@@ -61,7 +61,7 @@ public class Team {
     // Guarisci tutti i Pokémon
     public void healAllPokemon() {
         pokemonList.forEach(Pokemon::heal);
-        System.out.println("Tutti i Pokémon sono stati curati.");
+        // System.out.println("Tutti i Pokémon sono stati curati.");
     }
 
 
@@ -92,9 +92,9 @@ public class Team {
     }
 
     public boolean allPokemonFainted(){
-        return pokemonList.stream()                                 // crea uno stream dalla lista di Pokemon
-                .allMatch(pokemon -> pokemon.getCurrentHp() == 0);  // allMatch() verifica se tutti gli elementi dello stream soddisfano una certa condizione
-    }                                                               // pokemon -> pokemon.getHp() == 0 è una lambda che definisce la condizione: l'HP del Pokemon deve essere 0
+        return pokemonList.stream()                            // crea uno stream dalla lista di Pokemon
+                .allMatch(Pokemon::isFainted);                   // allMatch() verifica se tutti gli elementi dello stream soddisfano una certa condizione
+    }
 
     // Metodo per visualizzare la squadra
     @Override

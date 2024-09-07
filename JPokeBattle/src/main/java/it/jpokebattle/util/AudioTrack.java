@@ -12,7 +12,8 @@ public enum AudioTrack {
     BATTLE("audio.battle"),
     VICTORY("audio.victory"),
     LEADERBOARD("audio.leaderboard"),
-    LEVELUP("audio.levelup");
+    LEVELUP("audio.levelup"),
+    CURETEAM("audio.cureteam");
 
     private String srcName;
     private MediaPlayer mediaPlayer;
