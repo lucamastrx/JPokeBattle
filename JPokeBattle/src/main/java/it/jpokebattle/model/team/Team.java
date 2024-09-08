@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Team {
-    private List<Pokemon> pokemonList;
-    private Pokemon activePokemon;
+public class Team <T extends Pokemon> {
+    private List<T> pokemonList;
+    private T activePokemon;
 
-    public Team(Pokemon activePokemon) {
+    public Team(T activePokemon) {
         pokemonList = new ArrayList<>();
         this.activePokemon = activePokemon;
+        addPokemon(activePokemon);
     }
 
     // Metodo per aggiungere un Pokémon alla squadra
-    public void addPokemon(Pokemon pokemon) {
+    public void addPokemon(T pokemon) {
         if (pokemonList.size() < 6) {  // Limitiamo la squadra a un massimo di 6 Pokémon, come nei giochi originali
             pokemonList.add(pokemon);
             // System.out.println(pokemon.getName() + " aggiunto alla squadra.");
@@ -26,7 +27,7 @@ public class Team {
     }
 
     // Metodo per rimuovere un Pokémon dalla squadra
-    public void removePokemon(Pokemon pokemon) {
+    public void removePokemon(T pokemon) {
         if (pokemonList.size() == 1) {
             System.out.println("Non puoi rimanere senza compagni in squadra!");
             return;
@@ -38,9 +39,9 @@ public class Team {
         }
     }
 
-    public Pokemon getActivePokemon() {return activePokemon;}
+    public T getActivePokemon() {return activePokemon;}
 
-    public void setActivePokemon(Pokemon pokemon) {
+    public void setActivePokemon(T pokemon) {
         if (pokemonList.contains(pokemon)) {
             this.activePokemon = pokemon;
             System.out.println(pokemon.getName() + " è ora il Pokémon attivo.");
@@ -51,26 +52,26 @@ public class Team {
 
 
     // Metodo per ottenere la lista di Pokémon nella squadra
-    public List<Pokemon> getPokemonList() {
-        return pokemonList;
+    public List<T> getPokemonList() {
+        return new ArrayList<>(pokemonList);
     }
 
     // Trova Pokémon per nome
-    public Pokemon getPokemonByName(String name) {
-        for (Pokemon pokemon : pokemonList) {
-            if (pokemon.getName().equalsIgnoreCase(name)) {
-                return pokemon;
-            }
-        }
-        System.out.println("Nessun Pokémon trovato con il nome: " + name);
-        return null;
+    public T getPokemonByName(String name) {
+        return pokemonList.stream()
+                .filter(p -> p.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
     }
 
     // Sostituisci Pokémon in una posizione specifica
-    public void removeAndReplacePokemon(int index, Pokemon newPokemon) {
+    public void removeAndReplacePokemon(int index, T newPokemon) {
         if (index >= 0 && index < pokemonList.size()) {
             System.out.println(pokemonList.get(index).getName() + " sostituito da " + newPokemon.getName());
             pokemonList.set(index, newPokemon);
+            if (activePokemon.equals(pokemonList.get(index))) {
+                activePokemon = newPokemon;
+            }
         } else {
             System.out.println("Indice non valido.");
         }
@@ -94,9 +95,11 @@ public class Team {
     }
 
     // Rimuovi tutti i Pokémon dalla squadra
-    public void clearTeam() {
+    public void clearTeamExceptActivePokemon() {
+        T x = activePokemon;
         pokemonList.clear();
-        System.out.println("La squadra è stata svuotata.");
+        pokemonList.add(x);
+        System.out.println("La squadra è stata svuotata (Eccetto il Pokemon Attivo).");
     }
 
     // Scambia la posizione di due Pokémon
@@ -118,7 +121,7 @@ public class Team {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Pokemon pokemon : pokemonList) {
+        for (T pokemon : pokemonList) {
             sb.append(pokemon.toString()).append("\n");  // Aggiunge ogni Pokémon seguito da una nuova riga
         }
         return sb.toString().trim();  // Rimuove l'ultima nuova riga

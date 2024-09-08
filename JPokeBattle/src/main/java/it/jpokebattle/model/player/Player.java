@@ -3,15 +3,15 @@ package it.jpokebattle.model.player;
 import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.team.Team;
 
-public abstract class Player {
+public abstract class Player<T extends Pokemon> {
 
     private String name;
-    private Team team;
+    private Team<T> team;
 
 
-    public Player(String name, Pokemon activePokemon) {
+    public Player(String name, T activePokemon) {
         this.name = name;
-        this.team = new Team(activePokemon);
+        this.team = new Team<>(activePokemon);
     }
 
 
@@ -23,11 +23,11 @@ public abstract class Player {
         this.name = name;
     }
 
-    public Team getTeam() {
+    public Team<T> getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(Team<T> team) {
         this.team = team;
     }
 }

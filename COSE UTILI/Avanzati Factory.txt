@@ -1,0 +1,179 @@
+Certamente! Implementeremo le strategie di creazione del team e un sistema di difficoltà per la `BotPlayerFactory`. Questo richiederà alcune modifiche significative, quindi creerò un nuovo artefatto per mostrare l'implementazione completa.
+
+
+
+```java
+// TeamCreationStrategy.java
+package it.jpokebattle.model.player;
+
+import it.jpokebattle.model.pokemon.Pokemon;
+import it.jpokebattle.model.team.Team;
+import it.jpokebattle.model.pokemon.PokemonFactory;
+
+public interface TeamCreationStrategy {
+    Team<Pokemon> createTeam(PokemonFactory factory, int teamSize, Difficulty difficulty);
+}
+
+// BalancedTeamStrategy.java
+package it.jpokebattle.model.player;
+
+import it.jpokebattle.model.pokemon.Pokemon;
+import it.jpokebattle.model.team.Team;
+import it.jpokebattle.model.pokemon.PokemonFactory;
+
+public class BalancedTeamStrategy implements TeamCreationStrategy {
+    @Override
+    public Team<Pokemon> createTeam(PokemonFactory factory, int teamSize, Difficulty difficulty) {
+        Team<Pokemon> team = new Team<>(factory.createPokemon(difficulty));
+        for (int i = 1; i < teamSize; i++) {
+            team.addPokemon(factory.createPokemon(difficulty));
+        }
+        return team;
+    }
+}
+
+// SingleTypeTeamStrategy.java
+package it.jpokebattle.model.player;
+
+import it.jpokebattle.model.pokemon.Pokemon;
+import it.jpokebattle.model.team.Team;
+import it.jpokebattle.model.pokemon.PokemonFactory;
+import it.jpokebattle.model.pokemon.Type;
+
+import java.util.Random;
+
+public class SingleTypeTeamStrategy implements TeamCreationStrategy {
+    @Override
+    public Team<Pokemon> createTeam(PokemonFactory factory, int teamSize, Difficulty difficulty) {
+        Type teamType = Type.values()[new Random().nextInt(Type.values().length)];
+        Team<Pokemon> team = new Team<>(factory.createPokemonOfType(teamType, difficulty));
+        for (int i = 1; i < teamSize; i++) {
+            team.addPokemon(factory.createPokemonOfType(teamType, difficulty));
+        }
+        return team;
+    }
+}
+
+// Difficulty.java
+package it.jpokebattle.model.player;
+
+public enum Difficulty {
+    EASY(5, 15),
+    MEDIUM(10, 30),
+    HARD(20, 50);
+
+    private final int minLevel;
+    private final int maxLevel;
+
+    Difficulty(int minLevel, int maxLevel) {
+        this.minLevel = minLevel;
+        this.maxLevel = maxLevel;
+    }
+
+    public int getMinLevel() { return minLevel; }
+    public int getMaxLevel() { return maxLevel; }
+}
+
+// BotPlayerFactory.java
+package it.jpokebattle.model.player;
+
+import it.jpokebattle.model.pokemon.Pokemon;
+import it.jpokebattle.model.pokemon.PokemonFactory;
+import it.jpokebattle.model.team.Team;
+
+import java.util.Random;
+
+public class BotPlayerFactory extends PlayerFactory<Pokemon> {
+    private static final int MAX_TEAM_SIZE = 6;
+    private static final Random random = new Random();
+    private final TeamCreationStrategy teamStrategy;
+    private final Difficulty difficulty;
+
+    public BotPlayerFactory(PokemonFactory pokemonFactory, TeamCreationStrategy teamStrategy, Difficulty difficulty) {
+        super(pokemonFactory);
+        this.teamStrategy = teamStrategy;
+        this.difficulty = difficulty;
+    }
+
+    @Override
+    public BotPlayer createPlayer() {
+        int teamSize = random.nextInt(MAX_TEAM_SIZE - 1) + 2; // 2 to 6 Pokémon
+        Team<Pokemon> team = teamStrategy.createTeam(pokemonFactory, teamSize, difficulty);
+
+        String name = randomNameRole();
+        BotPlayer player = new BotPlayer(name, team.getActivePokemon());
+        player.setTeam(team);
+
+        return player;
+    }
+}
+
+// PokemonFactory.java (modifiche suggerite)
+package it.jpokebattle.model.pokemon;
+
+import it.jpokebattle.model.player.Difficulty;
+
+public class PokemonFactory {
+    // ... altri metodi ...
+
+    public Pokemon createPokemon(Difficulty difficulty) {
+        // Implementa la logica per creare un Pokémon basato sulla difficoltà
+        int level = new Random().nextInt(difficulty.getMaxLevel() - difficulty.getMinLevel() + 1) + difficulty.getMinLevel();
+        // ... logica per scegliere la specie, mosse, ecc. basata sulla difficoltà ...
+        return new Pokemon(/* parametri */);
+    }
+
+    public Pokemon createPokemonOfType(Type type, Difficulty difficulty) {
+        // Implementa la logica per creare un Pokémon di un tipo specifico basato sulla difficoltà
+        int level = new Random().nextInt(difficulty.getMaxLevel() - difficulty.getMinLevel() + 1) + difficulty.getMinLevel();
+        // ... logica per scegliere la specie del tipo specificato, mosse, ecc. basata sulla difficoltà ...
+        return new Pokemon(/* parametri */);
+    }
+}
+
+```
+
+Ecco una spiegazione dettagliata delle modifiche e delle nuove implementazioni:
+
+1. **TeamCreationStrategy**: Un'interfaccia che definisce il contratto per le strategie di creazione del team.
+
+2. **BalancedTeamStrategy**: Implementa una strategia per creare un team bilanciato di Pokémon.
+
+3. **SingleTypeTeamStrategy**: Implementa una strategia per creare un team di Pokémon tutti dello stesso tipo.
+
+4. **Difficulty**: Un enum che definisce i livelli di difficoltà e i relativi range di livelli per i Pokémon.
+
+5. **BotPlayerFactory**: Modificata per utilizzare la strategia di creazione del team e la difficoltà.
+
+6. **PokemonFactory**: Suggerite modifiche per supportare la creazione di Pokémon basata sulla difficoltà e sul tipo.
+
+Questi cambiamenti offrono diversi vantaggi:
+
+1. **Flessibilità**: Puoi facilmente aggiungere nuove strategie di creazione del team implementando l'interfaccia `TeamCreationStrategy`.
+
+2. **Configurabilità**: La difficoltà e la strategia di creazione del team possono essere configurate al momento della creazione della factory.
+
+3. **Scalabilità**: Il sistema di difficoltà può essere facilmente esteso o modificato cambiando l'enum `Difficulty`.
+
+4. **Separazione delle responsabilità**: La logica di creazione del team è separata dalla factory del giocatore, rendendo il codice più modulare.
+
+Per utilizzare questa nuova implementazione, potresti fare qualcosa del genere:
+
+```java
+PokemonFactory pokemonFactory = new PokemonFactory();
+TeamCreationStrategy balancedStrategy = new BalancedTeamStrategy();
+TeamCreationStrategy singleTypeStrategy = new SingleTypeTeamStrategy();
+
+BotPlayerFactory easyBalancedFactory = new BotPlayerFactory(pokemonFactory, balancedStrategy, Difficulty.EASY);
+BotPlayerFactory hardSingleTypeFactory = new BotPlayerFactory(pokemonFactory, singleTypeStrategy, Difficulty.HARD);
+
+BotPlayer easyBot = easyBalancedFactory.createPlayer();
+BotPlayer hardBot = hardSingleTypeFactory.createPlayer();
+```
+
+Questo approccio ti permette di creare bot con diverse strategie e livelli di difficoltà in modo flessibile e estensibile. Puoi facilmente aggiungere nuove strategie o modificare le esistenti senza dover cambiare la logica di base della `BotPlayerFactory`.
+
+
+
+
+

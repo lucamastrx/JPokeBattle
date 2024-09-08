@@ -1,10 +1,7 @@
 package it.jpokebattle.model.player;
 
-
 import it.jpokebattle.model.pokemon.Breed;
-
 import it.jpokebattle.model.pokemon.OwnedPokemon;
-import it.jpokebattle.model.team.Team;
 
 
 /**
@@ -12,7 +9,7 @@ import it.jpokebattle.model.team.Team;
  * questa classe si può memorizzare sempre lo stato corrente del gioco, sia per il pvp che
  * per l'arcade.
  */
-public class HumanPlayer extends Player {
+public class HumanPlayer extends Player<OwnedPokemon> {
 
     // Campo statico privato per l'istanza Singleton
     private static HumanPlayer instance;
@@ -27,7 +24,9 @@ public class HumanPlayer extends Player {
     // Metodo statico per ottenere l'istanza unica
     public static synchronized HumanPlayer getInstance() {
         if (instance == null) {
-            instance = new HumanPlayer("LucaMastrx", (OwnedPokemon) null); // TODO sistemare
+            Breed defaultBreed = Breed.breedsMap.get("Charmander"); // Assumendo che ci sia sempre un Charmander
+            OwnedPokemon defaultPokemon = new OwnedPokemon(defaultBreed, "", 5);
+            instance = new HumanPlayer("LucaMastrx", defaultPokemon);
         }
         return instance;
     }

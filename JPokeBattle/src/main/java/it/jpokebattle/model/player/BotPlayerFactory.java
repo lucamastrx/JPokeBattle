@@ -7,28 +7,27 @@ import it.jpokebattle.model.team.Team;
 import java.util.Random;
 
 public class BotPlayerFactory extends PlayerFactory{
-
+    private static final int MAX_TEAM_SIZE = 6;
+    private static final Random random = new Random();
 
     public BotPlayerFactory(PokemonFactory pokemonFactory) {
         super(pokemonFactory);
     }
 
     @Override
-    public Player createPlayer() {
-        Pokemon frontman = pokemonFactory.createPokemon();
-        // Inizializzazione Team solo col pokemon frontman
-        Team team = new Team(frontman);
+    public BotPlayer  createPlayer() {
+        Pokemon activePokemon = pokemonFactory.createPokemon();
+        // Inizializzazione Team solo col pokemon attivo
+        Team<Pokemon> team = new Team<>(activePokemon);
 
         // Altri pokemon che l'avversario ha in squadra
-        Random random = new Random();
-        int numberOfLoops = random.nextInt(6); // Genera un numero randomico da 0 a 5
-        for (int i = 0; i < numberOfLoops; i++) {
-            Pokemon pokemon = pokemonFactory.createPokemon();
-            team.addPokemon(pokemon);
+        int teamSize = random.nextInt(MAX_TEAM_SIZE - 1); // Genera un numero da 0 a 5
+        for (int i = 1; i < teamSize; i++) {
+            team.addPokemon(pokemonFactory.createPokemon());
         }
-        String name = randomNameRole();
 
-        Player player = new BotPlayer(name, frontman);
+        String name = randomNameRole();
+        BotPlayer player = new BotPlayer(name, activePokemon);
         player.setTeam(team);
 
         return player;
