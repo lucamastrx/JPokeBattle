@@ -7,7 +7,7 @@ import java.util.Random;
 
 public abstract class PlayerFactory {
 
-    PokemonFactory pokemonFactory;
+    protected PokemonFactory pokemonFactory;
 
     public PlayerFactory(PokemonFactory pokemonFactory) {
         this.pokemonFactory = pokemonFactory;
@@ -21,7 +21,7 @@ public abstract class PlayerFactory {
     }
 
 
-    public String randomNameRole() {
+    public static String randomNameRole() {
         String[] names = {"Paolo", "Luca", "Giulia", "Maria", "Francesco", "Matteo", "Mattia"};
         String[] roles = {"il cuoco", "l'insegnante", "il dottore", "l'ingegnere", "l'artista", "il bullo", "l'allenatore", "il campione"};
 

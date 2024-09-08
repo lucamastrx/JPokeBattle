@@ -15,7 +15,7 @@ public class BotPlayerFactory extends PlayerFactory{
     }
 
     @Override
-    public BotPlayer  createPlayer() {
+    public BotPlayer createPlayer() {
         Pokemon activePokemon = pokemonFactory.createPokemon();
         // Inizializzazione Team solo col pokemon attivo
         Team<Pokemon> team = new Team<>(activePokemon);
@@ -26,7 +26,7 @@ public class BotPlayerFactory extends PlayerFactory{
             team.addPokemon(pokemonFactory.createPokemon());
         }
 
-        String name = randomNameRole();
+        String name = PlayerFactory.randomNameRole();
         BotPlayer player = new BotPlayer(name, activePokemon);
         player.setTeam(team);
 
