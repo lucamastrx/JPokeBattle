@@ -4,6 +4,7 @@ package it.jpokebattle.model.player;
 import it.jpokebattle.model.pokemon.Breed;
 
 import it.jpokebattle.model.pokemon.OwnedPokemon;
+import it.jpokebattle.model.team.Team;
 
 
 /**
@@ -17,21 +18,22 @@ public class HumanPlayer extends Player {
     private static HumanPlayer instance;
 
     // Costruttore privato per impedire l'istanziamento esterno
-    private HumanPlayer(String name) {
-        super(name);
+    private HumanPlayer(String name, OwnedPokemon activePokemon) {
+        super(name, activePokemon);
         initializeStartingTeam();
     }
+
 
     // Metodo statico per ottenere l'istanza unica
     public static synchronized HumanPlayer getInstance() {
         if (instance == null) {
-            instance = new HumanPlayer("LucaMastrx");
+            instance = new HumanPlayer("LucaMastrx", (OwnedPokemon) null); // TODO sistemare
         }
         return instance;
     }
 
 
-    private void initializeStartingTeam() {
+    private void initializeStartingTeam() { // TODO rimuovere
         Breed charmander = Breed.breedsMap.get("Charmander");
         OwnedPokemon ownedCharmander = new OwnedPokemon(charmander, "",10);
 

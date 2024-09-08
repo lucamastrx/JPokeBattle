@@ -2,30 +2,38 @@ package it.jpokebattle.model.battle;
 
 import it.jpokebattle.model.player.Player;
 
+
 public class Battle {
 
     private boolean youLost = false;
     private Player playerYou;
-    private Player playerOther;
+    private Player playerOpponent;
 
-    public Battle(Player playerYou, Player playerOther) {
+
+    public Battle(Player playerYou, Player playerOpponent) {
         this.playerYou = playerYou;
-        this.playerOther = playerOther;
+        this.playerOpponent = playerOpponent;
+
+
+        startBattle();
     }
 
-    public void startBattle() {
+    private void startBattle() {
         while (!youLost) {
             // cose
         }
     }
 
 
-    private boolean youLost(){
+    public boolean youLost(){
         return playerYou.getTeam().allPokemonFainted();
     }
 
-    private boolean otherPlayerLost(){
-        return playerOther.getTeam().allPokemonFainted();
+    public boolean otherPlayerLost(){
+        return playerOpponent.getTeam().allPokemonFainted();
     }
 
+    public Player getPlayerYou() {return playerYou;}
+
+    public Player getPlayerOpponent() {return playerOpponent;}
 }

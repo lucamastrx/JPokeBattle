@@ -71,9 +71,6 @@ public class Move implements Identifiable {  // TODO equals toHash
 
     public String getDescription() {return description;}
 
-    @JsonIgnore
-    public int getDamage() {return power;}
-
     public int getPrecision() {return precision;}
 
     /**

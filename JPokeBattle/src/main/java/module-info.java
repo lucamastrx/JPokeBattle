@@ -51,4 +51,10 @@ module it.jpokebattle {
 
     exports it.jpokebattle.model.player;
     opens it.jpokebattle.model.player;
+
+    exports it.jpokebattle.model.battle;
+    opens it.jpokebattle.model.battle;
+
+    exports it.jpokebattle.model.team;
+    opens it.jpokebattle.model.team;
 }

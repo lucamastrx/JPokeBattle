@@ -15,19 +15,20 @@ public class BotPlayerFactory extends PlayerFactory{
 
     @Override
     public Player createPlayer() {
-        // Inizializzazione Team vuoto
-        Team team = new Team();
+        Pokemon frontman = pokemonFactory.createPokemon();
+        // Inizializzazione Team solo col pokemon frontman
+        Team team = new Team(frontman);
 
-        // Numero di pokemon che l'avversario ha in squadra
+        // Altri pokemon che l'avversario ha in squadra
         Random random = new Random();
-        int numberOfLoops = random.nextInt(6) + 1; // Genera un numero randomico da 1 a 6
+        int numberOfLoops = random.nextInt(6); // Genera un numero randomico da 0 a 5
         for (int i = 0; i < numberOfLoops; i++) {
             Pokemon pokemon = pokemonFactory.createPokemon();
             team.addPokemon(pokemon);
         }
         String name = randomNameRole();
 
-        Player player = new BotPlayer(name);
+        Player player = new BotPlayer(name, frontman);
         player.setTeam(team);
 
         return player;

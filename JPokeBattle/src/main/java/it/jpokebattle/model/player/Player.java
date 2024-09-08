@@ -1,5 +1,6 @@
 package it.jpokebattle.model.player;
 
+import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.team.Team;
 
 public abstract class Player {
@@ -8,9 +9,9 @@ public abstract class Player {
     private Team team;
 
 
-    public Player(String name) {
+    public Player(String name, Pokemon activePokemon) {
         this.name = name;
-        this.team = new Team();
+        this.team = new Team(activePokemon);
     }
 
 

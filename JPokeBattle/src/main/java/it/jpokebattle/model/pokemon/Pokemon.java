@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public abstract class Pokemon { // TODO usa mossa
+public class Pokemon {  // TODO equals toHash
     private String name;
     private Breed breed;        // specie
     private HashMap<Move, Integer> moves;        // {mossa: pp attuali}
@@ -55,6 +55,16 @@ public abstract class Pokemon { // TODO usa mossa
         setCurrentHp(getFullHp());
         for (Move move : moves.keySet()) {
             moves.put(move, move.getUtilizzi());  // ripristina i PP al massimo
+        }
+    }
+
+    public void useMove(Move move) {
+        Integer currentValue = moves.get(move);
+        if (currentValue != null && currentValue > 0) {
+            moves.put(move, currentValue - 1);
+        } else {
+            // Gestione del caso in cui la mossa non esiste o il valore è già 0
+            System.out.println("Impossibile usare la mossa: " + move);
         }
     }
 

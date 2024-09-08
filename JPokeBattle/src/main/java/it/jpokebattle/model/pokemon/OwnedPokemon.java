@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.time.Instant;
 import java.util.Set;
 
-
+// TODO equals toHash
 public class OwnedPokemon extends Pokemon implements Serializable, Identifiable, Saveable<OwnedPokemon> {
 
     private final String SER_SRC_NAME = "ser.ownedPokemon";
@@ -318,11 +318,24 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             updateStat("specialDef", getSpecialDefIV(), this.getBreed().getSpecialDefBaseStat());
             updateStat("speed", getSpeedIV(), this.getBreed().getSpeedBaseStat());
         }
+        setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
         save();
     }
 
 
 
+
+    private boolean canLearnMove(){
+        Set<Integer> moveLevels =  getBreed().getMoves().keySet();
+        return moveLevels.contains(this.getLevel());
+    }
+
+
+    public void learnMove(){    // TODO
+        if (canLearnMove()) {
+            addMove(getBreed().getMoves().get(getLevel())); // aggiunge la mossa a quelle del pokemon, addMove si occupa se c'è mossa da rimuovere
+        }
+    }
 
 
 
@@ -349,24 +362,12 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             if (this.nickname == null || this.nickname.isEmpty()) {
                 this.setName(succ.getName());  // cambia il nome solo se non c'è un soprannome
             }
+            setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
             save();
         }
     }
 
 
-
-
-    private boolean canLearnMove(){
-        Set<Integer> moveLevels =  getBreed().getMoves().keySet();
-        return moveLevels.contains(this.getLevel());
-    }
-
-
-    public void learnMove(){
-        if (canLearnMove()) {
-            addMove(getBreed().getMoves().get(getLevel())); // aggiunge la mossa a quelle del pokemon, addMove si occupa se c'è mossa da rimuovere
-        }
-    }
 
 
 

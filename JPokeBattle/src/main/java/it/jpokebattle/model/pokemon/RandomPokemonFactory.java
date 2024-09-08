@@ -17,7 +17,7 @@ public class RandomPokemonFactory extends PokemonFactory {
         int randomLevel = random.nextInt(61) + 10;
 
         // Costruisce e ritorna un WildPokemon
-        return new WildPokemon(breed, randomLevel);
+        return new Pokemon(breed, randomLevel);
     }
 
 
