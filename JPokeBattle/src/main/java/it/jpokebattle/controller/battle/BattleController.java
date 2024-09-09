@@ -1,6 +1,10 @@
 package it.jpokebattle.controller.battle;
 
 import it.jpokebattle.controller.SceneManager;
+import it.jpokebattle.model.player.HumanPlayer;
+import it.jpokebattle.model.pokemon.Move;
+import it.jpokebattle.model.pokemon.OwnedPokemon;
+import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,16 +31,27 @@ public class BattleController {
     private Stage stage;
     @FXML
     protected Button menuButton;
-    @FXML
-    protected Button popupButton;
 
     @FXML
     protected Button attackButton;
 
+    @FXML
+    protected Button levelupButton;
+
     private Popup movePopup;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    @FXML
+    void addlevel(ActionEvent event) throws IOException {
+        System.out.println("siamo entrati");
+        OwnedPokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
+        System.out.println("ha istanziato opkemon");
+        pokemon.collectExp(5000);
+        System.out.println("ha dato exp");
+        pokemon.levelUpAndStatsUp();
+        System.out.println("levelup e stat up");
+        System.out.println(pokemon.getLevel());
+        pokemon.learnMove(event);
+        System.out.println("chiama popup");
     }
 
     @FXML
@@ -42,16 +60,19 @@ public class BattleController {
         SceneManager.switchScene(event, "fxml.menu", "css.menu");
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.menu");
     }
-    @FXML
-    private void showLearnMovePopup(ActionEvent event) throws IOException {
+
+    public void showLearnMovePopup(ActionEvent event, Move move) {
         Popup popup = new Popup();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Node source = (Node) event.getSource();
+
+        Stage stage = (Stage) source.getScene().getWindow();
+
         // Add a listener to track the stage's position
         stage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(popup));
         stage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(popup));
 
         // Create the message label
-        Label messageLabel = new Label("The Pokémon can learn a new move. Would you like to forget another move?");
+        Label messageLabel = new Label("The Pokémon can learn " + move.getID() +  ". Would you like to forget another move?");
 
         // Create Yes and No buttons
         Button yesButton = new Button("Yes");
@@ -101,13 +122,15 @@ public class BattleController {
     }
 
     private void showMoveToForgetSelectionPopup() {
+        Pokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
+        List<String> moves = pokemon.getMoves().keySet().stream().map(Move::getID).toList();
+
         Popup popup = new Popup();
 
         // Create the message label
         Label messageLabel = new Label("Select a move to forget:");
 
         // Create buttons for each move
-        String[] moves = {"Quick Attack", "Iron Tail", "Thunder Wave", "Double Team"}; // Example moves
         VBox moveButtons = new VBox(10);
 
         for (String move : moves) {

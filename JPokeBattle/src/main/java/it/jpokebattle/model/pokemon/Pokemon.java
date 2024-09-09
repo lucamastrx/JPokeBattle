@@ -245,13 +245,13 @@ public class Pokemon {  // TODO equals toHash
      *
      * @param move Mossa che si vuole aggiungere
      */
-    public void addMove(Move move) {
-        if (getMoves().size() > 3) {
+    public void addMove(Move move) {    // Questi controli li lascio perche se un giorno volessi implementare le MT
+        if (getMoves().size() > 3) {    // non passerò tramite i metodi canLearnMove ecc, mantengo sicurezza
 
-            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una..."); // TODO messaggio in GUI
+            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una...");
             // click per rimuovere una mossa                                               // in GUI
             // removeMove(Move mossaDaDimenticare)
-            System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!"); // messaggio in GUI
+            System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!");
             // oppure "non ha imparato la mossa"!
         }
         else {
@@ -262,10 +262,10 @@ public class Pokemon {  // TODO equals toHash
 
     public void addMove(String moveID) {
         if (getMoves().size() > 3) {
-            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una..."); // TODO messaggio in GUI
+            System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una...");
             // click per rimuovere una mossa                                               // in GUI
             // removeMove(Move mossaDaDimenticare)
-            System.out.println(getName() + "ha imparato la mossa: " + moveID + "\nFantastico!"); // messaggio in GUI
+            System.out.println(getName() + "ha imparato la mossa: " + moveID + "\nFantastico!");
             // oppure "non ha imparato la mossa"!
 
         }

@@ -7,6 +7,7 @@ import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.type.Type;
 import it.jpokebattle.model.type.TypeEffectiveness;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 public class MoveAction implements Action{
@@ -24,7 +25,7 @@ public class MoveAction implements Action{
     public int getPriority() {return move.getPriority();}
 
     @Override
-    public void execute(Battle battle) {
+    public void execute(Battle battle) throws IOException {
         Pokemon user = actor.getTeam().getActivePokemon();
         Pokemon target = playerOpponent.getTeam().getActivePokemon();
 
@@ -48,7 +49,7 @@ public class MoveAction implements Action{
                 ownedPokemon.collectExp(target.getStrength());  // Guadagna esperienza
                 ownedPokemon.collectEVs(target.dropEVs());      // Guadagna EVs
                 ownedPokemon.levelUpAndStatsUp();               // Metodo che fa salire di livello se possibile, e aumenta le stats
-                ownedPokemon.learnMove();                       // Metodo che insegna una nuova mossa se possibile e se voluto
+                // ownedPokemon.learnMove();                       // Metodo che insegna una nuova mossa se possibile e se voluto
                 ownedPokemon.evolve();                          // Metodo che fa evolvere se possibile
             }
         }

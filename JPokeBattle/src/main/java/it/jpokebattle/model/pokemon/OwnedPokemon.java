@@ -1,8 +1,12 @@
 package it.jpokebattle.model.pokemon;
 
+import it.jpokebattle.controller.SceneManager;
+import it.jpokebattle.controller.battle.BattleController;
 import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.Saveable;
+import javafx.event.ActionEvent;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.time.Instant;
@@ -331,10 +335,21 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     }
 
 
-    public void learnMove(){    // TODO
+    public void learnMove(ActionEvent event) throws IOException {
         if (canLearnMove()) {
-            addMove(getBreed().getMoves().get(getLevel())); // aggiunge la mossa a quelle del pokemon, addMove si occupa se c'è mossa da rimuovere
+            String moveID = getBreed().getMoves().get(getLevel());
+            Move move = Move.movesMap.get(moveID);
+            if (getMoves().size() < 4) {
+                // System.out.println("entrato nell if");
+                addMove(move);
+                // TODO popup che il pokemon ha imparato una nuova mossa
+            } else {
+                // System.out.println("else");
+                BattleController controller = SceneManager.getController("fxml.battle");
+                controller.showLearnMovePopup(event, move); // aggiunge la mossa a quelle del pokemon, addMove si occupa se c'è mossa da rimuovere
+            }
         }
+        // System.out.println("usciti da learnMove()");
     }
 
 

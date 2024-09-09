@@ -12,6 +12,12 @@ import java.io.IOException;
 public class SceneManager {
 
 
+    public static <T> T getController(String fxmlSrcName) throws IOException {
+        FXMLLoader loader = FileManager.loadFXML(fxmlSrcName);
+        loader.load();
+        return loader.getController();
+    }
+
     /**
      * Questo metodo consente il passaggio di una scena ad un'altra.
      *
