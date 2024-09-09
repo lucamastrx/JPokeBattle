@@ -57,4 +57,8 @@ module it.jpokebattle {
 
     exports it.jpokebattle.model.team;
     opens it.jpokebattle.model.team;
+
+    exports it.jpokebattle.model.leaderboard;
+    opens it.jpokebattle.model.leaderboard;
+
 }

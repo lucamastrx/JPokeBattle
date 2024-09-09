@@ -4,16 +4,37 @@ import it.jpokebattle.controller.SceneManager;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.layout.GridPane;
 
 public class BattleController {
 
     private SoundManager soundMan = SoundManager.getInstance();
-
+    private Stage stage;
     @FXML
     protected Button menuButton;
+    @FXML
+    protected Button popupButton;
+
+    @FXML
+    protected Button attackButton;
+
+    private Popup movePopup;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     public void runAway(ActionEvent event) throws IOException {
@@ -21,5 +42,146 @@ public class BattleController {
         SceneManager.switchScene(event, "fxml.menu", "css.menu");
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.menu");
     }
+    @FXML
+    private void showLearnMovePopup(ActionEvent event) throws IOException {
+        Popup popup = new Popup();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // Add a listener to track the stage's position
+        stage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(popup));
+        stage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(popup));
 
+        // Create the message label
+        Label messageLabel = new Label("The Pokémon can learn a new move. Would you like to forget another move?");
+
+        // Create Yes and No buttons
+        Button yesButton = new Button("Yes");
+        Button noButton = new Button("No");
+
+        yesButton.setOnAction(e -> {
+            popup.hide();  // Hide the first popup
+            showMoveToForgetSelectionPopup(); // Show the move selection popup
+        });
+
+        noButton.setOnAction(e -> popup.hide());
+
+        // Layout for the first popup
+        HBox buttonBox = new HBox(10, yesButton, noButton);
+        VBox popupContent = new VBox(10, messageLabel, buttonBox);
+        popupContent.setStyle("-fx-background-color: lightyellow; -fx-padding: 20; -fx-border-color: black;");
+        popupContent.setMinWidth(300);
+        // Get the position of the scene within the stage
+        Bounds sceneBounds = stage.getScene().getRoot().localToScreen(stage.getScene().getRoot().getBoundsInLocal());
+
+        // Set popup position relative to the scene
+        double xOffset = 100; // Desired x offset from the scene's top-left corner
+        double yOffset = 100; // Desired y offset from the scene's top-left corner
+
+        popup.setX(sceneBounds.getMinX() + xOffset);
+        popup.setY(sceneBounds.getMinY() + yOffset);
+
+        popup.getContent().add(popupContent);
+        popup.show(stage);
+    }
+
+    private void updatePopupPosition(Popup popup) {
+        if (popup == null || stage == null) {
+            return;
+        }
+
+        // Get the current position of the stage
+        double stageX = stage.getX();
+        double stageY = stage.getY();
+
+        // Set the popup position relative to the stage
+        double xOffset = 100; // Offset from the top-left corner of the stage
+        double yOffset = 100; // Offset from the top-left corner of the stage
+
+        popup.setX(stageX + xOffset);
+        popup.setY(stageY + yOffset);
+    }
+
+    private void showMoveToForgetSelectionPopup() {
+        Popup popup = new Popup();
+
+        // Create the message label
+        Label messageLabel = new Label("Select a move to forget:");
+
+        // Create buttons for each move
+        String[] moves = {"Quick Attack", "Iron Tail", "Thunder Wave", "Double Team"}; // Example moves
+        VBox moveButtons = new VBox(10);
+
+        for (String move : moves) {
+            Button moveButton = new Button(move);
+            moveButton.setOnAction(e -> {
+                System.out.println("Selected move: " + move);
+                popup.hide(); // Close the popup after move selection
+            });
+            moveButtons.getChildren().add(moveButton);
+        }
+
+        // Layout for the second popup
+        VBox popupContent = new VBox(10, messageLabel, moveButtons);
+        popupContent.setStyle("-fx-background-color: lightblue; -fx-padding: 20; -fx-border-color: black;");
+        popupContent.setMinWidth(300);
+
+        popup.getContent().add(popupContent);
+        popup.show(stage);
+    }
+
+    /**
+     * Show a popup with a grid of 4 buttons, each representing a Pokémon move.
+     *
+     */
+    @FXML
+    public void showMoveSelectionPopup(ActionEvent event) throws IOException {
+        String[] moves = {"Quick Attack", "Iron Tail", "Thunder Wave", "Double Team"};
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // Create the popup
+        if (movePopup == null) {
+            movePopup = new Popup();
+        }
+
+        // GridPane to arrange buttons in a 2x2 grid
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setAlignment(Pos.CENTER);
+
+        // Create buttons for each move
+        for (int i = 0; i < moves.length; i++) {
+            String move = moves[i]; // Create a new final variable to capture the move
+            Button moveButton = new Button(move);
+            moveButton.setPrefSize(100, 50); // Set button size
+
+            // Add event handler for each button
+            moveButton.setOnAction(e -> {
+                System.out.println("Selected move: " + move);  // Use the final variable 'move'
+                movePopup.hide();  // Close the popup after selecting a move
+            });
+
+            // Add buttons to the grid (2x2 layout)
+            grid.add(moveButton, i % 2, i / 2);  // Place buttons in grid positions
+        }
+
+
+        // Optional: Add a "Cancel" button below the grid
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(e -> movePopup.hide());
+
+        // Add the grid and the cancel button into a VBox
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
+        layout.getChildren().addAll(grid, cancelButton);
+
+        // Add the layout to the popup content
+        movePopup.getContent().clear();
+        movePopup.getContent().add(layout);
+
+        // Show the popup at the stage position, offset slightly
+        movePopup.show(stage);
+        movePopup.centerOnScreen(); // Alternatively, you can position it as you need
+    }
 }
+

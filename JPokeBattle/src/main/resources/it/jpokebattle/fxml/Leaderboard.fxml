@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.jpokebattle.controller.leaderboard.LeaderboardController">
+<AnchorPane fx:id="LeaderboardView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.jpokebattle.controller.leaderboard.LeaderboardController">
    <children>
       <Button fx:id="menuButton" layoutX="39.0" layoutY="631.0" mnemonicParsing="false" onAction="#backToMenu" text="Back to the Menu" />
+      <TableView fx:id="tableView" layoutX="200.0" layoutY="167.0" prefHeight="200.0" prefWidth="600.0">
+         <columns>
+            <TableColumn fx:id="Date" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="Win" prefWidth="75.0" text="#Win" />
+            <TableColumn fx:id="pokemon1" prefWidth="75.0" text="pokemon1" />
+            <TableColumn fx:id="pokemon2" prefWidth="75.0" text="Pokemon2" />
+            <TableColumn fx:id="pokemon3" prefWidth="75.0" text="Pokemon3" />
+            <TableColumn fx:id="pokemon4" prefWidth="75.0" text="pokemon4" />
+            <TableColumn fx:id="pokemon5" prefWidth="75.0" text="pokemon5" />
+            <TableColumn fx:id="pokemon6" prefWidth="75.0" text="pokemon6" />
+
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

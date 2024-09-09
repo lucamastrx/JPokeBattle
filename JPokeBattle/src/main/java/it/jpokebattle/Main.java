@@ -1,9 +1,9 @@
 package it.jpokebattle;
 
 import it.jpokebattle.model.player.HumanPlayer;
-import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
+import it.jpokebattle.view.MenuView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,10 +21,6 @@ import java.io.IOException;
  * @author Luca Mastrantonio
  */
 public class Main extends Application {
-    private FXMLLoader loader;
-    private Stage mainStage;
-    private Scene mainScene;
-    private static Parent root;
 
     public static void main(String[] args) {
 
@@ -32,7 +28,7 @@ public class Main extends Application {
         FileManager.clearSER("ser.ownedPokemon");
         HumanPlayer player = HumanPlayer.getInstance();
         System.out.println(player.getTeam());
-
+        FileManager.clearSER("ser.ownedPokemon");
 
 
         launch(args);
@@ -73,46 +69,10 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage stage) throws IOException {
-        mainStage = stage;
-        loader = FileManager.loadFXML("fxml.menu");
-        setScene(loader.load());
-        setStage();
-
-        setRoot(mainScene.getRoot());
-
-
-        SoundManager.getInstance();
-    }
-
-    /**
-     * Imposta la scena iniziale.
-     */
-    private void setScene(Parent root) {
-        mainScene = new Scene(root);
-        mainScene.getStylesheets().add(FileManager.getResource("css.menu"));
-        mainScene.setUserData(loader);
-    }
-
-    /**
-     * Imposta parametri, loghi, immagini e valori della finestra principale.
-     */
-    private void setStage() {
-        Image icon = FileManager.loadImage("img.logo");
-        mainStage.getIcons().add(icon);
-        mainStage.setTitle("JPokeBattle");
-        mainStage.getIcons().add(icon);
-        mainStage.setResizable(false);
-        mainStage.setScene(mainScene);
-        mainStage.show();
-    }
-
-    /**
-     * Salva la scena principale.
-     *
-     * @param sceneRoot     Radice della scena
-     */
-    public static void setRoot(Parent sceneRoot) {
-        root = sceneRoot;
+    public void start(Stage stage) throws Exception {
+        // Delegate the menu setup to MenuView
+        new MenuView(stage);
     }
 }
+
+

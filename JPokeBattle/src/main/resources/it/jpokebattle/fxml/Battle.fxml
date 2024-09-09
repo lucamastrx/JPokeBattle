@@ -13,5 +13,7 @@
          </image>
       </ImageView>
       <Button fx:id="menuButton" layoutX="60.0" layoutY="605.0" mnemonicParsing="false" onAction="#runAway" text="Run Away!" />
+      <Button fx:id="popupButton" layoutX="220.0" layoutY="605.0" mnemonicParsing="false" onAction="#showLearnMovePopup" text="Show popup!" />
+      <Button fx:id="attackButton" layoutX="417.0" layoutY="605.0" mnemonicParsing="false" onAction="#showMoveSelectionPopup" text="Attack" />
    </children>
 </AnchorPane>

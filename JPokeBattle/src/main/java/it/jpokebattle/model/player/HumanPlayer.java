@@ -12,7 +12,7 @@ import java.util.List;
  * questa classe si può memorizzare sempre lo stato corrente del gioco, sia per il pvp che
  * per l'arcade.
  */
-public class HumanPlayer extends Player<OwnedPokemon> {
+public class HumanPlayer extends Player<OwnedPokemon> { // TODO fix bug 4 pokemons
 
     // Campo statico privato per l'istanza Singleton
     private static HumanPlayer instance;
