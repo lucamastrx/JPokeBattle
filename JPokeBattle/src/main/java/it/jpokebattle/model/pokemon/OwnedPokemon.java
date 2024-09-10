@@ -4,7 +4,6 @@ import it.jpokebattle.controller.SceneManager;
 import it.jpokebattle.controller.battle.BattleController;
 import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.Saveable;
-import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -334,8 +333,8 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         return moveLevels.contains(this.getLevel());
     }
 
-
-    public void learnMove(ActionEvent event) throws IOException {
+    // (ActionEvent event) throws IOException
+    public void learnMove() throws IOException {
         if (canLearnMove()) {
             String moveID = getBreed().getMoves().get(getLevel());
             Move move = Move.movesMap.get(moveID);
@@ -346,7 +345,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             } else {
                 // System.out.println("else");
                 BattleController controller = SceneManager.getController("fxml.battle");
-                controller.showLearnMovePopup(event, move); // aggiunge la mossa a quelle del pokemon, addMove si occupa se c'è mossa da rimuovere
+                controller.showLearnMovePopup(move); // aggiunge la mossa a quelle del pokemon, addMove si occupa se c'è mossa da rimuovere
             }
         }
         // System.out.println("usciti da learnMove()");

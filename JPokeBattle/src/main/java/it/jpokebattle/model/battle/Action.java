@@ -7,6 +7,6 @@ public interface Action {
 
     int getPriority();
 
-    void execute(Battle battle) throws IOException;
+    void execute() throws IOException;
 }
 

@@ -12,7 +12,7 @@ import java.util.List;
  * questa classe si può memorizzare sempre lo stato corrente del gioco, sia per il pvp che
  * per l'arcade.
  */
-public class HumanPlayer extends Player<OwnedPokemon> { // TODO fix bug 4 pokemons
+public class HumanPlayer extends Player<OwnedPokemon> {
 
     // Campo statico privato per l'istanza Singleton
     private static HumanPlayer instance;
@@ -25,7 +25,7 @@ public class HumanPlayer extends Player<OwnedPokemon> { // TODO fix bug 4 pokemo
 
 
     // Metodo statico per ottenere l'istanza unica con una squadra di default
-    public static synchronized HumanPlayer getInstance() {
+    public static synchronized HumanPlayer getInstance() { // TODO codice verrà rimpiazzato con un loadSER
         if (instance == null) {
             // Inizializza la squadra di default con Charmander, Bulbasaur e Squirtle
             List<OwnedPokemon> defaultTeam = new ArrayList<>();
@@ -52,6 +52,9 @@ public class HumanPlayer extends Player<OwnedPokemon> { // TODO fix bug 4 pokemo
     // Metodo statico per ottenere l'istanza unica con una squadra personalizzata
     public static synchronized HumanPlayer getInstance(List<OwnedPokemon> startingTeam) {
         if (instance == null) {
+            if (startingTeam == null || startingTeam.isEmpty()) {
+                throw new IllegalArgumentException("La squadra iniziale non può essere null o vuota");
+            }
             instance = new HumanPlayer("LucaMastrx", startingTeam);
         }
         return instance;
@@ -59,7 +62,10 @@ public class HumanPlayer extends Player<OwnedPokemon> { // TODO fix bug 4 pokemo
 
     // Metodo per inizializzare la squadra con una lista di Pokémon
     private void initializeTeam(List<OwnedPokemon> startingTeam) {
-        startingTeam.forEach(pokemon -> getTeam().addPokemon(pokemon));
+        // Salta il primo Pokémon (indice 0) perché è già stato aggiunto come attivo
+        for (int i = 1; i < startingTeam.size(); i++) {
+            getTeam().addPokemon(startingTeam.get(i));
+        }
     }
 
 }

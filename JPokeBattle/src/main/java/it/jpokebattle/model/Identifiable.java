@@ -1,10 +1,5 @@
 package it.jpokebattle.model;
 
-import it.jpokebattle.model.player.HumanPlayer;
-import it.jpokebattle.util.FileManager;
-import java.util.HashMap;
-import java.util.Optional;
-
 
 /**
  * L'interfaccia Identifiable rappresenta un contratto per oggetti che devono avere un identificatore univoco.

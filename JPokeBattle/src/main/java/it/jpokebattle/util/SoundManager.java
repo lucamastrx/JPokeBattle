@@ -11,6 +11,7 @@ public class SoundManager {
     private static AudioTrack currentTrack = AudioTrack.MENU;
     private static AudioTrack buttonPlayer = AudioTrack.BUTTON;
     private static AudioTrack cureTeam = AudioTrack.CURETEAM;
+    private static AudioTrack gameOver = AudioTrack.GAMEOVER;
 
     private SoundManager() {
         currentTrack.playLoop();

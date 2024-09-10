@@ -15,5 +15,6 @@
       <Button fx:id="menuButton" layoutX="60.0" layoutY="605.0" mnemonicParsing="false" onAction="#runAway" text="Run Away!" />
       <Button fx:id="attackButton" layoutX="417.0" layoutY="605.0" mnemonicParsing="false" onAction="#showMoveSelectionPopup" text="Attack" />
       <Button fx:id="levelupButton" layoutX="879.0" layoutY="618.0" mnemonicParsing="false" onAction="#addlevel" text="Button" />
+      <Button fx:id="staticButton" layoutX="121.0" layoutY="439.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="50.0" visible="false" />
    </children>
 </AnchorPane>

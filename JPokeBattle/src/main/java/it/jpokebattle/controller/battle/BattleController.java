@@ -38,10 +38,14 @@ public class BattleController {
     @FXML
     protected Button levelupButton;
 
+    @FXML
+    public Button staticButton;
+
     private Popup movePopup;
 
     @FXML
     void addlevel(ActionEvent event) throws IOException {
+
         System.out.println("siamo entrati");
         OwnedPokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
         System.out.println("ha istanziato opkemon");
@@ -50,7 +54,7 @@ public class BattleController {
         pokemon.levelUpAndStatsUp();
         System.out.println("levelup e stat up");
         System.out.println(pokemon.getLevel());
-        pokemon.learnMove(event);
+        pokemon.learnMove();
         System.out.println("chiama popup");
     }
 
@@ -61,11 +65,10 @@ public class BattleController {
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.menu");
     }
 
-    public void showLearnMovePopup(ActionEvent event, Move move) {
+    // showLearnMovePopup(ActionEvent event, Move move)
+    public void showLearnMovePopup(Move move) {
         Popup popup = new Popup();
-        Node source = (Node) event.getSource();
-
-        Stage stage = (Stage) source.getScene().getWindow();
+        stage = (Stage) menuButton.getScene().getWindow();
 
         // Add a listener to track the stage's position
         stage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(popup));
@@ -205,6 +208,14 @@ public class BattleController {
         // Show the popup at the stage position, offset slightly
         movePopup.show(stage);
         movePopup.centerOnScreen(); // Alternatively, you can position it as you need
+    }
+
+
+
+    public void switchToGameOver() throws IOException {
+        Stage currentStage = (Stage) staticButton.getScene().getWindow();
+        SceneManager.switchScene(currentStage, "fxml.gameover");
+        if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.gameover");
     }
 }
 

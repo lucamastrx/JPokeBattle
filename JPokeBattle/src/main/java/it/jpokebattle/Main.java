@@ -27,8 +27,13 @@ public class Main extends Application {
 
         FileManager.clearSER("ser.ownedPokemon");
         HumanPlayer player = HumanPlayer.getInstance();
-        System.out.println(player.getTeam());
+        System.out.println(player.getTeam().getPokemonList().size());
+        System.out.println(player.getTeam().getPokemonList());
+        System.out.println(player.getTeam().getActivePokemon());
+        System.out.println(player.getTeam().getAverageLevel());
+
         FileManager.clearSER("ser.ownedPokemon");
+
 
 
         launch(args);

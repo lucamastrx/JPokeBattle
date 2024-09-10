@@ -41,7 +41,6 @@ public class MenuController {
         soundMan.buttonClick();
         SceneManager.switchScene(event, "fxml.battle");
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.battle");
-
     }
 
 

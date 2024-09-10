@@ -23,6 +23,8 @@ public class Pokemon {  // TODO equals toHash
     private int specialAtkIV;
     private int specialDefIV;
     private int speedIV;
+    private int accuracy;
+    private int evasion;
 
 
     /**
@@ -37,6 +39,8 @@ public class Pokemon {  // TODO equals toHash
         this.name = breed.getName();     // inizialmente, il nome del pokemon è la razza
         this.moves = new HashMap<>();
         this.level = level;
+        this.accuracy = 100;
+        this.evasion = 1;
         setRandomIVs();
         setStatsFromLevel(level);
         setMovesFromLevel(level);
@@ -56,6 +60,8 @@ public class Pokemon {  // TODO equals toHash
         for (Move move : moves.keySet()) {
             moves.put(move, move.getUtilizzi());  // ripristina i PP al massimo
         }
+        setEvasion(1);
+        setAccuracy(100);
     }
 
     public void useMove(Move move) {
@@ -106,6 +112,9 @@ public class Pokemon {  // TODO equals toHash
 
     public int getStrength() {return strength;}
 
+    public int getAccuracy() {return accuracy;}
+
+    public int getEvasion() {return evasion;}
 
     /**
      * Vengono impostati gli IV a valori randomici tra 0 e 15
@@ -143,6 +152,28 @@ public class Pokemon {  // TODO equals toHash
     public void setLevel(int level) {this.level = level;}
 
     public void setStrength(int strength) {this.strength = strength;}
+
+    // Setter per Accuracy con limiti tra 40 e 160
+    private void setAccuracy(int accuracy) {
+        this.accuracy = Math.max(40, Math.min(accuracy, 160));  // Assicura che l'accuratezza sia tra 40 e 160
+    }
+
+    // Metodo per incrementare l'Accuracy di 10
+    public void modifyAccuracy(int modificatorValue) {
+        setAccuracy(this.accuracy + modificatorValue);  // Incrementa di 10 usando il setter per garantire i limiti
+    }
+
+
+    // Setter per Evasion con limiti tra 1 e 61
+    private void setEvasion(int evasion) {
+        this.evasion = Math.max(1, Math.min(evasion, 61));  // Assicura che l'evasione sia tra 1 e 61
+    }
+
+    // Metodo per decrementare/incrementare l'Evasion di 10
+    public void modifyEvasion(int modificatorValue) {
+        setEvasion(this.evasion + modificatorValue);  // Decrementa di 10 usando il setter per garantire i limiti
+    }
+
 
     private void setStatsFromLevel(int lvl){
         setCurrentHp((((getBreed().getHpBaseStat() + getHpIV()) * 2 * lvl) / 100)+ lvl + 10);

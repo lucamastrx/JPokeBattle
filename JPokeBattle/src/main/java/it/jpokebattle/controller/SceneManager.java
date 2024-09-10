@@ -18,6 +18,25 @@ public class SceneManager {
         return loader.getController();
     }
 
+
+
+    public static FXMLLoader switchScene(Stage stage, String fxmlSrcName) throws IOException {
+        // Carica il file FXML
+        FXMLLoader loader = FileManager.loadFXML(fxmlSrcName);
+        Scene scene = new Scene(loader.load());
+
+        // Imposta i dati utente sulla scena
+        scene.setUserData(loader);
+
+        // Cambia la scena dello Stage passato come parametro
+        stage.setScene(scene);
+        stage.show();
+
+        return loader;
+    }
+
+
+
     /**
      * Questo metodo consente il passaggio di una scena ad un'altra.
      *

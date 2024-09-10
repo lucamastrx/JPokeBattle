@@ -13,6 +13,7 @@ public enum AudioTrack {
     VICTORY("audio.victory"),
     LEADERBOARD("audio.leaderboard"),
     LEVELUP("audio.levelup"),
+    GAMEOVER("audio.gameover"),
     CURETEAM("audio.cureteam");
 
     private String srcName;

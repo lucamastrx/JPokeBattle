@@ -10,6 +10,12 @@ public abstract class Player<T extends Pokemon> {
 
 
     public Player(String name, T activePokemon) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il nome del giocatore non può essere null o vuoto");
+        }
+        if (activePokemon == null) {
+            throw new IllegalArgumentException("Il Pokémon attivo non può essere null");
+        }
         this.name = name;
         this.team = new Team<>(activePokemon);
     }

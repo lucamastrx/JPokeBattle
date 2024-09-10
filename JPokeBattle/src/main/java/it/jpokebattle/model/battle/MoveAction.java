@@ -1,11 +1,14 @@
 package it.jpokebattle.model.battle;
 
+
+import it.jpokebattle.controller.battle.BattleController;
 import it.jpokebattle.model.player.Player;
 import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.model.pokemon.OwnedPokemon;
 import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.type.Type;
 import it.jpokebattle.model.type.TypeEffectiveness;
+
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -14,31 +17,35 @@ public class MoveAction implements Action{
     private Player actor;
     private Move move;
     private Player playerOpponent;
+    private Battle battle;
 
-    public MoveAction(Player actor, Move move, Player playerOpponent) {
+    public MoveAction(Player actor, Move move, Player playerOpponent, Battle battle) {
         this.actor = actor;
         this.move = move;
         this.playerOpponent = playerOpponent;
+        this.battle = battle;
     }
 
     @Override
     public int getPriority() {return move.getPriority();}
 
     @Override
-    public void execute(Battle battle) throws IOException {
+    public void execute() throws IOException {
         Pokemon user = actor.getTeam().getActivePokemon();
         Pokemon target = playerOpponent.getTeam().getActivePokemon();
 
         // Utilizzatore usa 1 pp della mossa
         user.useMove(move);
 
-
-        if (user.getMoves().get(move) > -1) {
-            int damage = calculateDamage(user, move, target);
-            target.takeDamage(damage);
-            System.out.println(user.getName() + " usa " + move.getName() + " su " + target.getName() + " causando " + damage + " danni.");
-        } else {
-            System.out.println("Oh no! " + user.getName() + " è troppo stanco per usare questa mossa!");
+        if (isHit(user, move, target)) {
+            if (user.getMoves().get(move) > -1) {
+                int damage = calculateDamage(user, move, target);
+                target.takeDamage(damage);
+                System.out.println(user.getName() + " usa " + move.getName() + " su " + target.getName() + " causando " + damage + " danni.");
+                specialEffects(user, move, target);
+            } else {
+                System.out.println("Oh no! " + user.getName() + " è troppo stanco per usare questa mossa!");
+            }
         }
 
         if (target.isFainted()) {
@@ -49,20 +56,86 @@ public class MoveAction implements Action{
                 ownedPokemon.collectExp(target.getStrength());  // Guadagna esperienza
                 ownedPokemon.collectEVs(target.dropEVs());      // Guadagna EVs
                 ownedPokemon.levelUpAndStatsUp();               // Metodo che fa salire di livello se possibile, e aumenta le stats
-                // ownedPokemon.learnMove();                       // Metodo che insegna una nuova mossa se possibile e se voluto
+                ownedPokemon.learnMove();                       // Metodo che insegna una nuova mossa se possibile e se voluto
                 ownedPokemon.evolve();                          // Metodo che fa evolvere se possibile
             }
         }
         if (battle.youLost()) {
-            // TODO
+            // TODO testare e salvare tutti i dati della partita e aggiornare leaderboard
+            BattleController bc = new BattleController();
+            bc.switchToGameOver();
+            // SceneManager.switchScene("fxml.gameover"); // problema manca ActionEvent
         } else if (battle.otherPlayerLost()) {
             // TODO
         }
     }
 
-    private boolean isMissed() {
-        return false; // TODO
+    private boolean isHit(Pokemon user, Move move, Pokemon target) {
+        double hitProbability = move.getPrecision() * (user.getAccuracy() / 100) * (1 - (target.getEvasion() / 100));
+        double random = Math.random() * 100;
+        return random <= hitProbability;
     }
+
+    private void specialEffects(Pokemon user, Move move, Pokemon target){ // TODO
+        String effettoSuAvversario = move.getOpponentModificatorType();
+        if (effettoSuAvversario != null && !effettoSuAvversario.isEmpty() && !effettoSuAvversario.isBlank()) {
+            int valore = move.getOpponentModificatorValue();
+            switch (effettoSuAvversario) {
+                case "atk":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "def":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "specialAtk":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "specialDef":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "speed":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "accuracy":
+                    target.modifyAccuracy(valore);
+                case "evasion":
+                    target.modifyEvasion(valore);
+                default:
+                    throw new IllegalArgumentException("Tipo di Effetto su avversario non riconosciuto: " + effettoSuAvversario);
+
+            }
+        }
+
+        String effettoSuSeStesso = move.getPersonalModificatorType();
+        if (effettoSuSeStesso != null && !effettoSuSeStesso.isEmpty() && !effettoSuSeStesso.isBlank()) {
+            int valore = move.getPersonalModificatorValue();
+            switch (effettoSuSeStesso) {
+                case "atk":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "def":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "specialAtk":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "specialDef":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "speed":
+                    // modificatore di hp che non salva su ser
+                    break;
+                case "accuracy":
+                    user.modifyAccuracy(valore);
+                case "evasion":
+                    user.modifyEvasion(valore);
+
+                default:
+                    throw new IllegalArgumentException("Tipo di Effetto su se stesso non riconosciuto: " + effettoSuSeStesso);
+            }
+        }
+    }
+
 
     private int calculateDamage(Pokemon user, Move move, Pokemon target) {
         int lvl = user.getLevel();

@@ -22,6 +22,7 @@ public class Battle {
         while (!youLost) {
             // cose
         }
+        // cura tutti i tuoi pokemon
     }
 
 

@@ -11,21 +11,25 @@ public class Team <T extends Pokemon> {
     private T activePokemon;
 
     public Team(T activePokemon) {
-        pokemonList = new ArrayList<>();
+        if (activePokemon == null) {
+            throw new IllegalArgumentException("Il Pokémon attivo non può essere null");
+        }
+        this.pokemonList = new ArrayList<>();
         this.activePokemon = activePokemon;
         addPokemon(activePokemon);
     }
 
     // Metodo per aggiungere un Pokémon alla squadra
     public void addPokemon(T pokemon) {
-        if (pokemonList.size() < 6) {  // Limitiamo la squadra a un massimo di 6 Pokémon, come nei giochi originali
+        if (pokemon == null) {
+            throw new IllegalArgumentException("Il Pokémon non può essere null");
+        }
+        if (pokemonList.size() < 6) {
             pokemonList.add(pokemon);
-            // System.out.println(pokemon.getName() + " aggiunto alla squadra.");
         } else {
             System.out.println("La squadra è già completa. Non puoi aggiungere altri Pokémon.");
         }
     }
-
     // Metodo per rimuovere un Pokémon dalla squadra
     public void removePokemon(T pokemon) {
         if (pokemonList.size() == 1) {
@@ -99,7 +103,7 @@ public class Team <T extends Pokemon> {
         T x = activePokemon;
         pokemonList.clear();
         pokemonList.add(x);
-        System.out.println("La squadra è stata svuotata (Eccetto il Pokemon Attivo).");
+        System.out.println("La squadra è stata svuotata (Eccetto il Pokemon Attivo: " + activePokemon.getName() + ")");
     }
 
     // Scambia la posizione di due Pokémon
