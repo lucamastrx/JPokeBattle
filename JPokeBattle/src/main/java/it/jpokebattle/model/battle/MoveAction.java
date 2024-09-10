@@ -65,7 +65,7 @@ public class MoveAction implements Action{
             if (battle.botLost()) {
                 // TODO vittoria e prossima partita
                 return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.NO_LEVEL_UP};            }
-            if (battle.youLost()) {
+            if (battle.humanLost()) {
                 // TODO salvare tutti i dati della partita e aggiornare leaderboard e game over screen
                 return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.NO_LEVEL_UP};
 

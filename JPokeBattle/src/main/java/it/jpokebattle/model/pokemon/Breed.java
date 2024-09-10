@@ -8,11 +8,12 @@ import it.jpokebattle.model.type.Type;
 import it.jpokebattle.util.FileManager;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 import java.util.HashSet;
 
 
-public class Breed implements Identifiable { // TODO equals toHash
+public class Breed implements Identifiable {
     @JsonIgnore
     public static HashMap<String, Breed> breedsMap = new HashMap<>(FileManager.readJSON("json.breeds", Breed.class));
 
@@ -121,4 +122,18 @@ public class Breed implements Identifiable { // TODO equals toHash
         return "Breed:{" + name + "} ";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Breed breed = (Breed) obj;
+
+        return Objects.equals(name, breed.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

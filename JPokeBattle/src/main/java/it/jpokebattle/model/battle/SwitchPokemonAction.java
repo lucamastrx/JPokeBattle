@@ -3,7 +3,6 @@ package it.jpokebattle.model.battle;
 import it.jpokebattle.model.player.Player;
 import it.jpokebattle.model.pokemon.Pokemon;
 
-import java.io.IOException;
 
 public class SwitchPokemonAction implements Action{
 
@@ -13,6 +12,7 @@ public class SwitchPokemonAction implements Action{
 
     public SwitchPokemonAction(Player actor, Pokemon substitutePokemon, Battle battle) {
         this.actor = actor;
+        this.substitutePokemon = substitutePokemon;
         this.battle = battle;
     }
 
@@ -22,25 +22,25 @@ public class SwitchPokemonAction implements Action{
     }
 
     @Override
-    public BattleStatus[] execute() throws IOException { //TODO
+    public BattleStatus[] execute() {
         // Verifica se il Pokémon da sostituire è nella squadra del giocatore
         if (!actor.getTeam().getPokemonList().contains(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato non fa parte della tua squadra.");
-            // Permetti di rifare l'azione
+            execute(); // Permetti di rifare l'azione
             return null;
         }
 
         // Verifica se il Pokémon da sostituire è esausto
         if (substitutePokemon.isFainted()) {
             System.out.println("Il Pokémon selezionato è esausto e non può essere utilizzato.");
-            // Permetti di rifare l'azione
+            execute(); // Permetti di rifare l'azione
             return null;
         }
 
         // Verifica se il Pokémon da sostituire è già in campo
         if (actor.getTeam().getActivePokemon().equals(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato è già in campo.");
-            // Permetti di rifare l'azione
+            execute(); // Permetti di rifare l'azione
             return null;
         }
 

@@ -1,10 +1,13 @@
 package it.jpokebattle.controller.battle;
 
 import it.jpokebattle.controller.SceneManager;
+import it.jpokebattle.model.battle.Battle;
 import it.jpokebattle.model.exceptions.MoveSetException;
+import it.jpokebattle.model.player.Player;
+import it.jpokebattle.model.player.BotPlayerFactory;
 import it.jpokebattle.model.player.HumanPlayer;
-import it.jpokebattle.model.pokemon.Move;
-import it.jpokebattle.model.pokemon.OwnedPokemon;
+import it.jpokebattle.model.player.PlayerFactory;
+import it.jpokebattle.model.pokemon.*;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.control.Label;
@@ -28,6 +32,8 @@ public class BattleController {
 
     private SoundManager soundMan = SoundManager.getInstance();
     private static Stage currentStage;
+    private static Battle currentBattle;
+
 
     @FXML
     protected Button menuButton;
@@ -42,6 +48,27 @@ public class BattleController {
     protected Button gameOverButton;
 
     private Popup movePopup;
+
+
+    public BattleController(){
+        currentBattle = new Battle();
+    }
+
+
+    public void battleStatus() {
+        if (!currentBattle.humanLost()) {
+
+        } else {
+            // TODO switch to gameover
+            System.out.println("Game Over! Hai perso dopo aver sconfitto " + (currentBattle.getBattleCount() - 1) + " avversari.");
+        }
+    }
+
+
+
+    public static Battle getCurrentBattle() {
+        return currentBattle;
+    }
 
 
 
@@ -62,7 +89,9 @@ public class BattleController {
                 showLearnMovePopup(move);
             } else {
                 pokemon.learnMove();
-                // TODO popup che il pokemon ha imparato una nuova mossa
+                String moveID = pokemon.getBreed().getMoves().get(pokemon.getLevel());
+                Move move = Move.movesMap.get(moveID);
+                showAutomaticLearnedMovePopup(move); // popup che il pokemon ha imparato una nuova mossa in automatico
             }
 
         }
@@ -177,6 +206,44 @@ public class BattleController {
         popup.getContent().add(popupContent);
         popup.show(currentStage);
     }
+
+
+    public void showAutomaticLearnedMovePopup(Move move){
+        Popup popup = new Popup();
+        // Add a listener to track the stage's position
+        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupXPosition(popup, 90));
+        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupYPosition(popup, 550));
+
+        // Create the message label
+        Label messageLabel = new Label("The Pokémon has learned " + move.getID() + ", description:  \""+ move.getDescription() + "\", Type: "+  move.getType() + ", Power: "+  move.getPower()  +  ".");
+
+        // Create Yes and No buttons
+        Button okButton = new Button("Ok");
+
+
+        okButton.setOnAction(e -> {
+            popup.hide();  // Hide the first popup
+        });
+
+        // Layout for the first popup
+        HBox buttonBox = new HBox(10, okButton);
+        VBox popupContent = new VBox(10, messageLabel, buttonBox);
+        popupContent.setStyle("-fx-background-color: lightyellow; -fx-padding: 20; -fx-border-color: black;");
+        popupContent.setMinWidth(300);
+        // Get the position of the scene within the stage
+        Bounds sceneBounds = currentStage.getScene().getRoot().localToScreen(currentStage.getScene().getRoot().getBoundsInLocal());
+
+        // Set popup position relative to the scene
+        double xOffset = 90; // Desired x offset from the scene's top-left corner
+        double yOffset = 550; // Desired y offset from the scene's top-left corner
+
+        popup.setX(sceneBounds.getMinX() + xOffset);
+        popup.setY(sceneBounds.getMinY() + yOffset);
+
+        popup.getContent().add(popupContent);
+        popup.show(currentStage);
+    }
+
 
     /**
      * Show a popup with a grid of 4 buttons, each representing a Pokémon move.

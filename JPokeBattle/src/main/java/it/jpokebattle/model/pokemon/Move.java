@@ -8,9 +8,10 @@ import it.jpokebattle.model.type.Type;
 import it.jpokebattle.util.FileManager;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
-public class Move implements Identifiable {  // TODO equals toHash
+public class Move implements Identifiable {
     @JsonIgnore
     public static HashMap<String, Move> movesMap = new HashMap<>(FileManager.readJSON("json.moves", Move.class));
 
@@ -127,5 +128,20 @@ public class Move implements Identifiable {  // TODO equals toHash
         FileManager.writeJSON(movesMap, "json.moves") oppure "json.prova";
     }*/
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Move move = (Move) obj;
+
+        return Objects.equals(name, move.name);
+    }
+
+    // Override di hashCode
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 
 }

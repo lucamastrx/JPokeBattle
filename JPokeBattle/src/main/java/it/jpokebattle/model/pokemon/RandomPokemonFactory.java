@@ -12,9 +12,9 @@ public class RandomPokemonFactory extends PokemonFactory {
         // Genera una breed casuale
         Breed breed = createRandomBreed();
 
-        // Generare un livello casuale da 10 a 70 (incluso)
+        // Generare un livello casuale da 10 a 50 (incluso)
         Random random = new Random();
-        int randomLevel = random.nextInt(61) + 10;
+        int randomLevel = random.nextInt(41) + 10;
 
         // Costruisce e ritorna un WildPokemon
         return new Pokemon(breed, randomLevel);

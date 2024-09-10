@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class Pokemon {  // TODO equals toHash
+public class Pokemon {
     private String name;
     private Breed breed;        // specie
     private HashMap<Move, Integer> moves;        // {mossa: pp attuali}
@@ -363,5 +363,41 @@ public class Pokemon {  // TODO equals toHash
                 "specialDefIV=" + specialDefIV + ", " +
                 "speedIV=" + speedIV +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Pokemon pokemon = (Pokemon) obj;
+
+        return currentHp == pokemon.currentHp &&
+                fullHp == pokemon.fullHp &&
+                atk == pokemon.atk &&
+                def == pokemon.def &&
+                specialAtk == pokemon.specialAtk &&
+                specialDef == pokemon.specialDef &&
+                speed == pokemon.speed &&
+                level == pokemon.level &&
+                strength == pokemon.strength &&
+                hpIV == pokemon.hpIV &&
+                atkIV == pokemon.atkIV &&
+                defIV == pokemon.defIV &&
+                specialAtkIV == pokemon.specialAtkIV &&
+                specialDefIV == pokemon.specialDefIV &&
+                speedIV == pokemon.speedIV &&
+                accuracy == pokemon.accuracy &&
+                evasion == pokemon.evasion &&
+                Objects.equals(name, pokemon.name) &&
+                Objects.equals(breed, pokemon.breed) &&
+                Objects.equals(moves, pokemon.moves);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, breed, moves, currentHp, fullHp, atk, def, specialAtk, specialDef, speed, level,
+                strength, hpIV, atkIV, defIV, specialAtkIV, specialDefIV, speedIV, accuracy, evasion);
     }
 }

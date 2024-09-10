@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 
-// TODO equals toHash
+
 public class OwnedPokemon extends Pokemon implements Serializable, Identifiable, Saveable<OwnedPokemon> {
 
     private final String SER_SRC_NAME = "ser.ownedPokemon";
@@ -475,5 +476,20 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
                 "speedEV=" + speedEV + ", " +
                 "totalEVsUsed= " + totalEVsUsed +
                 "} ";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        OwnedPokemon that = (OwnedPokemon) obj;
+
+        return Objects.equals(ID, that.ID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID);
     }
 }
