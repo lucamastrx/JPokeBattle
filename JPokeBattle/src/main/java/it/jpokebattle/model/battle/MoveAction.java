@@ -1,7 +1,7 @@
 package it.jpokebattle.model.battle;
 
 
-import it.jpokebattle.controller.battle.BattleController;
+import it.jpokebattle.model.exceptions.MoveSetException;
 import it.jpokebattle.model.player.Player;
 import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.model.pokemon.OwnedPokemon;
@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.HashSet;
 
 public class MoveAction implements Action{
+
+    public enum BattleStatus {CONTINUE, LOST, WIN}
+
     private Player actor;
     private Move move;
     private Player playerOpponent;
@@ -30,7 +33,7 @@ public class MoveAction implements Action{
     public int getPriority() {return move.getPriority();}
 
     @Override
-    public void execute() throws IOException {
+    public BattleStatus execute() throws IOException, MoveSetException {
         Pokemon user = actor.getTeam().getActivePokemon();
         Pokemon target = playerOpponent.getTeam().getActivePokemon();
 
@@ -62,12 +65,15 @@ public class MoveAction implements Action{
         }
         if (battle.youLost()) {
             // TODO testare e salvare tutti i dati della partita e aggiornare leaderboard
-            BattleController bc = new BattleController();
-            bc.switchToGameOver();
+            return BattleStatus.LOST;
+
+
             // SceneManager.switchScene("fxml.gameover"); // problema manca ActionEvent
         } else if (battle.otherPlayerLost()) {
             // TODO
+            return BattleStatus.WIN;
         }
+        return BattleStatus.CONTINUE;
     }
 
     private boolean isHit(Pokemon user, Move move, Pokemon target) {

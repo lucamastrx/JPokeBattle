@@ -22,30 +22,31 @@ public class SwitchPokemonAction implements Action{
     }
 
     @Override
-    public void execute() throws IOException { //TODO
+    public MoveAction.BattleStatus execute() throws IOException { //TODO
         // Verifica se il Pokémon da sostituire è nella squadra del giocatore
         if (!actor.getTeam().getPokemonList().contains(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato non fa parte della tua squadra.");
             // Permetti di rifare l'azione
-            return;
+            return null;
         }
 
         // Verifica se il Pokémon da sostituire è esausto
         if (substitutePokemon.isFainted()) {
             System.out.println("Il Pokémon selezionato è esausto e non può essere utilizzato.");
             // Permetti di rifare l'azione
-            return;
+            return null;
         }
 
         // Verifica se il Pokémon da sostituire è già in campo
         if (actor.getTeam().getActivePokemon().equals(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato è già in campo.");
             // Permetti di rifare l'azione
-            return;
+            return null;
         }
 
         // Esegui l'azione di sostituzione
         actor.getTeam().setActivePokemon(substitutePokemon);
         System.out.println("Il Pokémon è stato sostituito con successo.");
+        return null;
     }
 }

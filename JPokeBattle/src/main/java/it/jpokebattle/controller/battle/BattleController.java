@@ -1,6 +1,7 @@
 package it.jpokebattle.controller.battle;
 
 import it.jpokebattle.controller.SceneManager;
+import it.jpokebattle.model.exceptions.MoveSetException;
 import it.jpokebattle.model.player.HumanPlayer;
 import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.model.pokemon.OwnedPokemon;
@@ -13,8 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -28,7 +29,8 @@ import javafx.scene.layout.GridPane;
 public class BattleController {
 
     private SoundManager soundMan = SoundManager.getInstance();
-    private Stage stage;
+    private static Stage currentStage;
+
     @FXML
     protected Button menuButton;
 
@@ -43,9 +45,12 @@ public class BattleController {
 
     private Popup movePopup;
 
-    @FXML
-    void addlevel(ActionEvent event) throws IOException {
 
+
+
+    @FXML
+    void addlevel(ActionEvent event) throws IOException, MoveSetException {
+        currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         System.out.println("siamo entrati");
         OwnedPokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
         System.out.println("ha istanziato opkemon");
@@ -54,7 +59,19 @@ public class BattleController {
         pokemon.levelUpAndStatsUp();
         System.out.println("levelup e stat up");
         System.out.println(pokemon.getLevel());
-        pokemon.learnMove();
+        if (pokemon.canLearnMove()) {
+            if (pokemon.has4moves()){
+                String moveID = pokemon.getBreed().getMoves().get(pokemon.getLevel());
+                Move move = Move.movesMap.get(moveID);
+                showLearnMovePopup(move);
+            } else {
+                pokemon.learnMove();
+                // TODO popup che il pokemon ha imparato una nuova mossa
+            }
+
+        }
+
+
         System.out.println("chiama popup");
     }
 
@@ -68,11 +85,11 @@ public class BattleController {
     // showLearnMovePopup(ActionEvent event, Move move)
     public void showLearnMovePopup(Move move) {
         Popup popup = new Popup();
-        stage = (Stage) menuButton.getScene().getWindow();
+        // currentStage = (Stage) menuButton.getScene().getWindow();
 
         // Add a listener to track the stage's position
-        stage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(popup));
-        stage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(popup));
+        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(popup));
+        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(popup));
 
         // Create the message label
         Label messageLabel = new Label("The Pokémon can learn " + move.getID() +  ". Would you like to forget another move?");
@@ -94,7 +111,7 @@ public class BattleController {
         popupContent.setStyle("-fx-background-color: lightyellow; -fx-padding: 20; -fx-border-color: black;");
         popupContent.setMinWidth(300);
         // Get the position of the scene within the stage
-        Bounds sceneBounds = stage.getScene().getRoot().localToScreen(stage.getScene().getRoot().getBoundsInLocal());
+        Bounds sceneBounds = currentStage.getScene().getRoot().localToScreen(currentStage.getScene().getRoot().getBoundsInLocal());
 
         // Set popup position relative to the scene
         double xOffset = 100; // Desired x offset from the scene's top-left corner
@@ -104,17 +121,17 @@ public class BattleController {
         popup.setY(sceneBounds.getMinY() + yOffset);
 
         popup.getContent().add(popupContent);
-        popup.show(stage);
+        popup.show(currentStage);
     }
 
     private void updatePopupPosition(Popup popup) {
-        if (popup == null || stage == null) {
+        if (popup == null || currentStage == null) {
             return;
         }
 
         // Get the current position of the stage
-        double stageX = stage.getX();
-        double stageY = stage.getY();
+        double stageX = currentStage.getX();
+        double stageY = currentStage.getY();
 
         // Set the popup position relative to the stage
         double xOffset = 100; // Offset from the top-left corner of the stage
@@ -151,7 +168,7 @@ public class BattleController {
         popupContent.setMinWidth(300);
 
         popup.getContent().add(popupContent);
-        popup.show(stage);
+        popup.show(currentStage);
     }
 
     /**
@@ -161,7 +178,7 @@ public class BattleController {
     @FXML
     public void showMoveSelectionPopup(ActionEvent event) throws IOException {
         String[] moves = {"Quick Attack", "Iron Tail", "Thunder Wave", "Double Team"};
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         // Create the popup
         if (movePopup == null) {
             movePopup = new Popup();
@@ -206,7 +223,7 @@ public class BattleController {
         movePopup.getContent().add(layout);
 
         // Show the popup at the stage position, offset slightly
-        movePopup.show(stage);
+        movePopup.show(currentStage);
         movePopup.centerOnScreen(); // Alternatively, you can position it as you need
     }
 
@@ -217,5 +234,6 @@ public class BattleController {
         SceneManager.switchScene(currentStage, "fxml.gameover");
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.gameover");
     }
+
 }
 
