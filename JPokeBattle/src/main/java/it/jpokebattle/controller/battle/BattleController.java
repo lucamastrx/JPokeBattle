@@ -47,7 +47,7 @@ public class BattleController {
 
 
     @FXML
-    void addlevel(ActionEvent event) throws MoveSetException {
+    void addlevel(ActionEvent event) throws MoveSetException { //TODO fix
         currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         OwnedPokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
         pokemon.collectExp(5000);
@@ -79,8 +79,8 @@ public class BattleController {
     public void showLearnMovePopup(Move move) {
         Popup popup = new Popup();
         // Add a listener to track the stage's position
-        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(popup));
-        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(popup));
+        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupXPosition(popup, 90));
+        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupYPosition(popup, 550));
 
         // Create the message label
         Label messageLabel = new Label("The Pokémon can learn " + move.getID() + ", description:  \""+ move.getDescription() + "\", Type: "+  move.getType() + ", Power: "+  move.getPower()  +  ". Would you like to forget another move?");
@@ -115,20 +115,23 @@ public class BattleController {
         popup.show(currentStage);
     }
 
-    private void updatePopupPosition(Popup popup) {
+    private void updatePopupXPosition(Popup popup, double xOffset) {
         if (popup == null || currentStage == null) {
             return;
         }
 
         // Get the current position of the stage
         double stageX = currentStage.getX();
+        popup.setX(stageX + xOffset);
+
+    }
+    private void updatePopupYPosition(Popup popup, double yOffset) {
+        if (popup == null || currentStage == null) {
+            return;
+        }
+
         double stageY = currentStage.getY();
 
-        // Set the popup position relative to the stage
-        double xOffset = 90; // Offset from the top-left corner of the stage
-        double yOffset = 550; // Offset from the top-left corner of the stage
-
-        popup.setX(stageX + xOffset);
         popup.setY(stageY + yOffset);
     }
 
@@ -189,9 +192,8 @@ public class BattleController {
             movePopup = new Popup();
         }
 
-        // Add a listener to track the stage's position
-        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(movePopup));
-        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(movePopup));
+        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupXPosition(movePopup, 200));
+        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupYPosition(movePopup, 200));
 
         // GridPane to arrange buttons in a 2x2 grid
         GridPane grid = new GridPane();
@@ -209,7 +211,13 @@ public class BattleController {
 
             // Add event handler for each button
             moveButton.setOnAction(e -> {
+                // controllare priorita e veolocita
+                // eseguire entrambe le Action
                 System.out.println("Selected move: " + moveID);  // Use the final variable 'move'
+                // isdtanziare moveaction
+                // chiamare execute
+                // vedere cosa ritorna e controllare come andare avanti
+                // vedi se passare ad altra schermata o continuare
                 movePopup.hide();  // Close the popup after selecting a move
             });
 
@@ -232,9 +240,8 @@ public class BattleController {
         movePopup.getContent().clear();
         movePopup.getContent().add(layout);
 
-        // Show the popup at the stage position, offset slightly
+        // movePopup.getContent().add(popupContent);
         movePopup.show(currentStage);
-        movePopup.centerOnScreen(); // Alternatively, you can position it as you need
     }
 
 

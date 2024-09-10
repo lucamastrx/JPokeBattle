@@ -294,7 +294,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * Controlla se il pokemon ha raggiunto la soglia di ex per salire di livello.
      * Il livello massimo è 100, dopo la quale il livello non aumenterà.
      */
-    private boolean canLevelUp() {
+    public boolean canLevelUp() {
         return this.exp >= this.expForNextLevel && getLevel() < 100;
     }
 

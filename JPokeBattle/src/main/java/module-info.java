@@ -49,6 +49,9 @@ module it.jpokebattle {
     exports it.jpokebattle.model.battle;
     opens it.jpokebattle.model.battle;
 
+    exports it.jpokebattle.model.exceptions;
+    opens it.jpokebattle.model.exceptions;
+
     exports it.jpokebattle.model.leaderboard;
     opens it.jpokebattle.model.leaderboard;
 

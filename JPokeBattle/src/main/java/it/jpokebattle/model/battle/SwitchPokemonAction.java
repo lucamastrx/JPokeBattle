@@ -22,7 +22,7 @@ public class SwitchPokemonAction implements Action{
     }
 
     @Override
-    public MoveAction.BattleStatus execute() throws IOException { //TODO
+    public BattleStatus[] execute() throws IOException { //TODO
         // Verifica se il Pokémon da sostituire è nella squadra del giocatore
         if (!actor.getTeam().getPokemonList().contains(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato non fa parte della tua squadra.");

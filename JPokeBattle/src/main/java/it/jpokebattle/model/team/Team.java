@@ -54,6 +54,12 @@ public class Team <T extends Pokemon> {
         }
     }
 
+    // Metodo per ottenere una lista di Pokémon che non sono svenuti
+    public List<T> getAvailablePokemon() {
+        return pokemonList.stream()            // Crea uno stream dalla lista di Pokémon
+                .filter(pokemon -> !pokemon.isFainted())  // Filtra i Pokémon che non sono svenuti
+                .toList();                      // Colleziona il risultato in una lista
+    }
 
     // Metodo per ottenere la lista di Pokémon nella squadra
     public List<T> getPokemonList() {

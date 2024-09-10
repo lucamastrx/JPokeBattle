@@ -6,13 +6,13 @@ import it.jpokebattle.model.player.Player;
 public class Battle {
 
     private boolean youLost = false;
-    private Player playerYou;
-    private Player playerOpponent;
+    private Player humanPlayer;
+    private static Player currentBotPlayer;
 
 
-    public Battle(Player playerYou, Player playerOpponent) {
-        this.playerYou = playerYou;
-        this.playerOpponent = playerOpponent;
+    public Battle(Player humanPlayer, Player currentBotPlayer) {
+        this.humanPlayer = humanPlayer;
+        Battle.currentBotPlayer = currentBotPlayer;
 
 
         startBattle();
@@ -27,14 +27,14 @@ public class Battle {
 
 
     public boolean youLost(){
-        return playerYou.getTeam().allPokemonFainted();
+        return humanPlayer.getTeam().allPokemonFainted();
     }
 
-    public boolean otherPlayerLost(){
-        return playerOpponent.getTeam().allPokemonFainted();
+    public boolean botLost(){
+        return currentBotPlayer.getTeam().allPokemonFainted();
     }
 
-    public Player getPlayerYou() {return playerYou;}
+    public Player getHumanPlayer() {return humanPlayer;}
 
-    public Player getPlayerOpponent() {return playerOpponent;}
+    public Player getCurrentBotPlayer() {return currentBotPlayer;}
 }
