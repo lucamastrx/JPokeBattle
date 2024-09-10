@@ -328,11 +328,27 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
 
 
-
     public boolean canLearnMove(){
-        Set<Integer> moveLevels =  getBreed().getMoves().keySet();
-        return moveLevels.contains(this.getLevel());
+        // Ottieni i livelli in cui il Pokémon può imparare nuove mosse
+        Set<Integer> moveLevels = getBreed().getMoves().keySet();
+
+        // Verifica se il livello corrente è tra i livelli in cui può imparare mosse
+        if (moveLevels.contains(this.getLevel())) {
+            // Ottieni la mossa che può essere imparata al livello attuale
+            String potentialMoveID = getBreed().getMoves().get(getLevel());
+            Move potentialMove = Move.movesMap.get(potentialMoveID);
+
+            // Verifica se la mossa non è già presente tra le mosse del Pokémon
+            return !this.getMoves().containsKey(potentialMove);
+        }
+
+        return false;  // Il livello non è un livello in cui può imparare nuove mosse
     }
+
+//    public boolean canLearnMove(){
+//        Set<Integer> moveLevels =  getBreed().getMoves().keySet();
+//        return moveLevels.contains(this.getLevel());
+//    }
 
     public boolean has4moves() {
         return getMoves().size() == 4;
@@ -348,8 +364,8 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             } else {
                 throw new MoveSetException();
             }
-
         }
+        save();
     }
 
 

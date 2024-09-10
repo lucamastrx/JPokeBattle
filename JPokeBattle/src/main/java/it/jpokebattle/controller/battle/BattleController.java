@@ -5,7 +5,6 @@ import it.jpokebattle.model.exceptions.MoveSetException;
 import it.jpokebattle.model.player.HumanPlayer;
 import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.model.pokemon.OwnedPokemon;
-import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import javafx.scene.control.Label;
@@ -41,7 +39,7 @@ public class BattleController {
     protected Button levelupButton;
 
     @FXML
-    public Button staticButton;
+    protected Button gameOverButton;
 
     private Popup movePopup;
 
@@ -49,16 +47,14 @@ public class BattleController {
 
 
     @FXML
-    void addlevel(ActionEvent event) throws IOException, MoveSetException {
+    void addlevel(ActionEvent event) throws MoveSetException {
         currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        System.out.println("siamo entrati");
         OwnedPokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
-        System.out.println("ha istanziato opkemon");
         pokemon.collectExp(5000);
-        System.out.println("ha dato exp");
         pokemon.levelUpAndStatsUp();
-        System.out.println("levelup e stat up");
+        System.out.println(pokemon.getMoves());
         System.out.println(pokemon.getLevel());
+
         if (pokemon.canLearnMove()) {
             if (pokemon.has4moves()){
                 String moveID = pokemon.getBreed().getMoves().get(pokemon.getLevel());
@@ -70,9 +66,6 @@ public class BattleController {
             }
 
         }
-
-
-        System.out.println("chiama popup");
     }
 
     @FXML
@@ -85,14 +78,12 @@ public class BattleController {
     // showLearnMovePopup(ActionEvent event, Move move)
     public void showLearnMovePopup(Move move) {
         Popup popup = new Popup();
-        // currentStage = (Stage) menuButton.getScene().getWindow();
-
         // Add a listener to track the stage's position
         currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(popup));
         currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(popup));
 
         // Create the message label
-        Label messageLabel = new Label("The Pokémon can learn " + move.getID() +  ". Would you like to forget another move?");
+        Label messageLabel = new Label("The Pokémon can learn " + move.getID() + ", description:  \""+ move.getDescription() + "\", Type: "+  move.getType() + ", Power: "+  move.getPower()  +  ". Would you like to forget another move?");
 
         // Create Yes and No buttons
         Button yesButton = new Button("Yes");
@@ -114,8 +105,8 @@ public class BattleController {
         Bounds sceneBounds = currentStage.getScene().getRoot().localToScreen(currentStage.getScene().getRoot().getBoundsInLocal());
 
         // Set popup position relative to the scene
-        double xOffset = 100; // Desired x offset from the scene's top-left corner
-        double yOffset = 100; // Desired y offset from the scene's top-left corner
+        double xOffset = 90; // Desired x offset from the scene's top-left corner
+        double yOffset = 550; // Desired y offset from the scene's top-left corner
 
         popup.setX(sceneBounds.getMinX() + xOffset);
         popup.setY(sceneBounds.getMinY() + yOffset);
@@ -134,15 +125,15 @@ public class BattleController {
         double stageY = currentStage.getY();
 
         // Set the popup position relative to the stage
-        double xOffset = 100; // Offset from the top-left corner of the stage
-        double yOffset = 100; // Offset from the top-left corner of the stage
+        double xOffset = 90; // Offset from the top-left corner of the stage
+        double yOffset = 550; // Offset from the top-left corner of the stage
 
         popup.setX(stageX + xOffset);
         popup.setY(stageY + yOffset);
     }
 
     private void showMoveToForgetSelectionPopup() {
-        Pokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
+        OwnedPokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
         List<String> moves = pokemon.getMoves().keySet().stream().map(Move::getID).toList();
 
         Popup popup = new Popup();
@@ -153,10 +144,23 @@ public class BattleController {
         // Create buttons for each move
         VBox moveButtons = new VBox(10);
 
-        for (String move : moves) {
-            Button moveButton = new Button(move);
+        // Variabile per salvare la mossa selezionata
+        final String[] selectedMove = {null};
+
+        for (String moveID : moves) {
+            Button moveButton = new Button(moveID);
             moveButton.setOnAction(e -> {
-                System.out.println("Selected move: " + move);
+                System.out.println("Selected move: " + moveID);
+                // Salva la mossa selezionata
+                selectedMove[0] = moveID;
+                // Chiama il metodo per rimuovere la mossa
+                Move moveToRemove = Move.movesMap.get(moveID);
+                pokemon.removeMove(moveToRemove);
+                try {
+                    pokemon.learnMove();
+                } catch (MoveSetException ex) {
+                    throw new RuntimeException(ex);
+                }
                 popup.hide(); // Close the popup after move selection
             });
             moveButtons.getChildren().add(moveButton);
@@ -177,12 +181,17 @@ public class BattleController {
      */
     @FXML
     public void showMoveSelectionPopup(ActionEvent event) throws IOException {
-        String[] moves = {"Quick Attack", "Iron Tail", "Thunder Wave", "Double Team"};
+        HumanPlayer humanPlayer = HumanPlayer.getInstance();
+        String[] movesID = humanPlayer.getTeam().getActivePokemon().getMoves().keySet().stream().map(Move::getID).toArray(String[]::new);
         currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         // Create the popup
         if (movePopup == null) {
             movePopup = new Popup();
         }
+
+        // Add a listener to track the stage's position
+        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupPosition(movePopup));
+        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupPosition(movePopup));
 
         // GridPane to arrange buttons in a 2x2 grid
         GridPane grid = new GridPane();
@@ -192,14 +201,15 @@ public class BattleController {
         grid.setAlignment(Pos.CENTER);
 
         // Create buttons for each move
-        for (int i = 0; i < moves.length; i++) {
-            String move = moves[i]; // Create a new final variable to capture the move
-            Button moveButton = new Button(move);
-            moveButton.setPrefSize(100, 50); // Set button size
+        for (int i = 0; i < movesID.length; i++) {
+            String moveID = movesID[i]; // Create a new final variable to capture the move
+            Move move = Move.movesMap.get(moveID);
+            Button moveButton = new Button(moveID + " " + move.getPower() + " [" + move.getType() + "]");
+            moveButton.setPrefSize(150, 50); // Set button size
 
             // Add event handler for each button
             moveButton.setOnAction(e -> {
-                System.out.println("Selected move: " + move);  // Use the final variable 'move'
+                System.out.println("Selected move: " + moveID);  // Use the final variable 'move'
                 movePopup.hide();  // Close the popup after selecting a move
             });
 
@@ -229,8 +239,8 @@ public class BattleController {
 
 
 
-    public void switchToGameOver() throws IOException {
-        Stage currentStage = (Stage) staticButton.getScene().getWindow();
+    public void switchToGameOver(ActionEvent event) throws IOException {
+        currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SceneManager.switchScene(currentStage, "fxml.gameover");
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.gameover");
     }
