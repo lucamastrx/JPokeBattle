@@ -46,43 +46,50 @@ public class MoveAction implements Action{
             } else {
                 System.out.println("Oh no! " + user.getName() + " è troppo stanco per usare questa mossa!");
             }
-        }
 
-        if (target.isFainted()) {
-            System.out.println(target.getName() + " è esausto!");
-            if (user instanceof OwnedPokemon) {
-                // Cast sicuro a OwnedPokemon
-                OwnedPokemon ownedPokemon = (OwnedPokemon) user;
-                ownedPokemon.collectExp(target.getStrength());  // Guadagna esperienza
-                ownedPokemon.collectEVs(target.dropEVs());      // Guadagna EVs
-                if (ownedPokemon.canLevelUp()) {
-                    canLevelUpFlag = true; // TODO
-                    //ownedPokemon.levelUpAndStatsUp();               // Metodo che fa salire di livello e aumenta le stats
-                    //ownedPokemon.learnMove();                       // Metodo che insegna una nuova mossa se possibile e se voluto
-                    //ownedPokemon.evolve();                          // Metodo che fa evolvere se possibile
+
+            if (target.isFainted()) {
+                System.out.println(target.getName() + " è esausto!");
+                if (user instanceof OwnedPokemon) {
+                    // Cast sicuro a OwnedPokemon
+                    OwnedPokemon ownedPokemon = (OwnedPokemon) user;
+                    ownedPokemon.collectExp(target.getStrength());  // Guadagna esperienza
+                    ownedPokemon.collectEVs(target.dropEVs());      // Guadagna EVs
+                    if (ownedPokemon.canLevelUp()) {
+                        canLevelUpFlag = true; // TODO
+                        //ownedPokemon.levelUpAndStatsUp();               // Metodo che fa salire di livello e aumenta le stats
+                        //ownedPokemon.learnMove();                       // Metodo che insegna una nuova mossa se possibile e se voluto
+                        //ownedPokemon.evolve();                          // Metodo che fa evolvere se possibile
+                    }
+                }
+                if (battle.botLost()) {
+                    // TODO vittoria e prossima partita
+                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.NO_LEVEL_UP};
+                }
+                if (battle.humanLost()) {
+                    // TODO salvare tutti i dati della partita e aggiornare leaderboard e game over screen
+                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.NO_LEVEL_UP};
+
+                }
+                if (playerOpponent instanceof BotPlayer) {
+                    // Cast sicuro a BotPlayer
+                    // BotPlayer botPlayer = (BotPlayer) playerOpponent;
+                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON, BattleStatus.NO_LEVEL_UP};
+                    // TODO bisogna che cambia pokemon con botPlayer.smartPokemonChange();
+
+                } else {
+                    // humanplayer cambia pokemon
+                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON, BattleStatus.NO_LEVEL_UP};
+                    // TODO
                 }
             }
-            if (battle.botLost()) {
-                // TODO vittoria e prossima partita
-                return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.NO_LEVEL_UP};            }
-            if (battle.humanLost()) {
-                // TODO salvare tutti i dati della partita e aggiornare leaderboard e game over screen
-                return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.NO_LEVEL_UP};
-
-            }
-            if (playerOpponent instanceof BotPlayer){
-                // Cast sicuro a BotPlayer
-                // BotPlayer botPlayer = (BotPlayer) playerOpponent;
-                return canLevelUpFlag ? new BattleStatus[]{BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON, BattleStatus.NO_LEVEL_UP};
-                // TODO bisogna che cambia pokemon con botPlayer.smartPokemonChange();
-
+            if (playerOpponent instanceof BotPlayer) {
+                return new BattleStatus[]{BattleStatus.CONTINUE_DAMAGE_TO_BOT_POKEMON, BattleStatus.NO_LEVEL_UP};
             } else {
-                // humanplayer cambia pokemon
-                return canLevelUpFlag ? new BattleStatus[]{BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON, BattleStatus.NO_LEVEL_UP};
-                // TODO
+                return new BattleStatus[]{BattleStatus.CONTINUE_DAMAGE_TO_YOUR_POKEMON, BattleStatus.NO_LEVEL_UP};
             }
         }
-        return new BattleStatus[]{BattleStatus.CONTINUE_WITH_CURRENT, BattleStatus.NO_LEVEL_UP};
+        return new BattleStatus[]{BattleStatus.CONTINUE_WITH_NO_DAMAGE, BattleStatus.NO_LEVEL_UP};
     }
 
     private boolean isHit(Pokemon user, Move move, Pokemon target) {

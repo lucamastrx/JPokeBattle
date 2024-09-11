@@ -16,5 +16,15 @@
       <Button fx:id="attackButton" layoutX="417.0" layoutY="605.0" mnemonicParsing="false" onAction="#showMoveSelectionPopup" text="Attack" />
       <Button fx:id="levelupButton" layoutX="879.0" layoutY="618.0" mnemonicParsing="false" onAction="#addlevel" text="Button" />
       <Button fx:id="gameOverButton" layoutX="660.0" layoutY="618.0" mnemonicParsing="false" onAction="#switchToGameOver" text="GameOver" />
+      <ImageView fx:id="yourImage" fitHeight="221.0" fitWidth="200.0" layoutX="132.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/TrainerYou.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="botImage" fitHeight="228.0" fitWidth="200.0" layoutX="697.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/TrainerYou.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

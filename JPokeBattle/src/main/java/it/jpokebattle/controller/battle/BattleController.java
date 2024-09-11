@@ -1,25 +1,30 @@
 package it.jpokebattle.controller.battle;
 
 import it.jpokebattle.controller.SceneManager;
+import it.jpokebattle.model.battle.Action;
 import it.jpokebattle.model.battle.Battle;
+import it.jpokebattle.model.battle.BattleStatus;
+import it.jpokebattle.model.battle.MoveAction;
+import it.jpokebattle.model.exceptions.ForbiddenActionException;
 import it.jpokebattle.model.exceptions.MoveSetException;
-import it.jpokebattle.model.player.Player;
-import it.jpokebattle.model.player.BotPlayerFactory;
 import it.jpokebattle.model.player.HumanPlayer;
-import it.jpokebattle.model.player.PlayerFactory;
 import it.jpokebattle.model.pokemon.*;
+import it.jpokebattle.util.FileManager;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
@@ -28,12 +33,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 
-public class BattleController {
+public class BattleController implements Initializable {
 
     private SoundManager soundMan = SoundManager.getInstance();
     private static Stage currentStage;
     private static Battle currentBattle;
 
+    @FXML
+    private ImageView yourImage, botImage;
 
     @FXML
     protected Button menuButton;
@@ -70,7 +77,16 @@ public class BattleController {
         return currentBattle;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Pokemon p1 = currentBattle.getHumanPlayer().getTeam().getActivePokemon();
+        Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
+        this.yourImage.setImage(FileManager.loadImage("gif." + p1.getBreed().getName()));
+        this.yourImage.setScaleX(-1); // Fa mirror
+        this.botImage.setImage(FileManager.loadImage("gif." + p2.getBreed().getName()));
+    }
 
+    public void update
 
 
     @FXML
@@ -154,6 +170,7 @@ public class BattleController {
         popup.setX(stageX + xOffset);
 
     }
+
     private void updatePopupYPosition(Popup popup, double yOffset) {
         if (popup == null || currentStage == null) {
             return;
@@ -278,7 +295,48 @@ public class BattleController {
 
             // Add event handler for each button
             moveButton.setOnAction(e -> {
-                // controllare priorita e veolocita
+                Action moveAction = new MoveAction(HumanPlayer.getInstance(), move, currentBattle.getCurrentBotPlayer(), currentBattle);
+                Action botAction = new MoveAction(currentBattle.getCurrentBotPlayer(), currentBattle.getCurrentBotPlayer().smartPokemonMove(), HumanPlayer.getInstance(), currentBattle);
+                if (currentBattle.humanStarts(moveAction, botAction)) {
+                    try {
+                        BattleStatus[] status1 = currentBattle.executeBattle(moveAction);
+                        BattleStatus[] status2 = currentBattle.executeBattle(botAction);
+                        BattleStatus[] totalStatus = new BattleStatus[status1.length + status2.length];
+                        System.arraycopy(status1, 0, totalStatus, 0, status1.length);
+                        System.arraycopy(status2, 0, totalStatus, status1.length, status2.length);
+
+                        for (BattleStatus battleStatus : totalStatus) {
+                            switch (battleStatus) {
+                                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
+                                    break;
+                                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
+                                    break;
+                                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
+                                    break;
+                                case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
+                                    break;
+                                case YOU_WIN:
+                                    break;
+                                case YES_LEVEL_UP:
+                                    break;
+                                case NO_LEVEL_UP:
+                                    break;
+                                case YOU_LOST:
+                                    break;
+                                case CONTINUE_WITH_NO_DAMAGE:
+                                    break;
+                            }
+                        }
+
+
+                    } catch (MoveSetException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (ForbiddenActionException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
                 // eseguire entrambe le Action
                 System.out.println("Selected move: " + moveID);  // Use the final variable 'move'
                 // isdtanziare moveaction
@@ -318,6 +376,7 @@ public class BattleController {
         SceneManager.switchScene(currentStage, "fxml.gameover");
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.gameover");
     }
+
 
 }
 
