@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,15 +17,17 @@
       <Button fx:id="attackButton" layoutX="417.0" layoutY="605.0" mnemonicParsing="false" onAction="#showMoveSelectionPopup" text="Attack" />
       <Button fx:id="levelupButton" layoutX="879.0" layoutY="618.0" mnemonicParsing="false" onAction="#addlevel" text="Button" />
       <Button fx:id="gameOverButton" layoutX="660.0" layoutY="618.0" mnemonicParsing="false" onAction="#switchToGameOver" text="GameOver" />
-      <ImageView fx:id="yourImage" fitHeight="221.0" fitWidth="200.0" layoutX="132.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="yourImage" fitHeight="182.0" fitWidth="170.0" layoutX="143.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/TrainerYou.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="botImage" fitHeight="228.0" fitWidth="200.0" layoutX="697.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="botImage" fitHeight="183.0" fitWidth="170.0" layoutX="686.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/TrainerYou.png" />
          </image>
       </ImageView>
+      <ProgressBar fx:id="yourPokemonBar" layoutX="128.0" layoutY="78.0" prefWidth="200.0" progress="0.69" />
+      <ProgressBar fx:id="botPokemonBar" layoutX="671.0" layoutY="78.0" prefWidth="200.0" progress="0.74" rotate="180.0" />
    </children>
 </AnchorPane>

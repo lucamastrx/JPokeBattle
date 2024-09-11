@@ -11,10 +11,15 @@ public class Pokemon {
     private int currentHp;             // punti salute attuali (variabili)
     private int fullHp;                // punti salute del pokemon quando è curato
     private int atk;
+    private int fullAtk;               // atk del pokemon quando è curato
     private int def;
+    private int fullDef;               // def del pokemon quando è curato
     private int specialAtk;
+    private int fullSpecialAtk;        // special atk salute del pokemon quando è curato
     private int specialDef;
+    private int fullSpecialDef;        // special def salute del pokemon quando è curato
     private int speed;
+    private int fullSpeed;             // speed del pokemon quando è curato
     private int level;
     private int strength;
     private int hpIV;
@@ -62,6 +67,11 @@ public class Pokemon {
         }
         setEvasion(1);
         setAccuracy(100);
+        setAtk(getFullAtk());
+        setDef(getFullDef());
+        setSpecialAtk(getFullSpecialAtk());
+        setSpecialDef(getFullSpecialDef());
+        setSpeed(getFullSpeed());
     }
 
     public void useMove(Move move) {
@@ -111,6 +121,16 @@ public class Pokemon {
     public HashMap<Move, Integer> getMoves() {return moves;}
 
     public int getStrength() {return strength;}
+
+    public int getFullSpeed() {return fullSpeed;}
+
+    public int getFullSpecialDef() {return fullSpecialDef;}
+
+    public int getFullSpecialAtk() {return fullSpecialAtk;}
+
+    public int getFullDef() {return fullDef;}
+
+    public int getFullAtk() {return fullAtk;}
 
     public int getAccuracy() {return accuracy;}
 

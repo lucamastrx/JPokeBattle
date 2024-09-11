@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -43,16 +44,11 @@ public class BattleController implements Initializable {
     private ImageView yourImage, botImage;
 
     @FXML
-    protected Button menuButton;
+    private ProgressBar yourPokemonBar, botPokemonBar;
 
     @FXML
-    protected Button attackButton;
+    protected Button menuButton, attackButton, levelupButton, gameOverButton;
 
-    @FXML
-    protected Button levelupButton;
-
-    @FXML
-    protected Button gameOverButton;
 
     private Popup movePopup;
 
@@ -84,10 +80,13 @@ public class BattleController implements Initializable {
         this.yourImage.setImage(FileManager.loadImage("gif." + p1.getBreed().getName()));
         this.yourImage.setScaleX(-1); // Fa mirror
         this.botImage.setImage(FileManager.loadImage("gif." + p2.getBreed().getName()));
+        this.yourPokemonBar.setStyle("-fx-accent: green;");
+        this.yourPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
+        this.botPokemonBar.setStyle("-fx-accent: red;");
+        this.botPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
     }
 
-    public void update
-
+    //public void updateBattle()
 
     @FXML
     void addlevel(ActionEvent event) throws MoveSetException { //TODO fix

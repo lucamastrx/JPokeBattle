@@ -98,25 +98,25 @@ public class MoveAction implements Action{
         return random <= hitProbability;
     }
 
-    private void specialEffects(Pokemon user, Move move, Pokemon target){ // TODO
+    private void specialEffects(Pokemon user, Move move, Pokemon target){
         String effettoSuAvversario = move.getOpponentModificatorType();
         if (effettoSuAvversario != null && !effettoSuAvversario.isEmpty() && !effettoSuAvversario.isBlank()) {
             int valore = move.getOpponentModificatorValue();
             switch (effettoSuAvversario) {
                 case "atk":
-                    // modificatore di hp che non salva su ser
+                    target.setAtk(target.getAtk() + valore); // modificatore di atk durante la battaglia
                     break;
                 case "def":
-                    // modificatore di hp che non salva su ser
+                    target.setDef(target.getDef() + valore);
                     break;
                 case "specialAtk":
-                    // modificatore di hp che non salva su ser
+                    target.setSpecialAtk(target.getSpecialAtk() + valore);
                     break;
                 case "specialDef":
-                    // modificatore di hp che non salva su ser
+                    target.setSpecialDef(target.getSpecialDef() + valore);
                     break;
                 case "speed":
-                    // modificatore di hp che non salva su ser
+                    target.setSpeed(target.getSpeed() + valore);
                     break;
                 case "accuracy":
                     target.modifyAccuracy(valore);
@@ -133,19 +133,19 @@ public class MoveAction implements Action{
             int valore = move.getPersonalModificatorValue();
             switch (effettoSuSeStesso) {
                 case "atk":
-                    // modificatore di hp che non salva su ser
+                    user.setAtk(user.getAtk() + valore); // modificatore di atk durante la battaglia
                     break;
                 case "def":
-                    // modificatore di hp che non salva su ser
+                    user.setDef(user.getDef() + valore);
                     break;
                 case "specialAtk":
-                    // modificatore di hp che non salva su ser
+                    user.setSpecialAtk(user.getSpecialAtk() + valore);
                     break;
                 case "specialDef":
-                    // modificatore di hp che non salva su ser
+                    user.setSpecialDef(user.getSpecialDef() + valore);
                     break;
                 case "speed":
-                    // modificatore di hp che non salva su ser
+                    user.setSpeed(user.getSpeed() + valore);
                     break;
                 case "accuracy":
                     user.modifyAccuracy(valore);
