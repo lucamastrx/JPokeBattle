@@ -39,7 +39,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     private int specialDefEV = 0;  // EV per la difesa speciale
     private int speedEV = 0;  // EV per la velocità
     private int totalEVsUsed = 0;  // Contatore per il totale di EV utilizzati
-    private Map<EVType, Integer> evMap = new HashMap<>();
+
 
     /**
      * Metodo costruttore.
@@ -218,16 +218,68 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     /**
      * Verifica e utilizza gli EV in multipli di 4, riducendo il totale degli EV disponibili e aggiornando il contatore totale degli EV utilizzati.
      *
-     * @param evType Il tipo di EV (ad esempio, EVType.HP, EVType.ATK, ecc.)
+     * @param evType Il tipo di EV (ad esempio, "hp", "atk", "def", ecc.)
      * @return Il numero di EV utilizzati.
+     * @throws IllegalArgumentException se gli EV non sono di un tipo valido.
      */
-    private int useEVs(EVType evType) {
-        int ev = evMap.getOrDefault(evType, 0);
+    private int useEVs(String evType) {
+        int ev = 0;
 
-        if (ev < 4) return 0;
+        // Ottieni il valore EV corrente basato sul tipo
+        switch (evType) {
+            case "hp":
+                ev = hpEV;
+                break;
+            case "atk":
+                ev = atkEV;
+                break;
+            case "def":
+                ev = defEV;
+                break;
+            case "specialAtk":
+                ev = specialAtkEV;
+                break;
+            case "specialDef":
+                ev = specialDefEV;
+                break;
+            case "speed":
+                ev = speedEV;
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di EV non valido: " + evType);
+        }
 
+        // Verifica se ci sono abbastanza EV per essere utilizzati
+        if (ev < 4) {
+            return 0; // Non c'è abbastanza EV per essere utilizzato
+        }
+
+        // Trova il multiplo di 4 più vicino
         int usableEVs = (ev / 4) * 4;
-        evMap.put(evType, ev - usableEVs);
+
+        // Aggiorna gli EV disponibili sottraendo gli EV usati
+        switch (evType) {
+            case "hp":
+                hpEV -= usableEVs;
+                break;
+            case "atk":
+                atkEV -= usableEVs;
+                break;
+            case "def":
+                defEV -= usableEVs;
+                break;
+            case "specialAtk":
+                specialAtkEV -= usableEVs;
+                break;
+            case "specialDef":
+                specialDefEV -= usableEVs;
+                break;
+            case "speed":
+                speedEV -= usableEVs;
+                break;
+        }
+
+        // Aggiungi gli EV usati al totale
         addToTotalEVsUsed(usableEVs);
 
         return usableEVs;
@@ -268,34 +320,35 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * @param baseStat Il valore di base della statistica. Questo valore è comune per tutte le entità
      *                 della stessa specie e viene utilizzato come base per il calcolo del valore finale.
      *
-     * @throws IllegalArgumentException Se il valore di `statType` non è uno dei valori previsti.
+     * @throws IllegalArgumentException Se il valore di statType non è uno dei valori previsti.
      */
     private void updateStat(String statType, int iv, int baseStat) {
-        // Controllo dei parametri
-        if (!Arrays.asList("hp", "atk", "def", "specialAtk", "specialDef", "speed").contains(statType)) {
-            throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
-        }
-
-        // Calcolo degli EV utilizzati
-        int usedEVs = useEVs(EVType.valueOf(statType));
-
-        // Calcolo del nuovo valore della statistica
+        int usedEVs = useEVs(statType);
         int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * getLevel()) / 100) + 5;
 
-        // Aggiornamento della statistica specifica
-        if ("hp".equals(statType)) {
-            newValue += getLevel() + 5;  // Aggiungi il livello al valore degli HP
-            setFullHp(newValue);
-        } else if ("atk".equals(statType)) {
-            setFullAtk(newValue);
-        } else if ("def".equals(statType)) {
-            setFullDef(newValue);
-        } else if ("specialAtk".equals(statType)) {
-            setFullSpecialAtk(newValue);
-        } else if ("specialDef".equals(statType)) {
-            setFullSpecialDef(newValue);
-        } else if ("speed".equals(statType)) {
-            setFullSpeed(newValue);
+        switch (statType) {
+            case "hp":
+                newValue += getLevel() + 5;
+                setCurrentHp(newValue);
+                setFullHp(newValue);
+                break;
+            case "atk":
+                setAtk(newValue);
+                break;
+            case "def":
+                setDef(newValue);
+                break;
+            case "specialAtk":
+                setSpecialAtk(newValue);
+                break;
+            case "specialDef":
+                setSpecialDef(newValue);
+                break;
+            case "speed":
+                setSpeed(newValue);
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
         }
     }
 
