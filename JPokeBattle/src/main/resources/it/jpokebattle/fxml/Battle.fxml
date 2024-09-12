@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -27,8 +28,11 @@
             <Image url="@../images/TrainerYou.png" />
          </image>
       </ImageView>
-      <ProgressBar fx:id="yourPokemonBar" layoutX="128.0" layoutY="78.0" prefWidth="200.0" progress="0.69" />
+      <ProgressBar fx:id="yourPokemonBar" layoutX="128.0" layoutY="78.0" prefWidth="200.0" progress="0.69" style="-fx-background-color: white; -fx-border-color: #000000; -fx-border-radius: 5px; -fx-accent: #4CAF50;" />
       <ProgressBar fx:id="botPokemonBar" layoutX="671.0" layoutY="78.0" prefWidth="200.0" progress="0.74" rotate="180.0" />
       <Button fx:id="changePokemonButton" layoutX="445.0" layoutY="605.0" mnemonicParsing="false" onAction="#showChangePokemonPopup" text="Change Pokemon" />
+      <Label layoutX="339.0" layoutY="70.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-background-color: white; -fx-border-color: #000000; -fx-padding: 5px;" text="Lvl. 25" />
+      <Label layoutX="599.0" layoutY="70.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-background-color: white; -fx-border-color: #000000; -fx-padding: 5px;" text="Lvl. 25" />
+      <Label layoutX="35.0" layoutY="70.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-background-color: white; -fx-border-color: #000000; -fx-padding: 5px;" text="HP: 20/30" />
    </children>
 </AnchorPane>

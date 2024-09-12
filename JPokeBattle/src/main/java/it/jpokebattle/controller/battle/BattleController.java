@@ -32,6 +32,8 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
+import static it.jpokebattle.model.battle.BattleStatus.CONTINUE_DAMAGE_TO_YOUR_POKEMON;
+
 public class BattleController implements Initializable {
 
     private SoundManager soundMan = SoundManager.getInstance();
@@ -86,11 +88,19 @@ public class BattleController implements Initializable {
 
 
     private void updatePokemonInBattle(Pokemon p) {
+        String color = "green";
+        double hpPerCent = (double)p.getCurrentHp() / p.getFullHp();
+        if (hpPerCent > 0.25 && hpPerCent <= 0.60){
+            color = "orange";
+        }
+        else if (hpPerCent <= 0.25){
+            color = "red";
+        }
         if (p instanceof OwnedPokemon) {
-            this.yourPokemonBar.setStyle("-fx-accent: green;");
+            this.yourPokemonBar.setStyle("-fx-accent: "+color+";");
             this.yourPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
         } else {
-            this.botPokemonBar.setStyle("-fx-accent: red;");
+            this.botPokemonBar.setStyle("-fx-accent: "+color+";");
             this.botPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
         }
     }
@@ -327,10 +337,10 @@ public class BattleController implements Initializable {
                         for (BattleStatus battleStatus : totalStatus) {
                             switch (battleStatus) {
                                 case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
-                                    this.yourPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
+                                    updatePokemonInBattle(p1);
                                     break;
                                 case CONTINUE_DAMAGE_TO_BOT_POKEMON:
-                                    this.botPokemonBar.setProgress(1.0 * p2.getCurrentHp() / p2.getFullHp());
+                                    updatePokemonInBattle(p2);
                                     break;
                                 case CONTINUE_WITH_BOT_CHANGE_POKEMON:
                                     break;
@@ -429,11 +439,94 @@ public class BattleController implements Initializable {
             pokemonButton.setOnAction(e -> {
                 Action switchPokemonAction = new SwitchPokemonAction(HumanPlayer.getInstance(), pokemonList.get(j), currentBattle);
                 Action botAction = new MoveAction(currentBattle.getCurrentBotPlayer(), currentBattle.getCurrentBotPlayer().smartPokemonMove(), HumanPlayer.getInstance(), currentBattle);
+                OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
+                Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
+                if (currentBattle.humanStarts(switchPokemonAction, botAction)) {
+                    try {
+                        switchPokemonAction.execute();
+                        updatePokemonImages(humanPlayer.getTeam().getActivePokemon());
+                        updatePokemonInBattle(humanPlayer.getTeam().getActivePokemon());
+                        changePokemonPopup.hide();  // Close the popup after selecting a move
+                        BattleStatus[] status1 = botAction.execute();
+                        if (status1[0]==CONTINUE_DAMAGE_TO_YOUR_POKEMON){
+                            System.out.println("DANNOOOOOO");
+                        }
+                        else{
+                            System.out.println(status1[0]);
+                        }
 
+                        for (BattleStatus battleStatus : status1) {
+                            switch (battleStatus) {
+                                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
+                                    updatePokemonInBattle(p1);
+                                    break;
+                                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
+                                    updatePokemonInBattle(p2);
+                                    break;
+                                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
+                                    break;
+                                case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
+                                    break;
+                                case YOU_WIN:
+                                    switchToYouWin();
+                                    break;
+                                case YES_LEVEL_UP:
+                                    break;
+                                case NO_LEVEL_UP:
+                                    break;
+                                case YOU_LOST:
+                                    break;
+                                case CONTINUE_WITH_NO_DAMAGE:
+                                    break;
+                            }
+                        }
+
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (MoveSetException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else{
+                    try {
+                        BattleStatus[] status1=botAction.execute();
+                        switchPokemonAction.execute();
+                        updatePokemonImages(humanPlayer.getTeam().getActivePokemon());
+                        updatePokemonInBattle(humanPlayer.getTeam().getActivePokemon());
+                        changePokemonPopup.hide();  // Close the popup after selecting a move
+                        for (BattleStatus battleStatus : status1) {
+                            switch (battleStatus) {
+                                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
+                                    updatePokemonInBattle(p1);
+                                    break;
+                                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
+                                    updatePokemonInBattle(p2);
+                                    break;
+                                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
+                                    break;
+                                case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
+                                    break;
+                                case YOU_WIN:
+                                    switchToYouWin();
+                                    break;
+                                case YES_LEVEL_UP:
+                                    break;
+                                case NO_LEVEL_UP:
+                                    break;
+                                case YOU_LOST:
+                                    break;
+                                case CONTINUE_WITH_NO_DAMAGE:
+                                    break;
+                            }
+                        }
+
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (MoveSetException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
                 //humanPlayer.getTeam().setActivePokemon();
-                updatePokemonImages(humanPlayer.getTeam().getActivePokemon());
-                updatePokemonInBattle(humanPlayer.getTeam().getActivePokemon());
-                changePokemonPopup.hide();  // Close the popup after selecting a move
+
             });
 
             // Add buttons to the grid (3x2 layout)

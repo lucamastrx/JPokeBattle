@@ -41,6 +41,7 @@ public class MoveAction implements Action{
             System.out.println("è hit");
             if (user.getMoves().get(move) > -1) {
                 int damage = calculateDamage(user, move, target);
+                if (damage < 0) damage = 0;
                 target.takeDamage(damage);
                 System.out.println(user.getName() + " usa " + move.getName() + " su " + target.getName() + " causando " + damage + " danni.");
                 specialEffects(user, move, target);

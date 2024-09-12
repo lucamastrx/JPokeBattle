@@ -26,21 +26,18 @@ public class SwitchPokemonAction implements Action{
         // Verifica se il Pokémon da sostituire è nella squadra del giocatore
         if (!actor.getTeam().getPokemonList().contains(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato non fa parte della tua squadra.");
-            execute(); // Permetti di rifare l'azione
             return null;
         }
 
         // Verifica se il Pokémon da sostituire è esausto
         if (substitutePokemon.isFainted()) {
             System.out.println("Il Pokémon selezionato è esausto e non può essere utilizzato.");
-            execute(); // Permetti di rifare l'azione
             return null;
         }
 
         // Verifica se il Pokémon da sostituire è già in campo
         if (actor.getTeam().getActivePokemon().equals(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato è già in campo.");
-            execute(); // Permetti di rifare l'azione
             return null;
         }
 

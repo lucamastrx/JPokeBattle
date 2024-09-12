@@ -329,23 +329,22 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         switch (statType) {
             case "hp":
                 newValue += getLevel() + 5;
-                setCurrentHp(newValue);
                 setFullHp(newValue);
                 break;
             case "atk":
-                setAtk(newValue);
+                setFullAtk(newValue);
                 break;
             case "def":
-                setDef(newValue);
+                setFullDef(newValue);
                 break;
             case "specialAtk":
-                setSpecialAtk(newValue);
+                setFullSpecialAtk(newValue);
                 break;
             case "specialDef":
-                setSpecialDef(newValue);
+                setFullSpecialDef(newValue);
                 break;
             case "speed":
-                setSpeed(newValue);
+                setFullSpeed(newValue);
                 break;
             default:
                 throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
@@ -397,7 +396,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
             updateStat("specialDef", getSpecialDefIV(), this.getBreed().getSpecialDefBaseStat());
             updateStat("speed", getSpeedIV(), this.getBreed().getSpeedBaseStat());
         }
-        setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
+        setStrength(getFullHp() + getFullAtk() + getFullDef() + getFullSpecialAtk() + getFullSpecialDef() + getFullSpeed() + getLevel());
         save();
     }
 
@@ -420,10 +419,6 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         return false;  // Il livello non è un livello in cui può imparare nuove mosse
     }
 
-//    public boolean canLearnMove(){
-//        Set<Integer> moveLevels =  getBreed().getMoves().keySet();
-//        return moveLevels.contains(this.getLevel());
-//    }
 
     public boolean has4moves() {
         return getMoves().size() == 4;
@@ -452,7 +447,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * @return valore booleano che determina se il pokemon può evolvere
      */
     private boolean canEvolve(){
-        return this.getLevel() >= this.getBreed().getEvoThreshold();
+        return this.getLevel() >= this.getBreed().getEvoThreshold() && getBreed().getSuccessor() != null;
     }
 
     /**
@@ -461,18 +456,17 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * e inoltre modifica il nome del pokemon se non ha soprannome.
      */
     public void evolve() {
-        if (this.canEvolve()) {
+        if (this.canEvolve() && getBreed().getSuccessor() != null) {
             Breed succ = this.getBreed().getSuccessor();
             this.setBreed(succ);   // cambia il Breed del Pokemon
 
             if (this.nickname == null || this.nickname.isEmpty()) {
                 this.setName(succ.getName());  // cambia il nome solo se non c'è un soprannome
             }
-            setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
+            setStrength(getFullHp() + getFullAtk() + getFullDef() + getFullSpecialAtk() + getFullSpecialDef() + getFullSpeed() + getLevel());
             save();
         }
     }
-
 
 
 
@@ -525,11 +519,11 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
                 getMoves().toString() + ", " +          // in alternativa getMoves().keySet()
                 "currentHp=" + getCurrentHp() + ", " +
                 "fullHp=" + getFullHp() + ", " +
-                "atk=" + getAtk() + ", " +
-                "def=" + getDef() + ", " +
-                "specialAtk=" + getSpecialAtk() + ", " +
-                "specialDef=" + getSpecialDef() + ", " +
-                "speed=" + getSpeed() + ", " +
+                "atk=" + getFullAtk() + ", " +
+                "def=" + getFullDef() + ", " +
+                "specialAtk=" + getFullSpecialAtk() + ", " +
+                "specialDef=" + getFullSpecialDef() + ", " +
+                "speed=" + getFullSpeed() + ", " +
                 "level=" + getLevel() + ", " +
                 "strength=" + getStrength() + ", " +
                 "hpIV=" + getHpIV() + ", " +
