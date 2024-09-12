@@ -38,6 +38,7 @@ public class MoveAction implements Action{
         user.useMove(move);
 
         if (isHit(user, move, target)) {
+            System.out.println("è hit");
             if (user.getMoves().get(move) > -1) {
                 int damage = calculateDamage(user, move, target);
                 target.takeDamage(damage);
@@ -158,10 +159,10 @@ public class MoveAction implements Action{
         }
     }
 
-
     private int calculateDamage(Pokemon user, Move move, Pokemon target) {
         int lvl = user.getLevel();
         int movePower = move.getPower();
+        System.out.println("la mossa di base ha power: " + movePower + " lvl: " + lvl);
         int userAttackPower;
         int targerDefensePower;
         if (move.isSpecial()) {
@@ -172,7 +173,8 @@ public class MoveAction implements Action{
             targerDefensePower = target.getDef();
         }
         double modificator = calculateModificator(user, move, target);
-        return (int) ((((double) (((2 * lvl / 5) + 2) * movePower * (userAttackPower / targerDefensePower)) / 50) + 2) * modificator);
+        System.out.println(" --------" + movePower + " " + userAttackPower +" " + targerDefensePower);
+        return (int) ((((double) (((2 * lvl / 5) + 2) * movePower * (userAttackPower / targerDefensePower)) / 50)) * modificator);
     }
 
     private double calculateModificator(Pokemon user, Move move, Pokemon target) {

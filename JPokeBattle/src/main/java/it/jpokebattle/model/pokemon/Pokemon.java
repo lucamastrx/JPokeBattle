@@ -3,7 +3,13 @@ package it.jpokebattle.model.pokemon;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * Classe che rappresenta un Pokémon con tutte le sue caratteristiche,
+ * statistiche e funzionalità.
+ * Ogni Pokémon ha un nome, una specie (Breed), un livello,
+ * statistiche (HP, Attacco, Difesa, Attacco Speciale, Difesa Speciale, Velocità),
+ * e può imparare un massimo di 4 mosse.
+ */
 public class Pokemon {
     private String name;
     private Breed breed;        // specie
@@ -33,11 +39,12 @@ public class Pokemon {
 
 
     /**
-     * Metodo Costruttore.
-     * Setta automaticamente il nome del pokemon con il nome della specie.
-     * Gli altri attributi sono valori di default.
+     * Costruttore per creare un Pokémon con una specie e un livello specificati.
+     * Setta automaticamente il nome del Pokémon con il nome della specie e inizializza
+     * altre statistiche e mosse in base al livello specificato.
      *
-     * @param breed Specie del pokemon
+     * @param breed Specie del Pokémon.
+     * @param level Livello del Pokémon.
      */
     public Pokemon(Breed breed, int level) {
         this.breed = breed;
@@ -52,14 +59,21 @@ public class Pokemon {
         setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
     }
 
-
+    /**
+     * Costruttore protetto utilizzato per la serializzazione.
+     */
     protected Pokemon(){}   // serve solo per la serializzazione di java
 
     /**
-     * Controlla se il pokemon ha ancora le forze
+     * Controlla se il Pokémon è svenuto (HP <= 0).
+     *
+     * @return {@code true} se il Pokémon è svenuto, altrimenti {@code false}.
      */
-    public boolean isFainted() {return currentHp > 0;}
+    public boolean isFainted() {return currentHp <= 0;}
 
+    /**
+     * Cura completamente il Pokémon ripristinando HP, PP, e altre statistiche.
+     */
     public void heal() {
         setCurrentHp(getFullHp());
         for (Move move : moves.keySet()) {
@@ -74,6 +88,11 @@ public class Pokemon {
         setSpeed(getFullSpeed());
     }
 
+    /**
+     * Usa una mossa specificata dal Pokémon, decrementando i PP della mossa.
+     *
+     * @param move La mossa da usare.
+     */
     public void useMove(Move move) {
         Integer currentValue = moves.get(move);
         if (currentValue != null && currentValue > 0) {
@@ -84,6 +103,11 @@ public class Pokemon {
         }
     }
 
+    /**
+     * Riduce gli HP del Pokémon in base al danno ricevuto.
+     *
+     * @param damage Il danno da infliggere.
+     */
     public void takeDamage(int damage) {setCurrentHp(Math.max(0, currentHp - damage));}
 
     public String getName() {return name;}
@@ -137,7 +161,7 @@ public class Pokemon {
     public int getEvasion() {return evasion;}
 
     /**
-     * Vengono impostati gli IV a valori randomici tra 0 e 15
+     * Imposta gli IV a valori randomici tra 0 e 15.
      */
     private void setRandomIVs() {
         Random random = new Random();
@@ -194,7 +218,11 @@ public class Pokemon {
         setEvasion(this.evasion + modificatorValue);  // Decrementa di 10 usando il setter per garantire i limiti
     }
 
-
+    /**
+     * Imposta le statistiche del Pokémon in base al livello specificato.
+     *
+     * @param lvl Il livello del Pokémon.
+     */
     private void setStatsFromLevel(int lvl){
         setCurrentHp((((getBreed().getHpBaseStat() + getHpIV()) * 2 * lvl) / 100)+ lvl + 10);
         setFullHp((((getBreed().getHpBaseStat() + getHpIV()) * 2 * lvl) / 100)+ lvl + 10);
@@ -205,6 +233,11 @@ public class Pokemon {
         setSpeed((((getBreed().getSpeedBaseStat() + getSpeedIV()) * 2 * lvl) / 100) + 5);
     }
 
+    /**
+     * Imposta le mosse del Pokémon in base al livello specificato.
+     *
+     * @param lvl Il livello del Pokémon.
+     */
     private void setMovesFromLevel(int lvl){
         HashMap<Integer, String> breedMoves = getBreed().getMoves();
 
@@ -259,10 +292,10 @@ public class Pokemon {
 
 
     /**
-     * Metodo che setta le mosse di un pokemon.
-     * Possono essere al massimo 4.
-     * @param moves HashMap<String, Integer> di mosse
-     * @throws IllegalArgumentException
+     * Setta le mosse del Pokémon. Possono essere al massimo 4.
+     *
+     * @param moves HashMap di mosse.
+     * @throws IllegalArgumentException se il numero di mosse è superiore a 4.
      */
     public void setMoves(HashMap<Move, Integer> moves) {
         if (moves.size() > 4) {
@@ -274,10 +307,10 @@ public class Pokemon {
 
 
     /**
-     * Metodo che setta le mosse di un pokemon.
-     * Possono essere al massimo 4.
-     * @param moves Array di mosse
-     * @throws IllegalArgumentException
+     * Setta le mosse del Pokémon. Possono essere al massimo 4.
+     *
+     * @param moves Array di mosse.
+     * @throws IllegalArgumentException se il numero di mosse è superiore a 4.
      */
     public void setMoves(Move[] moves) {
         if (moves.length > 4) {
@@ -291,10 +324,9 @@ public class Pokemon {
 
 
     /**
-     * Metodo che aggiunge una mossa al pokemon.
-     * Se il pokemon ha già 4 mosse, viene chiesta quale mossa sostituire.
+     * Aggiunge una mossa al Pokémon. Se il Pokémon ha già 4 mosse, viene chiesta quale mossa sostituire.
      *
-     * @param move Mossa che si vuole aggiungere
+     * @param move La mossa che si vuole aggiungere.
      */
     public void addMove(Move move) {    // Questi controli li lascio perche se un giorno volessi implementare le MT
         if (getMoves().size() > 3) {    // non passerò tramite i metodi canLearnMove ecc, mantengo sicurezza
@@ -327,6 +359,11 @@ public class Pokemon {
         }
     }
 
+    /**
+     * Rimuove una mossa dal Pokémon.
+     *
+     * @param move La mossa da rimuovere.
+     */
     public void removeMove(Move move){
         getMoves().remove(move);
     }
@@ -335,7 +372,8 @@ public class Pokemon {
 
     /**
      * Rilascia EVs quando il Pokémon viene sconfitto.
-     * Gli EVs rilasciati vengono aggiunti al conteggio totale di EVs del Pokémon ancora in forze.
+     *
+     * @return Gli EV rilasciati dal Pokémon.
      */
     public EVDrop dropEVs() {
         if (this.getBreed().getEvAmountDropped() <= 0) {
@@ -361,6 +399,11 @@ public class Pokemon {
     }
 
 
+    /**
+     * Restituisce una rappresentazione stringa del Pokémon con tutte le sue caratteristiche.
+     *
+     * @return Una stringa che rappresenta il Pokémon.
+     */
     @Override
     public String toString() {
         return "Pokemon:{" +
@@ -385,7 +428,12 @@ public class Pokemon {
                 '}';
     }
 
-
+    /**
+     * Compara questo Pokémon con un altro oggetto per verificare l'uguaglianza.
+     *
+     * @param obj L'oggetto con cui confrontare.
+     * @return {@code true} se gli oggetti sono uguali, altrimenti {@code false}.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -415,6 +463,11 @@ public class Pokemon {
                 Objects.equals(moves, pokemon.moves);
     }
 
+    /**
+     * Calcola l'hash code per il Pokémon.
+     *
+     * @return L'hash code del Pokémon.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, breed, moves, currentHp, fullHp, atk, def, specialAtk, specialDef, speed, level,

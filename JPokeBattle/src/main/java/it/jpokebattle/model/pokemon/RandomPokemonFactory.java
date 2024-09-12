@@ -1,12 +1,19 @@
 package it.jpokebattle.model.pokemon;
 
-
-
 import java.util.*;
 
+
+/**
+ * Classe concreta che estende {@link PokemonFactory} per creare Pokémon di livello casuale.
+ * I Pokémon creati avranno una razza casuale e un livello compreso tra 10 e 50.
+ */
 public class RandomPokemonFactory extends PokemonFactory {
 
-
+    /**
+     * Crea un nuovo oggetto {@link Pokemon} con razza casuale e livello casuale tra 10 e 50.
+     *
+     * @return Un nuovo oggetto {@link Pokemon} con razza e livello casuali.
+     */
     @Override
     public Pokemon createPokemon() {
         // Genera una breed casuale
@@ -20,13 +27,5 @@ public class RandomPokemonFactory extends PokemonFactory {
         return new Pokemon(breed, randomLevel);
     }
 
-
 }
 
-    /*  Codice che verrra usato per creare pokemon:
-
-        RandomPokemonFactory rwpf = new RandomPokemonFactory();
-        Pokemon pokmn= rwpf.createPokemon();
-
-        bla bla
-     */

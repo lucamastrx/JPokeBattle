@@ -86,7 +86,14 @@ public class BattleController implements Initializable {
         this.botPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
     }
 
-    //public void updateBattle()
+    public void updateBattle(){
+        Pokemon p1 = currentBattle.getHumanPlayer().getTeam().getActivePokemon();
+        Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
+        this.yourPokemonBar.setStyle("-fx-accent: green;");
+        this.yourPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
+        this.botPokemonBar.setStyle("-fx-accent: red;");
+        this.botPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
+    }
 
     @FXML
     void addlevel(ActionEvent event) throws MoveSetException { //TODO fix
@@ -304,17 +311,23 @@ public class BattleController implements Initializable {
                         System.arraycopy(status1, 0, totalStatus, 0, status1.length);
                         System.arraycopy(status2, 0, totalStatus, status1.length, status2.length);
 
+                        OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
+                        Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
+
                         for (BattleStatus battleStatus : totalStatus) {
                             switch (battleStatus) {
                                 case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
+                                    this.yourPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
                                     break;
                                 case CONTINUE_DAMAGE_TO_BOT_POKEMON:
+                                    this.botPokemonBar.setProgress(1.0 * p2.getCurrentHp() / p2.getFullHp());
                                     break;
                                 case CONTINUE_WITH_BOT_CHANGE_POKEMON:
                                     break;
                                 case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
                                     break;
                                 case YOU_WIN:
+                                    showYouWin();
                                     break;
                                 case YES_LEVEL_UP:
                                     break;
@@ -376,6 +389,14 @@ public class BattleController implements Initializable {
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.gameover");
     }
 
+    public void showYouWin(){
+        //youWinImageView.setImage(FileManager.loadImage("gif.youwin"));
+        if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.youwin");
+    }
 
+    public void hideYouWin(ActionEvent event) throws IOException {
+        //youWinImageView.setImage(null);
+        if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.battle");
+    }
 }
 

@@ -143,7 +143,7 @@
     "types":["FIRE"],
     "evoThreshold":16,
     "successor":{
-      "name":"Charmeleon","types":["FIRE"],"evoThreshold":36,"successor":{"name":"Charizard","types":["FIRE","FLYING"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":3,"hpBaseStat": 78,"atkBaseStat": 84,"defBaseStat": 78,"specialAtkBaseStat": 109,"specialDefBaseStat": 85,"speedBaseStat": 100,"moves":{"-1":"Ember","-2":"Leer","-3":"Growl","-4":"Scratch","36":"Slash","24":"Rage","46":"Flame Thrower"}},"evTypeDropped":"atk","evAmountDropped":2,"hpBaseStat": 58,"atkBaseStat": 64,"defBaseStat": 58,"specialAtkBaseStat": 80,"specialDefBaseStat": 65,"speedBaseStat": 80,"moves":{"-1":"Ember","-2":"Scratch","-3":"Growl","36":"Slash","24":"Rage","43":"Flame Thrower","15":"Leer"}},
+      "name":"Charmeleon","types":["FIRE"],"evoThreshold":36,"successor":{"name":"Charizard","types":["FIRE","FLYING"],"evoThreshold":101,"successor":null,"evTypeDropped":"specialAtk","evAmountDropped":3,"hpBaseStat": 78,"atkBaseStat": 84,"defBaseStat": 78,"specialAtkBaseStat": 109,"specialDefBaseStat": 85,"speedBaseStat": 100,"moves":{"-1":"Ember","-2":"Leer","-3":"Growl","-4":"Scratch","36":"Slash","24":"Rage","46":"Flame Thrower"}},"evTypeDropped":"atk","evAmountDropped":2,"hpBaseStat": 58,"atkBaseStat": 64,"defBaseStat": 58,"specialAtkBaseStat": 80,"specialDefBaseStat": 65,"speedBaseStat": 80,"moves":{"-2":"Ember","-1":"Scratch","-3":"Growl","36":"Slash","24":"Rage","43":"Flame Thrower","15":"Leer"}},
     "evTypeDropped":"speed",
     "evAmountDropped":1,
     "hpBaseStat": 39,
@@ -177,8 +177,8 @@
     "specialDefBaseStat": 65,
     "speedBaseStat": 80,
     "moves":{
-      "-1":"Ember",
-      "-2":"Scratch",
+      "-2":"Ember",
+      "-1":"Scratch",
       "-3":"Growl",
       "36":"Slash",
       "24":"Rage",

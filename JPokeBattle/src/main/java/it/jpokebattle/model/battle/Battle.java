@@ -3,10 +3,7 @@ package it.jpokebattle.model.battle;
 import it.jpokebattle.model.exceptions.ForbiddenActionException;
 import it.jpokebattle.model.exceptions.MoveSetException;
 import it.jpokebattle.model.player.*;
-import it.jpokebattle.model.pokemon.HighLevelPokemonFactory;
-import it.jpokebattle.model.pokemon.PokemonFactory;
-import it.jpokebattle.model.pokemon.RandomPokemonFactory;
-import it.jpokebattle.model.pokemon.SameAverageLevelRandomPokemonFactory;
+import it.jpokebattle.model.pokemon.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ public class Battle {
         this.humanPlayer = HumanPlayer.getInstance();
         this.pokemonFactories = initializePokemonFactories();
 
+
         // Inizializza botPlayerFactory con una default PokemonFactory
         this.botPlayerFactory = new BotPlayerFactory(pokemonFactories.get(0));  // Usa una factory di default
 
@@ -38,28 +36,22 @@ public class Battle {
 
         // Crea il giocatore bot con la factory configurata
         this.currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
+        this.currentBotPlayer = new BotPlayer("Pippo", new Pokemon(Breed.breedsMap.get("Squirtle"), 4)); // TODO da togliere dopo test
 
         // Aumenta il contatore delle battaglie
         battleCount++;
 
-        // Avvia la battaglia
-        startBattle();
     }
 
 
-    private void startBattle() {
 
-        while (!humanLost() && ! botLost()) {
-            // cose
-        }
-        // cura tutti i tuoi pokemon
-    }
 
 
     public BattleStatus[] executeBattle(Action action) throws MoveSetException, IOException, ForbiddenActionException {
 
         BattleStatus[] result = action.execute();
         for (BattleStatus battleStatus : result) {
+            System.out.println(battleStatus);
             switch (battleStatus) {
 
 
@@ -72,9 +64,11 @@ public class Battle {
                     return new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.YES_LEVEL_UP};
 
 
-                //case CONTINUE_WITH_CURRENT:
-                  //  return new BattleStatus[]{CONTINUE_WITH_CURRENT, NO_LEVEL_UP};
+                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
+                    return new BattleStatus[]{CONTINUE_DAMAGE_TO_BOT_POKEMON};
 
+                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
+                    return new BattleStatus[]{CONTINUE_DAMAGE_TO_YOUR_POKEMON};
 
                 default:
                     throw new ForbiddenActionException();
@@ -84,7 +78,11 @@ public class Battle {
     }
 
     public boolean humanStarts(Action action, Action botAction){
-        return action.getPriority() > botAction.getPriority();
+        boolean x = action.getPriority() == botAction.getPriority();
+        if (x){
+            return humanPlayer.getTeam().getActivePokemon().getSpeed() >= currentBotPlayer.getTeam().getActivePokemon().getSpeed();
+        }
+        return action.getPriority() >= botAction.getPriority();
     }
 
     public boolean humanLost() {return humanPlayer.getTeam().allPokemonFainted();}

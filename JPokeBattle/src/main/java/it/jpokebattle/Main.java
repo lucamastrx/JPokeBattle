@@ -1,6 +1,8 @@
 package it.jpokebattle;
 
 import it.jpokebattle.model.player.HumanPlayer;
+import it.jpokebattle.model.pokemon.Breed;
+import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.util.FileManager;
 import it.jpokebattle.view.MenuView;
@@ -13,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Set;
 
 
 /**
