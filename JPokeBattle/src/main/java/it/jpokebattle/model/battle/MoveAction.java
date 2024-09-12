@@ -74,10 +74,10 @@ public class MoveAction implements Action{
                 } else if (battle.humanLost()) {
                     status.add(BattleStatus.YOU_LOST);
                 } else if (playerOpponent instanceof BotPlayer) {
-                    status.add(BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON);
+                    status.add(BattleStatus.CHANGE_BOT_FAINTED_POKEMON);
                 } else {
                     // humanplayer cambia pokemon
-                    status.add(BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON);
+                    status.add(BattleStatus.CHANGE_YOUR_FAINTED_POKEMON);
                 }
                 return status;
             }
@@ -102,6 +102,7 @@ public class MoveAction implements Action{
         String effettoSuAvversario = move.getOpponentModificatorType();
         if (effettoSuAvversario != null && !effettoSuAvversario.isEmpty() && !effettoSuAvversario.isBlank()) {
             int valore = move.getOpponentModificatorValue();
+            System.out.println("-------------------" + effettoSuAvversario + "----------");
             switch (effettoSuAvversario) {
                 case "atk":
                     target.setAtk(target.getAtk() + valore); // modificatore di atk durante la battaglia
@@ -120,8 +121,10 @@ public class MoveAction implements Action{
                     break;
                 case "accuracy":
                     target.modifyAccuracy(valore);
+                    break;
                 case "evasion":
                     target.modifyEvasion(valore);
+                    break;
                 default:
                     throw new IllegalArgumentException("Tipo di Effetto su avversario non riconosciuto: " + effettoSuAvversario);
 
@@ -149,9 +152,10 @@ public class MoveAction implements Action{
                     break;
                 case "accuracy":
                     user.modifyAccuracy(valore);
+                    break;
                 case "evasion":
                     user.modifyEvasion(valore);
-
+                    break;
                 default:
                     throw new IllegalArgumentException("Tipo di Effetto su se stesso non riconosciuto: " + effettoSuSeStesso);
             }

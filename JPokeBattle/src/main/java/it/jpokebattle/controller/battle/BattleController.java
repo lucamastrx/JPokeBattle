@@ -403,6 +403,7 @@ public class BattleController implements Initializable {
             // Se currentStage non è già definito, ottieni la finestra principale
             currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
         }
+        System.out.println(currentStage);
         // Create the popup
         if (changePokemonPopup == null) {
             changePokemonPopup = new Popup();
@@ -485,6 +486,8 @@ public class BattleController implements Initializable {
 
         // movePopup.getContent().add(popupContent);
         changePokemonPopup.show(currentStage);
+
+
 
     }
 
@@ -599,6 +602,12 @@ public class BattleController implements Initializable {
                     showChangePokemonPopup();
                     /*updatePokemonImages(p1);
                     updatePokemonInBattle(p1);*/
+                    break;
+                case CHANGE_YOUR_FAINTED_POKEMON:
+                    break;
+                case CHANGE_BOT_FAINTED_POKEMON:
+                    updatePokemonImages(p2);
+                    updatePokemonInBattle(p2);
                     break;
                 case YOU_WIN:
                     switchToYouWin();

@@ -8,9 +8,6 @@ import it.jpokebattle.model.pokemon.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
-
-import static it.jpokebattle.model.battle.BattleStatus.*;
 
 
 public class Battle {
@@ -41,7 +38,7 @@ public class Battle {
         // TODO da togliere dopo test
         this.currentBotPlayer = new BotPlayer("Pippo", new Pokemon(Breed.breedsMap.get("Squirtle"), 4));
         Breed garchompBreed = Breed.breedsMap.get("Garchomp");
-        Pokemon garchompPokemon = new Pokemon(garchompBreed, 2);
+        Pokemon garchompPokemon = new Pokemon(garchompBreed, 14);
         currentBotPlayer.getTeam().addPokemon(garchompPokemon);
 
 

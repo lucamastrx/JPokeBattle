@@ -209,7 +209,7 @@ public class Pokemon {
 
     // Setter per Accuracy con limiti tra 40 e 160
     private void setAccuracy(int accuracy) {
-        this.accuracy = Math.max(40, Math.min(accuracy, 160));  // Assicura che l'accuratezza sia tra 40 e 160
+        this.accuracy = Math.max(60, Math.min(accuracy, 160));  // Assicura che l'accuratezza sia tra 60 e 160
     }
 
     // Metodo per incrementare l'Accuracy di 10
