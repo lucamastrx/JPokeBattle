@@ -162,19 +162,22 @@ public class MoveAction implements Action{
     private int calculateDamage(Pokemon user, Move move, Pokemon target) {
         int lvl = user.getLevel();
         int movePower = move.getPower();
-        System.out.println("la mossa di base ha power: " + movePower + " lvl: " + lvl);
-        int userAttackPower;
-        int targerDefensePower;
-        if (move.isSpecial()) {
-            userAttackPower = user.getSpecialAtk();
-            targerDefensePower = target.getSpecialDef();
-        } else {
-            userAttackPower = user.getAtk();
-            targerDefensePower = target.getDef();
+        if (movePower > 0) {
+            System.out.println("la mossa di base ha power: " + movePower + " lvl: " + lvl);
+            int userAttackPower;
+            int targerDefensePower;
+            if (move.isSpecial()) {
+                userAttackPower = user.getSpecialAtk();
+                targerDefensePower = target.getSpecialDef();
+            } else {
+                userAttackPower = user.getAtk();
+                targerDefensePower = target.getDef();
+            }
+            double modificator = calculateModificator(user, move, target);
+            System.out.println(" --------" + movePower + " " + userAttackPower + " " + targerDefensePower);
+            return (int) ((((double) (((2 * lvl / 5) + 2) * movePower * (userAttackPower / targerDefensePower)) / 50) + 5) * modificator);
         }
-        double modificator = calculateModificator(user, move, target);
-        System.out.println(" --------" + movePower + " " + userAttackPower +" " + targerDefensePower);
-        return (int) ((((double) (((2 * lvl / 5) + 2) * movePower * (userAttackPower / targerDefensePower)) / 50)) * modificator);
+        return 0;
     }
 
     private double calculateModificator(Pokemon user, Move move, Pokemon target) {

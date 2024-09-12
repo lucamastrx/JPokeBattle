@@ -32,11 +32,13 @@ public class Battle {
         this.botPlayerFactory = new BotPlayerFactory(pokemonFactories.get(0));  // Usa una factory di default
 
         // Configura la factory del bot in base a una probabilità
-        setPokemonFactoryWithProbability();
+        // setPokemonFactoryWithProbability();
 
         // Crea il giocatore bot con la factory configurata
         this.currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
+
         this.currentBotPlayer = new BotPlayer("Pippo", new Pokemon(Breed.breedsMap.get("Squirtle"), 4)); // TODO da togliere dopo test
+        System.out.println(currentBotPlayer.getTeam().getActivePokemon());
 
         // Aumenta il contatore delle battaglie
         battleCount++;
@@ -94,6 +96,12 @@ public class Battle {
     public HumanPlayer getHumanPlayer() {return humanPlayer;}
 
     public BotPlayer getCurrentBotPlayer() {return currentBotPlayer;}
+
+    public void newBotPlayer(){ // TODO
+        // setPokemonFactoryWithProbability();
+        currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
+        System.out.println(currentBotPlayer.getTeam().getActivePokemon());
+    }
 
     public int getBattleCount() {
         return battleCount;

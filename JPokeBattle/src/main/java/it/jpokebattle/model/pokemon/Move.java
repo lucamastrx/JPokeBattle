@@ -28,7 +28,7 @@ public class Move implements Identifiable {
     private String personalModificatorType;     // la mossa modifica un qualche valore personale
     private int personalModificatorValue;       // di quanto la modifica
 
-    /**
+    /**-
      * Metodo Costruttore.
      *
      * @param name

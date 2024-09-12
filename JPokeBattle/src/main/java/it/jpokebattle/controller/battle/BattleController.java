@@ -13,9 +13,12 @@ import it.jpokebattle.util.FileManager;
 import it.jpokebattle.util.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
@@ -26,19 +29,20 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.GridPane;
 
 public class BattleController implements Initializable {
 
     private SoundManager soundMan = SoundManager.getInstance();
     private static Stage currentStage;
     private static Battle currentBattle;
+    private Scene youWinScene;
+    private Scene battleScene;
+
 
     @FXML
     private ImageView yourImage, botImage;
@@ -47,10 +51,10 @@ public class BattleController implements Initializable {
     private ProgressBar yourPokemonBar, botPokemonBar;
 
     @FXML
-    protected Button menuButton, attackButton, levelupButton, gameOverButton;
+    protected Button menuButton, attackButton, changePokemonButton, levelupButton, gameOverButton;
 
 
-    private Popup movePopup;
+    private Popup changePokemonPopup;
 
 
     public BattleController(){
@@ -77,23 +81,32 @@ public class BattleController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Pokemon p1 = currentBattle.getHumanPlayer().getTeam().getActivePokemon();
         Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
-        this.yourImage.setImage(FileManager.loadImage("gif." + p1.getBreed().getName()));
-        this.yourImage.setScaleX(-1); // Fa mirror
-        this.botImage.setImage(FileManager.loadImage("gif." + p2.getBreed().getName()));
-        this.yourPokemonBar.setStyle("-fx-accent: green;");
-        this.yourPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
-        this.botPokemonBar.setStyle("-fx-accent: red;");
-        this.botPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
+        updatePokemonImages(p1);
+        updatePokemonImages(p2);
+        updatePokemonInBattle(p1);
+        updatePokemonInBattle(p2);
     }
 
-    public void updateBattle(){
-        Pokemon p1 = currentBattle.getHumanPlayer().getTeam().getActivePokemon();
-        Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
-        this.yourPokemonBar.setStyle("-fx-accent: green;");
-        this.yourPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
-        this.botPokemonBar.setStyle("-fx-accent: red;");
-        this.botPokemonBar.setProgress(1.0 * p1.getCurrentHp() / p1.getFullHp());
+
+    private void updatePokemonInBattle(Pokemon p) {
+        if (p instanceof OwnedPokemon) {
+            this.yourPokemonBar.setStyle("-fx-accent: green;");
+            this.yourPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
+        } else {
+            this.botPokemonBar.setStyle("-fx-accent: red;");
+            this.botPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
+        }
     }
+
+    private void updatePokemonImages(Pokemon p){
+        if (p instanceof OwnedPokemon) {
+            this.yourImage.setImage(FileManager.loadImage("gif." + p.getBreed().getName()));
+            this.yourImage.setScaleX(-1); // Fa mirror
+        } else {
+            this.botImage.setImage(FileManager.loadImage("gif." + p.getBreed().getName()));
+        }
+    }
+
 
     @FXML
     void addlevel(ActionEvent event) throws MoveSetException { //TODO fix
@@ -278,12 +291,12 @@ public class BattleController implements Initializable {
         String[] movesID = humanPlayer.getTeam().getActivePokemon().getMoves().keySet().stream().map(Move::getID).toArray(String[]::new);
         currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         // Create the popup
-        if (movePopup == null) {
-            movePopup = new Popup();
+        if (changePokemonPopup == null) {
+            changePokemonPopup = new Popup();
         }
 
-        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupXPosition(movePopup, 200));
-        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupYPosition(movePopup, 200));
+        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupXPosition(changePokemonPopup, 200));
+        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupYPosition(changePokemonPopup, 200));
 
         // GridPane to arrange buttons in a 2x2 grid
         GridPane grid = new GridPane();
@@ -327,7 +340,7 @@ public class BattleController implements Initializable {
                                 case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
                                     break;
                                 case YOU_WIN:
-                                    showYouWin();
+                                    switchToYouWin();
                                     break;
                                 case YES_LEVEL_UP:
                                     break;
@@ -355,7 +368,7 @@ public class BattleController implements Initializable {
                 // chiamare execute
                 // vedere cosa ritorna e controllare come andare avanti
                 // vedi se passare ad altra schermata o continuare
-                movePopup.hide();  // Close the popup after selecting a move
+                changePokemonPopup.hide();  // Close the popup after selecting a move
             });
 
             // Add buttons to the grid (2x2 layout)
@@ -365,7 +378,7 @@ public class BattleController implements Initializable {
 
         // Optional: Add a "Cancel" button below the grid
         Button cancelButton = new Button("Cancel");
-        cancelButton.setOnAction(e -> movePopup.hide());
+        cancelButton.setOnAction(e -> changePokemonPopup.hide());
 
         // Add the grid and the cancel button into a VBox
         VBox layout = new VBox(10);
@@ -374,14 +387,83 @@ public class BattleController implements Initializable {
         layout.getChildren().addAll(grid, cancelButton);
 
         // Add the layout to the popup content
-        movePopup.getContent().clear();
-        movePopup.getContent().add(layout);
+        changePokemonPopup.getContent().clear();
+        changePokemonPopup.getContent().add(layout);
 
         // movePopup.getContent().add(popupContent);
-        movePopup.show(currentStage);
+        changePokemonPopup.show(currentStage);
     }
 
 
+
+    public void showChangePokemonPopup(ActionEvent event){
+        HumanPlayer humanPlayer = HumanPlayer.getInstance();
+        List<OwnedPokemon> pokemonList = humanPlayer.getTeam().getPokemonList();
+        currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // Create the popup
+        if (changePokemonPopup == null) {
+            changePokemonPopup = new Popup();
+        }
+
+        currentStage.xProperty().addListener((obs, oldX, newX) -> updatePopupXPosition(changePokemonPopup, 200));
+        currentStage.yProperty().addListener((obs, oldY, newY) -> updatePopupYPosition(changePokemonPopup, 200));
+
+        // GridPane to arrange buttons in a 2x2 grid
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10));
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setAlignment(Pos.CENTER);
+
+        // Create buttons for each move
+        for (int i = 0; i < pokemonList.size(); i++) {
+            String name = pokemonList.get(i).getName(); // Create a new final variable to capture the move
+            Button pokemonButton = new Button();
+            if (!pokemonList.get(i).isFainted()) {
+                pokemonButton.setText(name + " hp: " + pokemonList.get(i).getCurrentHp() + "/" + pokemonList.get(i).getFullHp());
+            } else {
+                pokemonButton.setText(name + " is Fainted. " + pokemonList.get(i).getCurrentHp() + "/" + pokemonList.get(i).getFullHp());
+                pokemonButton.setDisable(true);
+            }
+
+            pokemonButton.setPrefSize(150, 50); // Set button size
+            final int j = i;
+            // Add event handler for each button
+            pokemonButton.setOnAction(e -> {
+                Action switchPokemonAction = new switchPokemonAction(HumanPlayer.getInstance(), , currentBattle);
+                Action botAction = new MoveAction(currentBattle.getCurrentBotPlayer(), currentBattle.getCurrentBotPlayer().smartPokemonMove(), HumanPlayer.getInstance(), currentBattle);
+
+                humanPlayer.getTeam().setActivePokemon(pokemonList.get(j));
+                updatePokemonImages(humanPlayer.getTeam().getActivePokemon());
+                updatePokemonInBattle(humanPlayer.getTeam().getActivePokemon());
+                changePokemonPopup.hide();  // Close the popup after selecting a move
+            });
+
+            // Add buttons to the grid (3x2 layout)
+            int row = i / 3;
+            int column = i % 3;
+            grid.add(pokemonButton, column, row);  // Place buttons in grid positions
+        }
+
+
+        // Optional: Add a "Cancel" button below the grid
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setOnAction(e -> changePokemonPopup.hide());
+
+        // Add the grid and the cancel button into a VBox
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
+        layout.getChildren().addAll(grid, cancelButton);
+
+        // Add the layout to the popup content
+        changePokemonPopup.getContent().clear();
+        changePokemonPopup.getContent().add(layout);
+
+        // movePopup.getContent().add(popupContent);
+        changePokemonPopup.show(currentStage);
+
+    }
 
     public void switchToGameOver(ActionEvent event) throws IOException {
         currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -389,14 +471,53 @@ public class BattleController implements Initializable {
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.gameover");
     }
 
-    public void showYouWin(){
-        //youWinImageView.setImage(FileManager.loadImage("gif.youwin"));
+    public void switchToYouWin() throws IOException {
+        battleScene = currentStage.getScene();
+        FXMLLoader youWinLoader = FileManager.loadFXML("fxml.youwin");
+        Parent youWinLayout = youWinLoader.load();
+        youWinScene = new Scene(youWinLayout);
+
+        // Verifica che il layout radice sia un BorderPane
+        if (youWinLayout instanceof BorderPane) {
+            BorderPane borderPane = (BorderPane) youWinLayout;
+
+            // Creazione del bottone dinamicamente
+            Button returnButton = new Button("CONTINA");
+
+            // Configura l'azione del bottone per tornare alla scena di battaglia
+            returnButton.setOnAction(event -> returnToBattleScene(event));
+
+            // Centra il bottone in basso utilizzando un HBox
+            HBox bottomBox = new HBox(returnButton);
+            bottomBox.setAlignment(Pos.CENTER); // Allinea il bottone al centro
+            bottomBox.setPadding(new Insets(10, 0, 20, 0)); // Margine dal bordo inferiore
+
+            // Aggiungi l'HBox al layout inferiore del BorderPane
+            borderPane.setBottom(bottomBox);
+        }
+
+        // Imposta e mostra la scena "You Win"
+        Stage stage = currentStage; // Usa lo stage corrente
+        stage.setScene(youWinScene);
+        stage.show();
         if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.youwin");
+
     }
 
-    public void hideYouWin(ActionEvent event) throws IOException {
-        //youWinImageView.setImage(null);
-        if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.battle");
+    @FXML
+    public void returnToBattleScene(ActionEvent event) {
+        if (currentStage != null && battleScene != null) {
+            currentBattle.newBotPlayer();
+            Pokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
+            Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
+            updatePokemonInBattle(p1);
+            updatePokemonInBattle(p2);
+            updatePokemonImages(p1);
+            updatePokemonImages(p2);
+            currentStage.setScene(battleScene);  // Torna alla scena battaglia
+            currentStage.show();
+            if (SoundManager.isVolumeOn()) soundMan.switchTrack("audio.battle");
+        }
     }
 }
 
