@@ -10,6 +10,11 @@ public enum BattleStatus {
     YOU_LOST,
     YOU_WIN,
     NO_LEVEL_UP,
-    YES_LEVEL_UP;
+    YES_LEVEL_UP,
+    EVOLVE,
+    LEARN_MOVE,
+    NO_EVOLVE,
+    NO_LEARN_MOVE,
+    CHANGE_MOVE;
 
 }

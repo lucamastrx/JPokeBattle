@@ -9,7 +9,10 @@ import it.jpokebattle.model.pokemon.OwnedPokemon;
 import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.type.Type;
 import it.jpokebattle.model.type.TypeEffectiveness;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class MoveAction implements Action{
 
@@ -29,11 +32,11 @@ public class MoveAction implements Action{
     public int getPriority() {return move.getPriority();}
 
     @Override
-    public BattleStatus[] execute() throws MoveSetException {
+    public List<BattleStatus> execute() throws MoveSetException {
         boolean canLevelUpFlag = false;
         Pokemon user = actor.getTeam().getActivePokemon();
         Pokemon target = playerOpponent.getTeam().getActivePokemon();
-
+        List<BattleStatus> status = new ArrayList<>();
         // Utilizzatore usa 1 pp della mossa
         user.useMove(move);
 
@@ -55,43 +58,38 @@ public class MoveAction implements Action{
                 if (user instanceof OwnedPokemon) {
                     // Cast sicuro a OwnedPokemon
                     OwnedPokemon ownedPokemon = (OwnedPokemon) user;
-                    ownedPokemon.collectExp(target.getStrength());  // Guadagna esperienza
+                    ownedPokemon.collectExp(target.getStrength()+500000);  // Guadagna esperienza
                     ownedPokemon.collectEVs(target.dropEVs());      // Guadagna EVs
                     if (ownedPokemon.canLevelUp()) {
-                        canLevelUpFlag = true; // TODO
-                        //ownedPokemon.levelUpAndStatsUp();               // Metodo che fa salire di livello e aumenta le stats
-                        //ownedPokemon.learnMove();                       // Metodo che insegna una nuova mossa se possibile e se voluto
-                        //ownedPokemon.evolve();                          // Metodo che fa evolvere se possibile
+                        status.add(BattleStatus.YES_LEVEL_UP);
+                        ownedPokemon.levelUpAndStatsUp();   // Metodo che fa salire di livello e aumenta le stats
+                        status.add(ownedPokemon.learnMove()); // Metodo che insegna una nuova mossa se possibile e se voluto
+                        status.add(ownedPokemon.evolve()); // Metodo che fa evolvere se possibile
+                    } else {
+                        status.add(BattleStatus.NO_LEVEL_UP);
                     }
                 }
                 if (battle.botLost()) {
-                    // TODO vittoria e prossima partita
-                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.NO_LEVEL_UP};
-                }
-                if (battle.humanLost()) {
-                    // TODO salvare tutti i dati della partita e aggiornare leaderboard e game over screen
-                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.YOU_LOST, BattleStatus.NO_LEVEL_UP};
-
-                }
-                if (playerOpponent instanceof BotPlayer) {
-                    // Cast sicuro a BotPlayer
-                    // BotPlayer botPlayer = (BotPlayer) playerOpponent;
-                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON, BattleStatus.NO_LEVEL_UP};
-                    // TODO bisogna che cambia pokemon con botPlayer.smartPokemonChange();
-
+                    status.add(BattleStatus.YOU_WIN);
+                } else if (battle.humanLost()) {
+                    status.add(BattleStatus.YOU_LOST);
+                } else if (playerOpponent instanceof BotPlayer) {
+                    status.add(BattleStatus.CONTINUE_WITH_BOT_CHANGE_POKEMON);
                 } else {
                     // humanplayer cambia pokemon
-                    return canLevelUpFlag ? new BattleStatus[]{BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON, BattleStatus.YES_LEVEL_UP} : new BattleStatus[]{BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON, BattleStatus.NO_LEVEL_UP};
-                    // TODO
+                    status.add(BattleStatus.CONTINUE_WITH_YOUR_CHANGE_POKEMON);
                 }
+                return status;
             }
             if (playerOpponent instanceof BotPlayer) {
-                return new BattleStatus[]{BattleStatus.CONTINUE_DAMAGE_TO_BOT_POKEMON, BattleStatus.NO_LEVEL_UP};
+                status.add(BattleStatus.CONTINUE_DAMAGE_TO_BOT_POKEMON);
             } else {
-                return new BattleStatus[]{BattleStatus.CONTINUE_DAMAGE_TO_YOUR_POKEMON, BattleStatus.NO_LEVEL_UP};
+                status.add(BattleStatus.CONTINUE_DAMAGE_TO_YOUR_POKEMON);
             }
+            return status;
         }
-        return new BattleStatus[]{BattleStatus.CONTINUE_WITH_NO_DAMAGE, BattleStatus.NO_LEVEL_UP};
+        status.add(BattleStatus.CONTINUE_WITH_NO_DAMAGE);
+        return status;
     }
 
     private boolean isHit(Pokemon user, Move move, Pokemon target) {

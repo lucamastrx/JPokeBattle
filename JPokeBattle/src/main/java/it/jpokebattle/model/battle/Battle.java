@@ -37,7 +37,15 @@ public class Battle {
         // Crea il giocatore bot con la factory configurata
         this.currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
 
-        this.currentBotPlayer = new BotPlayer("Pippo", new Pokemon(Breed.breedsMap.get("Squirtle"), 4)); // TODO da togliere dopo test
+
+        // TODO da togliere dopo test
+        this.currentBotPlayer = new BotPlayer("Pippo", new Pokemon(Breed.breedsMap.get("Squirtle"), 4));
+        Breed garchompBreed = Breed.breedsMap.get("Garchomp");
+        Pokemon garchompPokemon = new Pokemon(garchompBreed, 2);
+        currentBotPlayer.getTeam().addPokemon();
+
+
+
         System.out.println(currentBotPlayer.getTeam().getActivePokemon());
 
         // Aumenta il contatore delle battaglie
@@ -49,9 +57,9 @@ public class Battle {
 
 
 
-    public BattleStatus[] executeBattle(Action action) throws MoveSetException, IOException, ForbiddenActionException {
+    public List<BattleStatus> executeBattle(Action action) throws MoveSetException, IOException, ForbiddenActionException {
 
-        BattleStatus[] result = action.execute();
+        List<BattleStatus> result = action.execute();
         for (BattleStatus battleStatus : result) {
             System.out.println(battleStatus);
             switch (battleStatus) {
@@ -59,24 +67,22 @@ public class Battle {
 
                 case CONTINUE_WITH_BOT_CHANGE_POKEMON:
                     currentBotPlayer.smartPokemonChange();
-                    return new BattleStatus[]{CONTINUE_WITH_BOT_CHANGE_POKEMON, YES_LEVEL_UP};
+                    break;
 
 
                 case YOU_WIN:
-                    return new BattleStatus[]{BattleStatus.YOU_WIN, BattleStatus.YES_LEVEL_UP};
+                    break;
 
 
                 case CONTINUE_DAMAGE_TO_BOT_POKEMON:
-                    return new BattleStatus[]{CONTINUE_DAMAGE_TO_BOT_POKEMON};
+                    break;
 
                 case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
-                    return new BattleStatus[]{CONTINUE_DAMAGE_TO_YOUR_POKEMON};
+                    break;
 
-                default:
-                    throw new ForbiddenActionException();
             }
         }
-        return null;
+        return result;
     }
 
     public boolean humanStarts(Action action, Action botAction){

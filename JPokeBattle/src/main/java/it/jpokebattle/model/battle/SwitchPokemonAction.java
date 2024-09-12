@@ -3,6 +3,8 @@ package it.jpokebattle.model.battle;
 import it.jpokebattle.model.player.Player;
 import it.jpokebattle.model.pokemon.Pokemon;
 
+import java.util.List;
+
 
 public class SwitchPokemonAction implements Action{
 
@@ -22,7 +24,7 @@ public class SwitchPokemonAction implements Action{
     }
 
     @Override
-    public BattleStatus[] execute() {
+    public List<BattleStatus> execute() {
         // Verifica se il Pokémon da sostituire è nella squadra del giocatore
         if (!actor.getTeam().getPokemonList().contains(substitutePokemon)) {
             System.out.println("Il Pokémon selezionato non fa parte della tua squadra.");

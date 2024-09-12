@@ -2,12 +2,11 @@ package it.jpokebattle.model.pokemon;
 
 import it.jpokebattle.model.Identifiable;
 import it.jpokebattle.model.Saveable;
+import it.jpokebattle.model.battle.BattleStatus;
 import it.jpokebattle.model.exceptions.MoveSetException;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.*;
 import java.time.Instant;
-import java.util.Objects;
-import java.util.Set;
 
 
 /**
@@ -40,6 +39,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     private int specialDefEV = 0;  // EV per la difesa speciale
     private int speedEV = 0;  // EV per la velocità
     private int totalEVsUsed = 0;  // Contatore per il totale di EV utilizzati
+    private Map<EVType, Integer> evMap = new HashMap<>();
 
     /**
      * Metodo costruttore.
@@ -218,68 +218,16 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     /**
      * Verifica e utilizza gli EV in multipli di 4, riducendo il totale degli EV disponibili e aggiornando il contatore totale degli EV utilizzati.
      *
-     * @param evType Il tipo di EV (ad esempio, "hp", "atk", "def", ecc.)
+     * @param evType Il tipo di EV (ad esempio, EVType.HP, EVType.ATK, ecc.)
      * @return Il numero di EV utilizzati.
-     * @throws IllegalArgumentException se gli EV non sono di un tipo valido.
      */
-    private int useEVs(String evType) {
-        int ev = 0;
+    private int useEVs(EVType evType) {
+        int ev = evMap.getOrDefault(evType, 0);
 
-        // Ottieni il valore EV corrente basato sul tipo
-        switch (evType) {
-            case "hp":
-                ev = hpEV;
-                break;
-            case "atk":
-                ev = atkEV;
-                break;
-            case "def":
-                ev = defEV;
-                break;
-            case "specialAtk":
-                ev = specialAtkEV;
-                break;
-            case "specialDef":
-                ev = specialDefEV;
-                break;
-            case "speed":
-                ev = speedEV;
-                break;
-            default:
-                throw new IllegalArgumentException("Tipo di EV non valido: " + evType);
-        }
+        if (ev < 4) return 0;
 
-        // Verifica se ci sono abbastanza EV per essere utilizzati
-        if (ev < 4) {
-            return 0; // Non c'è abbastanza EV per essere utilizzato
-        }
-
-        // Trova il multiplo di 4 più vicino
         int usableEVs = (ev / 4) * 4;
-
-        // Aggiorna gli EV disponibili sottraendo gli EV usati
-        switch (evType) {
-            case "hp":
-                hpEV -= usableEVs;
-                break;
-            case "atk":
-                atkEV -= usableEVs;
-                break;
-            case "def":
-                defEV -= usableEVs;
-                break;
-            case "specialAtk":
-                specialAtkEV -= usableEVs;
-                break;
-            case "specialDef":
-                specialDefEV -= usableEVs;
-                break;
-            case "speed":
-                speedEV -= usableEVs;
-                break;
-        }
-
-        // Aggiungi gli EV usati al totale
+        evMap.put(evType, ev - usableEVs);
         addToTotalEVsUsed(usableEVs);
 
         return usableEVs;
@@ -323,31 +271,31 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * @throws IllegalArgumentException Se il valore di `statType` non è uno dei valori previsti.
      */
     private void updateStat(String statType, int iv, int baseStat) {
-        int usedEVs = useEVs(statType);
+        // Controllo dei parametri
+        if (!Arrays.asList("hp", "atk", "def", "specialAtk", "specialDef", "speed").contains(statType)) {
+            throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
+        }
+
+        // Calcolo degli EV utilizzati
+        int usedEVs = useEVs(EVType.valueOf(statType));
+
+        // Calcolo del nuovo valore della statistica
         int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * getLevel()) / 100) + 5;
 
-        switch (statType) {
-            case "hp":
-                newValue += getLevel() + 5;
-                setFullHp(newValue);
-                break;
-            case "atk":
-                setFullAtk(newValue);
-                break;
-            case "def":
-                setFullDef(newValue);
-                break;
-            case "specialAtk":
-                setFullSpecialAtk(newValue);
-                break;
-            case "specialDef":
-                setFullSpecialDef(newValue);
-                break;
-            case "speed":
-                setFullSpeed(newValue);
-                break;
-            default:
-                throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
+        // Aggiornamento della statistica specifica
+        if ("hp".equals(statType)) {
+            newValue += getLevel() + 5;  // Aggiungi il livello al valore degli HP
+            setFullHp(newValue);
+        } else if ("atk".equals(statType)) {
+            setFullAtk(newValue);
+        } else if ("def".equals(statType)) {
+            setFullDef(newValue);
+        } else if ("specialAtk".equals(statType)) {
+            setFullSpecialAtk(newValue);
+        } else if ("specialDef".equals(statType)) {
+            setFullSpecialDef(newValue);
+        } else if ("speed".equals(statType)) {
+            setFullSpeed(newValue);
         }
     }
 
@@ -424,18 +372,20 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         return getMoves().size() == 4;
     }
 
-    // (ActionEvent event) throws IOException
-    public void learnMove() throws MoveSetException {
+
+    public BattleStatus learnMove() throws MoveSetException {
         if (canLearnMove()) {
             String moveID = getBreed().getMoves().get(getLevel());
             Move move = Move.movesMap.get(moveID);
             if (getMoves().size() < 4) {
                 addMove(move);
+                save();
+                return BattleStatus.LEARN_MOVE;
             } else {
-                throw new MoveSetException();
+                return BattleStatus.CHANGE_MOVE;
             }
         }
-        save();
+        return BattleStatus.NO_LEARN_MOVE;
     }
 
 
@@ -455,17 +405,19 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
      * Cambia il breed del pokemon con quella del suo successore,
      * e inoltre modifica il nome del pokemon se non ha soprannome.
      */
-    public void evolve() {
-        if (this.canEvolve() && getBreed().getSuccessor() != null) {
+    public BattleStatus evolve() {
+        if (this.canEvolve()) {
             Breed succ = this.getBreed().getSuccessor();
             this.setBreed(succ);   // cambia il Breed del Pokemon
 
             if (this.nickname == null || this.nickname.isEmpty()) {
                 this.setName(succ.getName());  // cambia il nome solo se non c'è un soprannome
             }
-            setStrength(getFullHp() + getFullAtk() + getFullDef() + getFullSpecialAtk() + getFullSpecialDef() + getFullSpeed() + getLevel());
+            setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
             save();
+            return BattleStatus.EVOLVE;
         }
+        return BattleStatus.NO_EVOLVE;
     }
 
 
