@@ -56,7 +56,7 @@ public class Pokemon {
         setRandomIVs();
         setStatsFromLevel(level);
         setMovesFromLevel(level);
-        setStrength( getFullHp() + getAtk() + getDef() + getSpecialAtk() + getSpecialDef() + getSpeed() + getLevel());
+        setStrength( getFullHp() + getFullAtk() + getFullDef() + getFullSpecialAtk() + getFullSpecialDef() + getFullSpeed() + getLevel());
     }
 
     /**
@@ -181,8 +181,6 @@ public class Pokemon {
 
     public void setCurrentHp(int currentHp) {this.currentHp = currentHp;}
 
-    public void setFullHp(int fullHp) {this.fullHp = fullHp;}
-
     public void setAtk(int atk) {this.atk = atk;}
 
     public void setDef(int def) {this.def = def;}
@@ -194,6 +192,18 @@ public class Pokemon {
     public void setSpeed(int speed) {this.speed = speed;}
 
     public void setLevel(int level) {this.level = level;}
+
+    public void setFullHp(int fullHp) {this.fullHp = fullHp;}
+
+    public void setFullAtk(int fullAtk) {this.fullAtk = fullAtk;}
+
+    public void setFullDef(int fullDef) {this.fullDef = fullDef;}
+
+    public void setFullSpecialAtk(int fullSpecialAtk) {this.fullSpecialAtk = fullSpecialAtk;}
+
+    public void setFullSpecialDef(int fullSpecialDef) {this.fullSpecialDef = fullSpecialDef;}
+
+    public void setFullSpeed(int fullSpeed) {this.fullSpeed = fullSpeed;}
 
     public void setStrength(int strength) {this.strength = strength;}
 
@@ -226,11 +236,16 @@ public class Pokemon {
     private void setStatsFromLevel(int lvl){
         setCurrentHp((((getBreed().getHpBaseStat() + getHpIV()) * 2 * lvl) / 100)+ lvl + 10);
         setFullHp((((getBreed().getHpBaseStat() + getHpIV()) * 2 * lvl) / 100)+ lvl + 10);
-        setAtk((((getBreed().getAtkBaseStat() + getAtkIV()) * 2 * lvl) / 100) + 5);
-        setDef((((getBreed().getDefBaseStat() + getDefIV()) * 2 * lvl) / 100) + 5);
-        setSpecialAtk((((getBreed().getSpecialAtkBaseStat() + getSpecialAtkIV()) * 2 * lvl) / 100) + 5);
-        setSpecialDef((((getBreed().getSpecialDefBaseStat() + getSpecialDefIV()) * 2 * lvl) / 100) + 5);
-        setSpeed((((getBreed().getSpeedBaseStat() + getSpeedIV()) * 2 * lvl) / 100) + 5);
+        setFullAtk((((getBreed().getAtkBaseStat() + getAtkIV()) * 2 * lvl) / 100) + 5);
+        setAtk(getFullAtk());
+        setFullDef((((getBreed().getDefBaseStat() + getDefIV()) * 2 * lvl) / 100) + 5);
+        setDef(getFullDef());
+        setFullSpecialAtk((((getBreed().getSpecialAtkBaseStat() + getSpecialAtkIV()) * 2 * lvl) / 100) + 5);
+        setSpecialAtk(getFullSpecialAtk());
+        setFullSpecialDef((((getBreed().getSpecialDefBaseStat() + getSpecialDefIV()) * 2 * lvl) / 100) + 5);
+        setSpecialDef(getFullSpecialDef());
+        setFullSpeed((((getBreed().getSpeedBaseStat() + getSpeedIV()) * 2 * lvl) / 100) + 5);
+        setSpeed(getFullSpeed());
     }
 
     /**
@@ -412,11 +427,11 @@ public class Pokemon {
                 getMoves().toString() + ", " +
                 "currentHp=" + currentHp + ", " +
                 "fullHp=" + fullHp + ", " +
-                "atk=" + atk + ", " +
-                "def=" + def + ", " +
-                "specialAtk=" + specialAtk + ", " +
-                "specialDef=" + specialDef + ", " +
-                "speed=" + speed + ", " +
+                "atk=" + fullAtk + ", " +
+                "def=" + fullDef + ", " +
+                "specialAtk=" + fullSpecialAtk + ", " +
+                "specialDef=" + fullSpecialDef + ", " +
+                "speed=" + fullSpeed + ", " +
                 "level=" + level + ", " +
                 "strength=" + strength + ", " +
                 "hpIV=" + hpIV + ", " +
@@ -443,11 +458,11 @@ public class Pokemon {
 
         return currentHp == pokemon.currentHp &&
                 fullHp == pokemon.fullHp &&
-                atk == pokemon.atk &&
-                def == pokemon.def &&
-                specialAtk == pokemon.specialAtk &&
-                specialDef == pokemon.specialDef &&
-                speed == pokemon.speed &&
+                fullAtk == pokemon.fullAtk &&
+                fullDef == pokemon.fullDef &&
+                fullSpecialAtk == pokemon.fullSpecialAtk &&
+                fullSpecialDef == pokemon.fullSpecialDef &&
+                fullSpeed == pokemon.fullSpeed &&
                 level == pokemon.level &&
                 strength == pokemon.strength &&
                 hpIV == pokemon.hpIV &&
@@ -470,7 +485,7 @@ public class Pokemon {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, breed, moves, currentHp, fullHp, atk, def, specialAtk, specialDef, speed, level,
+        return Objects.hash(name, breed, moves, currentHp, fullHp, fullAtk, fullDef, fullSpecialAtk, fullSpecialDef, fullSpeed, level,
                 strength, hpIV, atkIV, defIV, specialAtkIV, specialDefIV, speedIV, accuracy, evasion);
     }
 }

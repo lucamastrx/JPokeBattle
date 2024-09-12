@@ -1,10 +1,7 @@
 package it.jpokebattle.controller.battle;
 
 import it.jpokebattle.controller.SceneManager;
-import it.jpokebattle.model.battle.Action;
-import it.jpokebattle.model.battle.Battle;
-import it.jpokebattle.model.battle.BattleStatus;
-import it.jpokebattle.model.battle.MoveAction;
+import it.jpokebattle.model.battle.*;
 import it.jpokebattle.model.exceptions.ForbiddenActionException;
 import it.jpokebattle.model.exceptions.MoveSetException;
 import it.jpokebattle.model.player.HumanPlayer;
@@ -430,10 +427,10 @@ public class BattleController implements Initializable {
             final int j = i;
             // Add event handler for each button
             pokemonButton.setOnAction(e -> {
-                Action switchPokemonAction = new switchPokemonAction(HumanPlayer.getInstance(), , currentBattle);
+                Action switchPokemonAction = new SwitchPokemonAction(HumanPlayer.getInstance(), pokemonList.get(j), currentBattle);
                 Action botAction = new MoveAction(currentBattle.getCurrentBotPlayer(), currentBattle.getCurrentBotPlayer().smartPokemonMove(), HumanPlayer.getInstance(), currentBattle);
 
-                humanPlayer.getTeam().setActivePokemon(pokemonList.get(j));
+                //humanPlayer.getTeam().setActivePokemon();
                 updatePokemonImages(humanPlayer.getTeam().getActivePokemon());
                 updatePokemonInBattle(humanPlayer.getTeam().getActivePokemon());
                 changePokemonPopup.hide();  // Close the popup after selecting a move
