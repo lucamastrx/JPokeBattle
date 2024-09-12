@@ -32,7 +32,6 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-import static it.jpokebattle.model.battle.BattleStatus.CONTINUE_DAMAGE_TO_YOUR_POKEMON;
 
 public class BattleController implements Initializable {
 
@@ -52,6 +51,8 @@ public class BattleController implements Initializable {
     @FXML
     protected Button menuButton, attackButton, changePokemonButton, levelupButton, gameOverButton;
 
+    @FXML
+    private Label myPokemonLevel, botPokemonLevel, myPokemonHP, botPokemonHP;
 
     private Popup changePokemonPopup;
 
@@ -84,8 +85,19 @@ public class BattleController implements Initializable {
         updatePokemonImages(p2);
         updatePokemonInBattle(p1);
         updatePokemonInBattle(p2);
+        updatePokemonLevel(p1);
+        updatePokemonLevel(p2);
     }
 
+    private void updatePokemonLevel(Pokemon p){
+        if (p instanceof OwnedPokemon) {
+
+            this.myPokemonLevel.setText("Lvl. "+p.getLevel());
+        } else {
+
+            this.botPokemonLevel.setText("Lvl. "+p.getLevel());
+        }
+    }
 
     private void updatePokemonInBattle(Pokemon p) {
         String color = "green";
@@ -99,9 +111,11 @@ public class BattleController implements Initializable {
         if (p instanceof OwnedPokemon) {
             this.yourPokemonBar.setStyle("-fx-accent: "+color+";");
             this.yourPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
+            this.myPokemonHP.setText("HP: "+p.getCurrentHp()+"/"+p.getFullHp());
         } else {
             this.botPokemonBar.setStyle("-fx-accent: "+color+";");
             this.botPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
+            this.botPokemonHP.setText("HP: "+p.getCurrentHp()+"/"+p.getFullHp());
         }
     }
 
@@ -323,51 +337,28 @@ public class BattleController implements Initializable {
             moveButton.setOnAction(e -> {
                 Action moveAction = new MoveAction(HumanPlayer.getInstance(), move, currentBattle.getCurrentBotPlayer(), currentBattle);
                 Action botAction = new MoveAction(currentBattle.getCurrentBotPlayer(), currentBattle.getCurrentBotPlayer().smartPokemonMove(), HumanPlayer.getInstance(), currentBattle);
-                if (currentBattle.humanStarts(moveAction, botAction)) {
-                    try {
-                        BattleStatus[] status1 = currentBattle.executeBattle(moveAction);
-                        BattleStatus[] status2 = currentBattle.executeBattle(botAction);
-                        BattleStatus[] totalStatus = new BattleStatus[status1.length + status2.length];
-                        System.arraycopy(status1, 0, totalStatus, 0, status1.length);
-                        System.arraycopy(status2, 0, totalStatus, status1.length, status2.length);
-
-                        OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
-                        Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
-
-                        for (BattleStatus battleStatus : totalStatus) {
-                            switch (battleStatus) {
-                                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
-                                    updatePokemonInBattle(p1);
-                                    break;
-                                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
-                                    updatePokemonInBattle(p2);
-                                    break;
-                                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
-                                    break;
-                                case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
-                                    break;
-                                case YOU_WIN:
-                                    switchToYouWin();
-                                    break;
-                                case YES_LEVEL_UP:
-                                    break;
-                                case NO_LEVEL_UP:
-                                    break;
-                                case YOU_LOST:
-                                    break;
-                                case CONTINUE_WITH_NO_DAMAGE:
-                                    break;
-                            }
-                        }
+                try {
+                    BattleStatus[] status1;
+                    BattleStatus[] status2;
+                    if (currentBattle.humanStarts(moveAction, botAction)) {
 
 
-                    } catch (MoveSetException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (ForbiddenActionException ex) {
-                        throw new RuntimeException(ex);
+                        status1 = currentBattle.executeBattle(moveAction);
+                        status2 = currentBattle.executeBattle(botAction);
+                    } else {
+                        status2 = currentBattle.executeBattle(botAction);
+                        status1 = currentBattle.executeBattle(moveAction);
+
                     }
+                    BattleStatus[] totalStatus = new BattleStatus[status1.length + status2.length];
+                    System.arraycopy(status1, 0, totalStatus, 0, status1.length);
+                    System.arraycopy(status2, 0, totalStatus, status1.length, status2.length);
+
+                    OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
+                    Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
+                    executeMoveAction(totalStatus, p1, p2);
+                } catch (MoveSetException | IOException | ForbiddenActionException ex) {
+                    throw new RuntimeException(ex);
                 }
                 // eseguire entrambe le Action
                 System.out.println("Selected move: " + moveID);  // Use the final variable 'move'
@@ -400,6 +391,7 @@ public class BattleController implements Initializable {
         // movePopup.getContent().add(popupContent);
         changePokemonPopup.show(currentStage);
     }
+
 
 
 
@@ -439,91 +431,28 @@ public class BattleController implements Initializable {
             pokemonButton.setOnAction(e -> {
                 Action switchPokemonAction = new SwitchPokemonAction(HumanPlayer.getInstance(), pokemonList.get(j), currentBattle);
                 Action botAction = new MoveAction(currentBattle.getCurrentBotPlayer(), currentBattle.getCurrentBotPlayer().smartPokemonMove(), HumanPlayer.getInstance(), currentBattle);
-                OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
-                Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
-                if (currentBattle.humanStarts(switchPokemonAction, botAction)) {
-                    try {
+                try {
+                    if (currentBattle.humanStarts(switchPokemonAction, botAction)) {
                         switchPokemonAction.execute();
                         updatePokemonImages(humanPlayer.getTeam().getActivePokemon());
                         updatePokemonInBattle(humanPlayer.getTeam().getActivePokemon());
                         changePokemonPopup.hide();  // Close the popup after selecting a move
+                        OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
+                        Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
                         BattleStatus[] status1 = botAction.execute();
-                        if (status1[0]==CONTINUE_DAMAGE_TO_YOUR_POKEMON){
-                            System.out.println("DANNOOOOOO");
-                        }
-                        else{
-                            System.out.println(status1[0]);
-                        }
-
-                        for (BattleStatus battleStatus : status1) {
-                            switch (battleStatus) {
-                                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
-                                    updatePokemonInBattle(p1);
-                                    break;
-                                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
-                                    updatePokemonInBattle(p2);
-                                    break;
-                                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
-                                    break;
-                                case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
-                                    break;
-                                case YOU_WIN:
-                                    switchToYouWin();
-                                    break;
-                                case YES_LEVEL_UP:
-                                    break;
-                                case NO_LEVEL_UP:
-                                    break;
-                                case YOU_LOST:
-                                    break;
-                                case CONTINUE_WITH_NO_DAMAGE:
-                                    break;
-                            }
-                        }
-
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (MoveSetException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } else{
-                    try {
-                        BattleStatus[] status1=botAction.execute();
+                        executeMoveAction(status1, p1, p2);
+                    } else {
+                        OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
+                        Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
+                        BattleStatus[] status1 = botAction.execute();
+                        executeMoveAction(status1, p1, p2);
                         switchPokemonAction.execute();
                         updatePokemonImages(humanPlayer.getTeam().getActivePokemon());
                         updatePokemonInBattle(humanPlayer.getTeam().getActivePokemon());
-                        changePokemonPopup.hide();  // Close the popup after selecting a move
-                        for (BattleStatus battleStatus : status1) {
-                            switch (battleStatus) {
-                                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
-                                    updatePokemonInBattle(p1);
-                                    break;
-                                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
-                                    updatePokemonInBattle(p2);
-                                    break;
-                                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
-                                    break;
-                                case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
-                                    break;
-                                case YOU_WIN:
-                                    switchToYouWin();
-                                    break;
-                                case YES_LEVEL_UP:
-                                    break;
-                                case NO_LEVEL_UP:
-                                    break;
-                                case YOU_LOST:
-                                    break;
-                                case CONTINUE_WITH_NO_DAMAGE:
-                                    break;
-                            }
-                        }
-
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (MoveSetException ex) {
-                        throw new RuntimeException(ex);
+                        changePokemonPopup.hide();
                     }
+                } catch (IOException | MoveSetException ex) {
+                    throw new RuntimeException(ex);
                 }
                 //humanPlayer.getTeam().setActivePokemon();
 
@@ -554,6 +483,36 @@ public class BattleController implements Initializable {
         changePokemonPopup.show(currentStage);
 
     }
+
+
+    private void executeMoveAction(BattleStatus[] status, Pokemon p1, Pokemon p2) throws IOException {
+        for (BattleStatus battleStatus : status) {
+            switch (battleStatus) {
+                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
+                    updatePokemonInBattle(p1);
+                    break;
+                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
+                    updatePokemonInBattle(p2);
+                    break;
+                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
+                    break;
+                case CONTINUE_WITH_YOUR_CHANGE_POKEMON:
+                    break;
+                case YOU_WIN:
+                    switchToYouWin();
+                    break;
+                case YES_LEVEL_UP:
+                    break;
+                case NO_LEVEL_UP:
+                    break;
+                case YOU_LOST:
+                    break;
+                case CONTINUE_WITH_NO_DAMAGE:
+                    break;
+            }
+        }
+    }
+
 
     public void switchToGameOver(ActionEvent event) throws IOException {
         currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

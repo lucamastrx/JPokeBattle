@@ -54,11 +54,37 @@ public class BotPlayer extends Player<Pokemon> {
     }
 
     public Move smartPokemonMove(){
+        // Ottieni le mosse del Pokémon attivo del bot
+        List<Move> botMoves = new ArrayList<>(getTeam().getActivePokemon().getMoves().keySet());
+
         // Ottieni i tipi del Pokémon avversario umano
         HashSet<Type> opponentTypes = HumanPlayer.getInstance().getTeam().getActivePokemon().getBreed().getTypes();
 
-        // Ottieni le mosse del Pokémon attivo del bot
-        List<Move> moves = new ArrayList<>(getTeam().getActivePokemon().getMoves().keySet());
+        if (getTeam().getActivePokemon().getLevel() + 10 < HumanPlayer.getInstance().getTeam().getActivePokemon().getLevel()) {
+            Move bestMove = null;
+            int bestModificationValue = 0;
+            int highestPower = 0;
+            double bestEffectiveness = 0; // Efficacia della mossa migliore
+
+
+            for (Move move : botMoves) {
+                if (move.getOpponentModificatorType().equalsIgnoreCase("atk")) {
+                    int modificationValue = move.getOpponentModificatorValue();
+                    double effectiveness = TypeEffectiveness.getInstance().getEffectiveness(move.getType(), opponentTypes); // Calcola l'efficacia
+
+                    if (modificationValue > bestModificationValue ||
+                            (modificationValue == bestModificationValue && effectiveness > bestEffectiveness) ||
+                            (modificationValue == bestModificationValue && effectiveness == bestEffectiveness && move.getPower() > highestPower)) {
+
+                        bestModificationValue = modificationValue;  // Aggiorna il miglior valore di modifica
+                        highestPower = move.getPower(); // Aggiorna anche la potenza
+                        bestEffectiveness = effectiveness; // Aggiorna l'efficacia
+                        bestMove = move;
+                    }
+                }
+            }
+            if (bestMove != null) return bestMove;
+        }
 
         // Variabili per tenere traccia della mossa migliore
         Move bestMove = null;
@@ -66,7 +92,7 @@ public class BotPlayer extends Player<Pokemon> {
         int highestPower = 0;
 
         // Itera su tutte le mosse del Pokémon attivo del bot
-        for (Move move : moves) {
+        for (Move move : botMoves) {
             // Calcola l'efficacia della mossa contro i tipi del Pokémon avversario
             double effectiveness = TypeEffectiveness.getInstance().getEffectiveness(move.getType(), opponentTypes);
 
