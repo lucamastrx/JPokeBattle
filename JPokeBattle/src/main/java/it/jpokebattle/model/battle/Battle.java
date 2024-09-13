@@ -60,7 +60,9 @@ public class Battle {
         for (BattleStatus battleStatus : result) {
             System.out.println(battleStatus);
             switch (battleStatus) {
-
+                case CHANGE_BOT_FAINTED_POKEMON:
+                    currentBotPlayer.smartPokemonChange();
+                    break;
 
                 case CONTINUE_WITH_BOT_CHANGE_POKEMON:
                     currentBotPlayer.smartPokemonChange();

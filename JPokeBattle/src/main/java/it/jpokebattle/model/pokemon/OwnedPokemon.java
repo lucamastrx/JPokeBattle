@@ -325,12 +325,12 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     private void updateStat(String statType, int iv, int baseStat) {
         int usedEVs = useEVs(statType);
         int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * getLevel()) / 100) + 5;
-
         switch (statType) {
             case "hp":
-                newValue += getLevel() + 5;
-                setCurrentHp(newValue);
-                setFullHp(newValue);
+                System.out.println(newValue);
+                setCurrentHp(this.getCurrentHp()+newValue);
+                setFullHp(this.getFullHp()+newValue);
+                System.out.println("AGGIORNAMENTO FULLHP: "+this.getFullHp());
                 break;
             case "atk":
                 setAtk(newValue);

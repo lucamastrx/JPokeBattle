@@ -88,12 +88,15 @@ public class MoveAction implements Action{
             }
             return status;
         }
+        System.out.println("MISSSSSSS");
         status.add(BattleStatus.CONTINUE_WITH_NO_DAMAGE);
         return status;
     }
 
     private boolean isHit(Pokemon user, Move move, Pokemon target) {
-        double hitProbability = move.getPrecision() * (user.getAccuracy() / 100) * (1 - (target.getEvasion() / 100));
+        double hitProbability = move.getPrecision() * ((double)user.getAccuracy() / 100) * (1 - ((double)target.getEvasion() / 100));
+        System.out.println(move.getPrecision()+" "+user.getAccuracy()+ " "+target.getEvasion());
+        System.out.println("HIT PROB: "+hitProbability);
         double random = Math.random() * 100;
         return random <= hitProbability;
     }
@@ -207,5 +210,9 @@ public class MoveAction implements Action{
             return 1.5;
         }
         return 1.0;
+    }
+    @Override
+    public String toString(){
+        return actor.getTeam().getActivePokemon().getName() + " attacca " + playerOpponent.getTeam().getActivePokemon().getName() + " con " + move.toString();
     }
 }

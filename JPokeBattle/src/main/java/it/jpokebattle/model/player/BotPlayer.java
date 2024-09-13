@@ -60,7 +60,7 @@ public class BotPlayer extends Player<Pokemon> {
         // Ottieni i tipi del Pokémon avversario umano
         HashSet<Type> opponentTypes = HumanPlayer.getInstance().getTeam().getActivePokemon().getBreed().getTypes();
 
-        if (getTeam().getActivePokemon().getLevel() + 10 < HumanPlayer.getInstance().getTeam().getActivePokemon().getLevel()) {
+        if (HumanPlayer.getInstance().getTeam().getActivePokemon().getLevel() - getTeam().getActivePokemon().getLevel() >10 ) {
             Move bestMove = null;
             int bestModificationValue = 0;
             int highestPower = 0;
@@ -85,12 +85,12 @@ public class BotPlayer extends Player<Pokemon> {
             }
             if (bestMove != null) return bestMove;
         }
-
+        System.out.println("NOT A STATE ACTION");
         // Variabili per tenere traccia della mossa migliore
         Move bestMove = null;
         double bestEffectiveness = 0;
         int highestPower = 0;
-
+        botMoves = botMoves.stream().filter(x->x.getPower()>0).toList();
         // Itera su tutte le mosse del Pokémon attivo del bot
         for (Move move : botMoves) {
             // Calcola l'efficacia della mossa contro i tipi del Pokémon avversario
@@ -105,7 +105,7 @@ public class BotPlayer extends Player<Pokemon> {
                 highestPower = move.getPower();
             }
         }
-
+        System.out.println("bestEffectiveness: "+bestEffectiveness);
         // Ritorna la mossa migliore trovata
         if (bestMove != null) {
             System.out.println("Il Bot ha scelto la mossa: " + bestMove.getName());
