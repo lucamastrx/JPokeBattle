@@ -2,9 +2,13 @@ package it.jpokebattle.model.player;
 
 import it.jpokebattle.model.pokemon.Breed;
 import it.jpokebattle.model.pokemon.OwnedPokemon;
+import it.jpokebattle.model.pokemon.Pokemon;
+import it.jpokebattle.util.FileManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -25,8 +29,20 @@ public class HumanPlayer extends Player<OwnedPokemon> {
 
 
     // Metodo statico per ottenere l'istanza unica con una squadra di default
-    public static synchronized HumanPlayer getInstance() { // TODO codice verrà rimpiazzato con un loadSER
+    public static synchronized HumanPlayer getInstance() { //  codice verrà rimpiazzato con un loadSER
         if (instance == null) {
+
+
+            /*
+            HashMap<String, OwnedPokemon> defaultTeamHashMap = FileManager.loadSER("ser.ownedPokemon");
+
+
+
+            List<OwnedPokemon> defaultTeam = new ArrayList<>(defaultTeamHashMap.values());
+            */
+
+
+
             // Inizializza la squadra di default con Charmander, Bulbasaur e Squirtle
             List<OwnedPokemon> defaultTeam = new ArrayList<>();
 
@@ -54,6 +70,21 @@ public class HumanPlayer extends Player<OwnedPokemon> {
             defaultTeam.add(ownedTyranitar);
             defaultTeam.add(ownedGarchomp);
             defaultTeam.add(ownedDragonite);
+            
+
+            /*
+            HashMap<String, OwnedPokemon> pokemonMap = new HashMap<>();
+            pokemonMap.put("Charmander", ownedCharmander);
+            pokemonMap.put("Bulbasaur", ownedBulbasaur);
+            pokemonMap.put("Squirtle", ownedSquirtle);
+            pokemonMap.put("Tyranitar", ownedTyranitar);
+            pokemonMap.put("Garchomp", ownedGarchomp);
+            pokemonMap.put("Dragonite", ownedDragonite);
+
+            FileManager.writeSER(pokemonMap, "ser.ownedPokemon");
+            */
+
+
 
 
             instance = new HumanPlayer("LucaMastrx", defaultTeam);

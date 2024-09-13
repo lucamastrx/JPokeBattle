@@ -65,12 +65,38 @@ public class LeaderboardController {
         pokemon4.setCellValueFactory(cellData -> cellData.getValue().getPokemon4Property());
         pokemon5.setCellValueFactory(cellData -> cellData.getValue().getPokemon5Property());
         pokemon6.setCellValueFactory(cellData -> cellData.getValue().getPokemon6Property());
-
+        // Leggi i dati JSON
         HashMap<String, LeaderboardEntry> leaderboardEntriesHashMap = FileManager.readJSON("json.leaderboard", LeaderboardEntry.class);
-        for (LeaderboardEntry entry : leaderboardEntriesHashMap.values()) {
+
+        // Ordina le voci
+        List<LeaderboardEntry> sortedEntries = leaderboardEntriesHashMap.values().stream()
+                .sorted((e1, e2) -> {
+                    int winCompare = Integer.compare(getWinStatusValue(e2), getWinStatusValue(e1));
+                    if (winCompare == 0) {
+                        return e2.getTimestamp().compareTo(e1.getTimestamp());
+                    }
+                    return winCompare;
+                })
+                .collect(Collectors.toList());
+
+        // Aggiungi le righe ordinate alla tabella
+        for (LeaderboardEntry entry : sortedEntries) {
             addRow(entry);
         }
     }
+
+
+    // Metodo per ottenere il valore intero di winStatus
+    public int getWinStatusValue(LeaderboardEntry entry) {
+        try {
+            // Assumendo che winStatus sia una stringa numerica
+            return Integer.parseInt(entry.getWinStatus());
+        } catch (NumberFormatException e) {
+            // Gestisci il caso in cui winStatus non è numerico
+            return 0; // O qualsiasi valore predefinito
+        }
+    }
+
 
     @FXML
     public void backToMenu(ActionEvent event) throws IOException {
@@ -85,15 +111,23 @@ public class LeaderboardController {
     }
 
     public static void updateLeaderboard(int playerScore) {
+        // Leggi il file JSON esistente
         HashMap<String, LeaderboardEntry> leaderboardEntriesHashMap = FileManager.readJSON("json.leaderboard", LeaderboardEntry.class);
         Player newPlayer = HumanPlayer.getInstance();
         LocalDateTime now = LocalDateTime.now();
 
+        // Estrai il team di Pokémon del nuovo giocatore
         List<Pokemon> pokemonTeam = newPlayer.getTeam().getPokemonList();
         List<String> pokemonNames = pokemonTeam.stream().map(Pokemon::getName).collect(Collectors.toList());
 
+        // Crea una nuova voce per la leaderboard
         LeaderboardEntry newEntry = new LeaderboardEntry(now, String.valueOf(playerScore), pokemonNames);
+
+        // Aggiungi la nuova voce alla mappa
         leaderboardEntriesHashMap.put(now.toString(), newEntry);
+
+        // Salva la mappa aggiornata nel file JSON
         FileManager.writeJSON(leaderboardEntriesHashMap, "json.leaderboard");
+
     }
 }

@@ -64,16 +64,6 @@ public class BattleController implements Initializable {
     }
 
 
-    public void battleStatus() {
-        if (!currentBattle.humanLost()) {
-
-        } else {
-            // TODO switch to gameover
-            System.out.println("Game Over! Hai perso dopo aver sconfitto " + (currentBattle.getBattleCount() - 1) + " avversari.");
-        }
-    }
-
-
 
     public static Battle getCurrentBattle() {
         return currentBattle;
@@ -133,7 +123,7 @@ public class BattleController implements Initializable {
 
 
     @FXML
-    void addlevel(ActionEvent event) throws MoveSetException { //TODO fix
+    void addlevel(ActionEvent event) throws MoveSetException {
         currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         OwnedPokemon pokemon = HumanPlayer.getInstance().getTeam().getActivePokemon();
         pokemon.collectExp(5000);
@@ -141,6 +131,7 @@ public class BattleController implements Initializable {
         pokemon.levelUpAndStatsUp();
         pokemon.evolve();
         updatePokemonImages(pokemon);
+        updatePokemonLevel(pokemon);
         updatePokemonInBattle(pokemon);
         System.out.println(pokemon.getMoves());
         System.out.println(pokemon.getLevel());
@@ -612,6 +603,7 @@ public class BattleController implements Initializable {
                 case YOU_WIN:
                     currentBattle.setBattleCount(getCurrentBattle().getBattleCount() + 1);
                     switchToYouWin();
+
                     break;
                 case YES_LEVEL_UP:
                     updatePokemonLevel(p1);

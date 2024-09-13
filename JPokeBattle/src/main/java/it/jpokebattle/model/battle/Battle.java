@@ -26,27 +26,21 @@ public class Battle {
 
 
         // Inizializza botPlayerFactory con una default PokemonFactory
-        this.botPlayerFactory = new BotPlayerFactory(pokemonFactories.get(0));  // Usa una factory di default
+        this.botPlayerFactory = new BotPlayerFactory(pokemonFactories.get(0));  // Usa una factory di default (SameAverageLevelRandomPokemonFactory)
 
         // Configura la factory del bot in base a una probabilità
         // setPokemonFactoryWithProbability();
 
         // Crea il giocatore bot con la factory configurata
-        this.currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
+        // this.currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
 
 
-        // TODO da togliere dopo test
+        // primo BotPlayer sempre Pippo
         this.currentBotPlayer = new BotPlayer("Pippo", new Pokemon(Breed.breedsMap.get("Squirtle"), 4));
         Breed garchompBreed = Breed.breedsMap.get("Garchomp");
         Pokemon garchompPokemon = new Pokemon(garchompBreed, 14);
         currentBotPlayer.getTeam().addPokemon(garchompPokemon);
 
-
-
-        System.out.println(currentBotPlayer.getTeam().getActivePokemon());
-
-        // Aumenta il contatore delle battaglie
-        battleCount++;
 
     }
 
@@ -102,8 +96,8 @@ public class Battle {
 
     public BotPlayer getCurrentBotPlayer() {return currentBotPlayer;}
 
-    public void newBotPlayer(){ // TODO
-        // setPokemonFactoryWithProbability();
+    public void newBotPlayer(){
+        setPokemonFactoryWithProbability();
         currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
         System.out.println(currentBotPlayer.getTeam().getActivePokemon());
     }
@@ -136,7 +130,7 @@ public class Battle {
         }
 
         botPlayerFactory.setPokemonFactory(newFactory);
-        System.out.println("Switched to " + newFactory.getClass().getSimpleName());
+        System.out.println("New Bot switched to " + newFactory.getClass().getSimpleName());
     }
 
     public int getBattleCount() {
