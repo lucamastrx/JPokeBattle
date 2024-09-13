@@ -12,36 +12,40 @@ import java.util.stream.Collectors;
 
 
 /**
- * I profili consentono all'utente di interfacciarsi con il gioco. Grazie alle istanze di
- * questa classe si può memorizzare sempre lo stato corrente del gioco, sia per il pvp che
- * per l'arcade.
+ * Classe che rappresenta un giocatore umano nel gioco. Implementa il pattern Singleton per assicurare
+ * che esista solo un'istanza del giocatore umano durante il gioco.
  */
 public class HumanPlayer extends Player<OwnedPokemon> {
 
     // Campo statico privato per l'istanza Singleton
     private static HumanPlayer instance;
 
-    // Costruttore privato per impedire l'istanziamento esterno
+    /**
+     * Costruttore privato per impedire l'istanziamento esterno. Inizializza un giocatore umano con un nome
+     * e una squadra di Pokémon.
+     *
+     * @param name         Il nome del giocatore.
+     * @param startingTeam La squadra iniziale di Pokémon del giocatore.
+     */
     private HumanPlayer(String name, List<OwnedPokemon> startingTeam) {
         super(name, startingTeam.get(0));  // Imposta il primo Pokémon come attivo
         initializeTeam(startingTeam);
     }
 
 
-    // Metodo statico per ottenere l'istanza unica con una squadra di default
-    public static synchronized HumanPlayer getInstance() { //  codice verrà rimpiazzato con un loadSER
+    /**
+     * Metodo statico per ottenere l'istanza Singleton del giocatore umano. Se l'istanza non è stata ancora
+     * creata, la inizializza con una squadra predefinita.
+            *
+            * @return L'istanza Singleton di HumanPlayer.
+            */
+    public static synchronized HumanPlayer getInstance() {
         if (instance == null) {
-
 
             /*
             HashMap<String, OwnedPokemon> defaultTeamHashMap = FileManager.loadSER("ser.ownedPokemon");
-
-
-
             List<OwnedPokemon> defaultTeam = new ArrayList<>(defaultTeamHashMap.values());
             */
-
-
 
             // Inizializza la squadra di default con Charmander, Bulbasaur e Squirtle
             List<OwnedPokemon> defaultTeam = new ArrayList<>();
@@ -70,7 +74,6 @@ public class HumanPlayer extends Player<OwnedPokemon> {
             defaultTeam.add(ownedTyranitar);
             defaultTeam.add(ownedGarchomp);
             defaultTeam.add(ownedDragonite);
-            
 
             /*
             HashMap<String, OwnedPokemon> pokemonMap = new HashMap<>();
@@ -83,17 +86,20 @@ public class HumanPlayer extends Player<OwnedPokemon> {
 
             FileManager.writeSER(pokemonMap, "ser.ownedPokemon");
             */
-
-
-
-
             instance = new HumanPlayer("LucaMastrx", defaultTeam);
         }
         return instance;
     }
 
 
-    // Metodo statico per ottenere l'istanza unica con una squadra personalizzata
+    /**
+     * Metodo statico per ottenere l'istanza Singleton del giocatore umano con una squadra personalizzata.
+     * Se l'istanza non è stata ancora creata, la inizializza con la squadra fornita.
+     *
+     * @param startingTeam La squadra iniziale di Pokémon del giocatore.
+     * @return L'istanza Singleton di HumanPlayer.
+     * @throws IllegalArgumentException Se la squadra iniziale è null o vuota.
+     */
     public static synchronized HumanPlayer getInstance(List<OwnedPokemon> startingTeam) {
         if (instance == null) {
             if (startingTeam == null || startingTeam.isEmpty()) {
@@ -104,7 +110,13 @@ public class HumanPlayer extends Player<OwnedPokemon> {
         return instance;
     }
 
-    // Metodo per inizializzare la squadra con una lista di Pokémon
+
+    /**
+     * Inizializza la squadra del giocatore umano con una lista di Pokémon. Salta il primo Pokémon
+     * perché è già stato impostato come attivo.
+     *
+     * @param startingTeam La lista dei Pokémon con cui inizializzare la squadra.
+     */
     private void initializeTeam(List<OwnedPokemon> startingTeam) {
         // Salta il primo Pokémon (indice 0) perché è già stato aggiunto come attivo
         for (int i = 1; i < startingTeam.size(); i++) {

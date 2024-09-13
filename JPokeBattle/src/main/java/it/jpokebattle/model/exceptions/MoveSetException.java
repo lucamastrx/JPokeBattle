@@ -1,8 +1,14 @@
 package it.jpokebattle.model.exceptions;
 
-public class MoveSetException extends Exception{
+/**
+ * Eccezione lanciata quando un Pokémon ha già imparato 4 mosse e non può impararne altre.
+ */
+public class MoveSetException extends Exception {
 
-    public MoveSetException(){
+    /**
+     * Costruttore di default che fornisce un messaggio di errore predefinito.
+     */
+    public MoveSetException() {
         super("Il tuo pokemon conosce già 4 mosse");
     }
 }

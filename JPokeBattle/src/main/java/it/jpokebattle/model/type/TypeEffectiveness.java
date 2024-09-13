@@ -5,6 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 
+/**
+ * Classe Singleton che gestisce l'efficacia dei tipi di Pokémon durante i combattimenti.
+ *
+ * Questa classe fornisce informazioni su come le mosse di un tipo specifico influenzano i Pokémon di altri tipi.
+ * Utilizza una mappa per mantenere le relazioni di efficacia tra i diversi tipi di Pokémon.
+ */
 public class TypeEffectiveness {
 
     private static final TypeEffectiveness instance = new TypeEffectiveness();          // per singleton
@@ -12,8 +18,10 @@ public class TypeEffectiveness {
 
 
     /**
-     * HashMap di HashMap che contiene per ogni tipo l'informazione di efficacia:
-     * Se Non Efficace, se Superefficace, se Normale, se Immune
+     * Costruttore privato per il Singleton.
+     *
+     * Inizializza la mappa dell'efficacia con i valori predefiniti per tutti i tipi di Pokémon.
+     * Questo metodo popola la mappa {@code effectivenessMap} con i valori di efficacia tra i diversi tipi di Pokémon.
      */
     private TypeEffectiveness() {   // costruttore privato
         // Inizializza l'efficacia per ogni tipo
@@ -208,18 +216,23 @@ public class TypeEffectiveness {
         // effectivenessMap.put(Type.FAIRY, fairyEffectiveness);
     }
 
-
+    /**
+     * Ottiene l'istanza unica della classe {@code TypeEffectiveness}.
+     *
+     * @return L'istanza unica della classe {@code TypeEffectiveness}.
+     */
     public static TypeEffectiveness getInstance() {         // getInstance leggermente diverso perché la classe ha final
         return instance;
     }
 
     /**
-     * Metodo che ritorna il moltiplicatore dei danni per capire l'efficacia di una mossa
-     * su di un pokemon.
+     * Calcola l'efficacia totale di una mossa di un certo tipo su un Pokémon con più tipi.
      *
-     * @param moveAttacker è il Type della mossa del Pokemon attaccante.
-     * @param defenderTypes è il Set dei Type del Pokemon difensore.
-     * @return double è il valore del moltiplicatore ai danni
+     * Questo metodo considera tutti i tipi del Pokémon difensore e calcola il moltiplicatore totale dell'efficacia.
+     *
+     * @param moveAttacker Il tipo della mossa del Pokémon attaccante.
+     * @param defenderTypes Il set dei tipi del Pokémon difensore.
+     * @return Il valore del moltiplicatore di danni.
      */
     public double getEffectiveness(Type moveAttacker, Set<Type> defenderTypes) {
         double totalEffectiveness = 1.0;        // valore base dell'efficacia
@@ -229,6 +242,13 @@ public class TypeEffectiveness {
         return totalEffectiveness;
     }
 
+    /**
+     * Ottiene il valore di efficacia di una mossa di un tipo su un Pokémon di un altro tipo.
+     *
+     * @param attacker Il tipo della mossa del Pokémon attaccante.
+     * @param defender Il tipo del Pokémon difensore.
+     * @return Il valore del moltiplicatore di danni.
+     */
     private double getEffectiveness(Type attacker, Type defender) {
         return effectivenessMap.getOrDefault(attacker, new HashMap<>()).getOrDefault(defender, 1.0);
     }

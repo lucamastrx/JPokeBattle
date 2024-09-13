@@ -4,18 +4,31 @@ import it.jpokebattle.model.pokemon.Move;
 import it.jpokebattle.model.pokemon.Pokemon;
 import it.jpokebattle.model.type.Type;
 import it.jpokebattle.model.type.TypeEffectiveness;
-
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
 
+/**
+ * Classe che rappresenta un giocatore controllato dal computer (bot). Il bot è in grado di prendere decisioni
+ * intelligenti sui cambi di Pokémon e sulle mosse da utilizzare in battaglia.
+ */
 public class BotPlayer extends Player<Pokemon> {
+
+    /**
+     * Costruttore della classe BotPlayer. Inizializza un bot con un nome e un Pokémon attivo.
+     *
+     * @param name          Il nome del bot.
+     * @param activePokemon Il Pokémon attivo del bot.
+     */
     public BotPlayer(String name, Pokemon activePokemon) {
         super(name, activePokemon);
     }
 
+    /**
+     * Cambia il Pokémon attivo del bot in modo intelligente, scegliendo il miglior Pokémon disponibile
+     * in base all'efficacia delle mosse contro il Pokémon avversario.
+     */
     public void smartPokemonChange() {
         // Ottieni i tipi del Pokémon attivo dell'avversario umano
         HashSet<Type> opponentTypes = HumanPlayer.getInstance().getTeam().getActivePokemon().getBreed().getTypes();
@@ -53,6 +66,13 @@ public class BotPlayer extends Player<Pokemon> {
         }
     }
 
+
+    /**
+     * Seleziona la mossa migliore del Pokémon attivo del bot in base all'efficacia delle mosse contro i tipi
+     * del Pokémon avversario e alla potenza della mossa.
+     *
+     * @return La mossa migliore scelta dal bot.
+     */
     public Move smartPokemonMove(){
         // Ottieni le mosse del Pokémon attivo del bot
         List<Move> botMoves = new ArrayList<>(getTeam().getActivePokemon().getMoves().keySet());

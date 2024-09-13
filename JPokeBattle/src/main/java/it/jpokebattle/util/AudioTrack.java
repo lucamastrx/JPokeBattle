@@ -6,6 +6,11 @@ import javafx.animation.Timeline;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+
+/**
+ * L'enumerazione {@code AudioTrack} rappresenta una serie di tracce audio predefinite utilizzate nell'applicazione.
+ * Ogni traccia è associata a un file audio specifico e fornisce metodi per la gestione e la riproduzione di tali tracce.
+ */
 public enum AudioTrack {
     MENU("audio.menu"),
     BUTTON("audio.button"),
@@ -21,12 +26,25 @@ public enum AudioTrack {
     private MediaPlayer mediaPlayer;
     private double volume = 0.5;
 
+    /**
+     * Costruttore privato dell'enumerazione.
+     * Inizializza la traccia audio associata e il suo {@code MediaPlayer}.
+     *
+     * @param mediaSrcName Il nome della risorsa audio associata alla traccia.
+     */
     private AudioTrack(String mediaSrcName) {
         srcName = mediaSrcName;
         mediaPlayer = FileManager.loadMP3(mediaSrcName);
         mediaPlayer.setVolume(volume);
     }
 
+
+    /**
+     * Restituisce l'istanza dell'enumerazione {@code AudioTrack} corrispondente al nome della risorsa audio.
+     *
+     * @param srcName Il nome della risorsa audio.
+     * @return L'istanza dell'enumerazione {@code AudioTrack} corrispondente, oppure {@code null} se non trovata.
+     */
     public static AudioTrack fromSrcName(String srcName) {
         for (AudioTrack track : AudioTrack.values()) {
             if (track.getSrcName().equalsIgnoreCase(srcName))
@@ -35,34 +53,63 @@ public enum AudioTrack {
         return null;
     }
 
+    /**
+     * Restituisce il {@code MediaPlayer} associato alla traccia audio.
+     *
+     * @return Il {@code MediaPlayer} utilizzato per riprodurre la traccia audio.
+     */
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
 
+    /**
+     * Restituisce il nome della risorsa audio associata alla traccia.
+     *
+     * @return Il nome della risorsa audio.
+     */
     public String getSrcName() {
         return srcName;
     }
+
+    /**
+     * Attiva l'audio della traccia impostando il volume al livello predefinito.
+     */
 
     public void audioOn() {
         mediaPlayer.setVolume(volume);
     }
 
+    /**
+     * Disattiva l'audio della traccia impostando il volume a zero.
+     */
     public void audioOff() {
         mediaPlayer.setVolume(0);
     }
 
 
+    /**
+     * Riproduce la traccia audio in loop continuo.
+     */
     public void playLoop() {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
     }
 
+    /**
+     * Riproduce la traccia audio una sola volta, iniziando dalla posizione iniziale.
+     */
     public void playOnce() {
         mediaPlayer.play();
         mediaPlayer.seek(Duration.ZERO);
     }
 
-
+    /**
+     * Cambia la traccia audio corrente con una nuova traccia, eseguendo un crossfade tra le due.
+     * La transizione tra le tracce avviene gradualmente, aumentando il volume della nuova traccia
+     * mentre si riduce il volume della traccia corrente.
+     *
+     * @param newTrack La nuova traccia {@code AudioTrack} con cui sostituire la traccia corrente.
+     */
     public void switchToTrack(AudioTrack newTrack) {
         MediaPlayer newMP = newTrack.getMediaPlayer();
 

@@ -1,6 +1,14 @@
 package it.jpokebattle.model.exceptions;
 
-public class ForbiddenActionException extends Exception{
+/**
+ * Eccezione lanciata quando un'azione proibita viene tentata nel contesto della battaglia.
+ */
+public class ForbiddenActionException extends Exception {
 
-    public ForbiddenActionException(){super("Non è possibile eseguire questa azione");}
+    /**
+     * Costruttore di default che fornisce un messaggio di errore predefinito.
+     */
+    public ForbiddenActionException() {
+        super("Non è possibile eseguire questa azione");
+    }
 }

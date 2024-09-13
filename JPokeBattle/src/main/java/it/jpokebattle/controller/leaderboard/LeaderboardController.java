@@ -26,6 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Controller della leaderboard che gestisce la visualizzazione della classifica
+ * e l'interazione con l'utente, inclusa la lettura e la scrittura dei dati JSON.
+ */
 public class LeaderboardController {
 
     private SoundManager soundMan = SoundManager.getInstance();
@@ -54,7 +59,9 @@ public class LeaderboardController {
     private TableColumn<LeaderboardEntry, String> pokemon6;
 
 
-
+    /**
+     * Inizializza la tabella della leaderboard leggendo i dati da un file JSON e ordinandoli.
+     */
     @FXML
     public void initialize() {
         Date.setCellValueFactory(cellData -> cellData.getValue().getTimestampProperty());
@@ -86,18 +93,28 @@ public class LeaderboardController {
     }
 
 
-    // Metodo per ottenere il valore intero di winStatus
+    /**
+     * Restituisce il valore intero di winStatus per l'ordinamento.
+     *
+     * @param entry La voce della leaderboard da valutare.
+     * @return Il valore numerico di winStatus.
+     */
     public int getWinStatusValue(LeaderboardEntry entry) {
         try {
-            // Assumendo che winStatus sia una stringa numerica
             return Integer.parseInt(entry.getWinStatus());
         } catch (NumberFormatException e) {
             // Gestisci il caso in cui winStatus non è numerico
-            return 0; // O qualsiasi valore predefinito
+            return 0;
         }
     }
 
 
+    /**
+     * Torna al menu principale.
+     *
+     * @param event L'evento associato all'azione del pulsante.
+     * @throws IOException Se si verifica un errore durante il caricamento della scena.
+     */
     @FXML
     public void backToMenu(ActionEvent event) throws IOException {
         soundMan.buttonClick();
@@ -106,10 +123,20 @@ public class LeaderboardController {
 
     }
 
+    /**
+     * Aggiunge una nuova riga alla tabella della leaderboard.
+     *
+     * @param newEntry La nuova voce da aggiungere alla tabella.
+     */
     public void addRow(LeaderboardEntry newEntry) {
         tableView.getItems().add(newEntry);
     }
 
+    /**
+     * Aggiorna la leaderboard aggiungendo un nuovo giocatore e il suo punteggio.
+     *
+     * @param playerScore Il punteggio del giocatore da aggiungere alla leaderboard.
+     */
     public static void updateLeaderboard(int playerScore) {
         // Leggi il file JSON esistente
         HashMap<String, LeaderboardEntry> leaderboardEntriesHashMap = FileManager.readJSON("json.leaderboard", LeaderboardEntry.class);

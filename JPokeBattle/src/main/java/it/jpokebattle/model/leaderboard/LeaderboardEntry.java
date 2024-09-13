@@ -10,6 +10,11 @@ import javafx.beans.property.ObjectProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * Classe che rappresenta una singola voce nella classifica, contenente informazioni sul timestamp,
+ * sullo stato della vittoria e sui Pokémon del team.
+ */
 public class LeaderboardEntry {
 
     @JsonProperty("timestamp")
@@ -37,58 +42,75 @@ public class LeaderboardEntry {
     @JsonProperty("pokemon6")
     private String pokemon6;
 
+
+    /**
+     * Costruttore di default, necessario per la deserializzazione da JSON.
+     */
     public LeaderboardEntry() {
         // Default constructor needed for Jackson deserialization
     }
 
+    /**
+     * Costruttore che inizializza una nuova voce con il timestamp, lo stato della vittoria e il team di Pokémon.
+     *
+     * @param timestamp Il momento in cui è stata registrata la partita.
+     * @param winStatus Lo stato di vittoria o sconfitta.
+     * @param team La lista dei nomi dei Pokémon del team.
+     */
     public LeaderboardEntry(LocalDateTime timestamp, String winStatus, List<String> team) {
         this.timestamp = timestamp;
         this.winStatus = winStatus;
         populatePokemons(team);
     }
 
-    // Convert to JavaFX properties for the view
+
+    /**
+     * Restituisce una proprietà di JavaFX per il timestamp.
+     *
+     * @return Oggetto Property di JavaFX contenente il timestamp.
+     */
     @JsonIgnore
     public ObjectProperty<LocalDateTime> getTimestampProperty() {
         return new SimpleObjectProperty<>(timestamp);
     }
 
+
+    /**
+     * Restituisce una proprietà di JavaFX per il numero di vittorie.
+     *
+     * @return Oggetto Property di JavaFX contenente il numero di vittorie.
+     */
     @JsonIgnore
     public SimpleStringProperty getWinStatusProperty() {
         return new SimpleStringProperty(winStatus);
     }
 
-    @JsonIgnore
-    public SimpleStringProperty getPokemon1Property() {
-        return new SimpleStringProperty(pokemon1);
-    }
+    // Metodi per restituire le proprietà di JavaFX per ciascun Pokémon.
 
     @JsonIgnore
-    public SimpleStringProperty getPokemon2Property() {
-        return new SimpleStringProperty(pokemon2);
-    }
+    public SimpleStringProperty getPokemon1Property() {return new SimpleStringProperty(pokemon1);}
 
     @JsonIgnore
-    public SimpleStringProperty getPokemon3Property() {
-        return new SimpleStringProperty(pokemon3);
-    }
+    public SimpleStringProperty getPokemon2Property() {return new SimpleStringProperty(pokemon2);}
 
     @JsonIgnore
-    public SimpleStringProperty getPokemon4Property() {
-        return new SimpleStringProperty(pokemon4);
-    }
+    public SimpleStringProperty getPokemon3Property() {return new SimpleStringProperty(pokemon3);}
 
     @JsonIgnore
-    public SimpleStringProperty getPokemon5Property() {
-        return new SimpleStringProperty(pokemon5);
-    }
+    public SimpleStringProperty getPokemon4Property() {return new SimpleStringProperty(pokemon4);}
 
     @JsonIgnore
-    public SimpleStringProperty getPokemon6Property() {
-        return new SimpleStringProperty(pokemon6);
-    }
+    public SimpleStringProperty getPokemon5Property() {return new SimpleStringProperty(pokemon5);}
 
-    // Method to populate Pokémon names
+    @JsonIgnore
+    public SimpleStringProperty getPokemon6Property() {return new SimpleStringProperty(pokemon6);}
+
+
+    /**
+     * Metodo privato per popolare i nomi dei Pokémon del team.
+     *
+     * @param team La lista dei nomi dei Pokémon.
+     */
     @JsonIgnore
     private void populatePokemons(List<String> team) {
         if (team != null) {
@@ -104,7 +126,8 @@ public class LeaderboardEntry {
         }
     }
 
-    // Getters and setters for standard properties
+    // Getter e setter per i campi
+
     @JsonIgnore
     public LocalDateTime getTimestamp() { return timestamp; }
     @JsonIgnore
