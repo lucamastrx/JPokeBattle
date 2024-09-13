@@ -322,23 +322,6 @@ public class Pokemon {
 
 
     /**
-     * Setta le mosse del Pokémon. Possono essere al massimo 4.
-     *
-     * @param moves Array di mosse.
-     * @throws IllegalArgumentException se il numero di mosse è superiore a 4.
-     */
-    public void setMoves(Move[] moves) {
-        if (moves.length > 4) {
-            throw new IllegalArgumentException("Un Pokémon può avere al massimo 4 mosse.");
-        }
-
-        for (Move move : moves) {
-            this.moves.put(move, move.getUtilizzi());
-        }
-    }
-
-
-    /**
      * Aggiunge una mossa al Pokémon. Se il Pokémon ha già 4 mosse, viene chiesta quale mossa sostituire.
      *
      * @param move La mossa che si vuole aggiungere.

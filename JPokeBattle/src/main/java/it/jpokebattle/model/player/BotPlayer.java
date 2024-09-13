@@ -68,7 +68,7 @@ public class BotPlayer extends Player<Pokemon> {
 
 
             for (Move move : botMoves) {
-                if (move.getOpponentModificatorType().equalsIgnoreCase("atk")) {
+                if (move.getOpponentModificatorType() != null && move.getOpponentModificatorType().equalsIgnoreCase("atk")) {
                     int modificationValue = move.getOpponentModificatorValue();
                     double effectiveness = TypeEffectiveness.getInstance().getEffectiveness(move.getType(), opponentTypes); // Calcola l'efficacia
 

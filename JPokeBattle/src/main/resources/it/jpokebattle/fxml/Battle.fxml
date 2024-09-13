@@ -9,15 +9,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.jpokebattle.controller.battle.BattleController">
    <children>
+      <ImageView fitHeight="191.0" fitWidth="1000.0" layoutY="512.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/pokeball-background.jpeg" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="513.0" fitWidth="1006.0" layoutX="-6.0" pickOnBounds="true">
          <image>
             <Image url="@../images/background/battle-background.gif" />
          </image>
       </ImageView>
-      <Button fx:id="menuButton" layoutX="60.0" layoutY="605.0" mnemonicParsing="false" onAction="#runAway" text="Run Away!" />
-      <Button fx:id="attackButton" layoutX="303.0" layoutY="605.0" mnemonicParsing="false" onAction="#showMoveSelectionPopup" text="Attack" />
-      <Button fx:id="levelupButton" layoutX="879.0" layoutY="618.0" mnemonicParsing="false" onAction="#addlevel" text="Button" />
-      <Button fx:id="gameOverButton" layoutX="660.0" layoutY="618.0" mnemonicParsing="false" onAction="#switchToGameOver" text="GameOver" />
+      <Button fx:id="menuButton" layoutX="43.0" layoutY="605.0" mnemonicParsing="false" onAction="#runAway" style="-fx-background-color: red;" text="Run Away!" />
+      <Button fx:id="attackButton" layoutX="273.0" layoutY="599.0" mnemonicParsing="false" onAction="#showMoveSelectionPopup" prefHeight="37.0" prefWidth="194.0" style="-fx-background-color: orange;" text="Attack" />
+      <Button fx:id="levelupButton" layoutX="900.0" layoutY="605.0" mnemonicParsing="false" onAction="#addlevel" style="-fx-background-color: lightblue;" text="EXPs!" />
+      <Button fx:id="gameOverButton" layoutX="886.0" layoutY="643.0" mnemonicParsing="false" onAction="#switchToGameOver" style="-fx-background-color: black;" text="GameOver" textFill="WHITE" />
       <ImageView fx:id="yourImage" fitHeight="182.0" fitWidth="170.0" layoutX="143.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/TrainerYou.png" />
@@ -30,7 +35,7 @@
       </ImageView>
       <ProgressBar fx:id="yourPokemonBar" layoutX="128.0" layoutY="78.0" prefWidth="200.0" progress="0.69" style="-fx-background-color: white; -fx-border-color: #000000; -fx-border-radius: 5px; -fx-accent: green;" />
       <ProgressBar fx:id="botPokemonBar" layoutX="671.0" layoutY="78.0" prefWidth="200.0" progress="0.74" rotate="180.0" style="-fx-background-color: white; -fx-accent: green; -fx-border-color: #000000; -fx-border-radius: 5px;" />
-      <Button fx:id="changePokemonButton" layoutX="445.0" layoutY="605.0" mnemonicParsing="false" onAction="#showChangePokemonPopup" text="Change Pokemon" />
+      <Button fx:id="changePokemonButton" layoutX="533.0" layoutY="599.0" mnemonicParsing="false" onAction="#showChangePokemonPopup" prefHeight="37.0" prefWidth="194.0" style="-fx-background-color: green;" text="Change Pokemon" />
       <Label fx:id="myPokemonLevel" layoutX="339.0" layoutY="70.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-background-color: white; -fx-border-color: #000000; -fx-padding: 5px;" text="Lvl. 25" />
       <Label fx:id="botPokemonLevel" layoutX="599.0" layoutY="70.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-background-color: white; -fx-border-color: #000000; -fx-padding: 5px;" text="Lvl. 25" />
       <Label fx:id="myPokemonHP" layoutX="35.0" layoutY="70.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-background-color: white; -fx-border-color: #000000; -fx-padding: 5px;" text="HP: 20/30" />

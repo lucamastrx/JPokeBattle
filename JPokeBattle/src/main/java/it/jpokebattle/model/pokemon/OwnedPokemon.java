@@ -325,27 +325,41 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     private void updateStat(String statType, int iv, int baseStat) {
         int usedEVs = useEVs(statType);
         int newValue = (int) (((baseStat + iv) * 2 + Math.sqrt(usedEVs) / 4 * getLevel()) / 100) + 5;
+        //System.out.println("nuovo valore da aggiungere: " + newValue + ",  statType: " + statType);
         switch (statType) {
             case "hp":
-                System.out.println(newValue);
-                setCurrentHp(this.getCurrentHp()+newValue);
-                setFullHp(this.getFullHp()+newValue);
-                System.out.println("AGGIORNAMENTO FULLHP: "+this.getFullHp());
+                //System.out.println("prima CURRENTHP: "+getCurrentHp());
+                setCurrentHp(getCurrentHp()+newValue);
+                //System.out.println("AGGIORNAMENTO CURRENTHP: "+getCurrentHp());
+
+                //System.out.println("prima FULLHP: "+getFullHp());
+                setFullHp(getFullHp()+newValue);
+                //System.out.println("AGGIORNAMENTO FULLHP: "+getFullHp());
                 break;
             case "atk":
-                setAtk(newValue);
+                //System.out.println("prima FULLatk: "+getFullAtk());
+                setFullAtk(getFullAtk() + newValue);
+                //System.out.println("AGGIORNAMENTO FULLatk: "+getFullAtk());
                 break;
             case "def":
-                setDef(newValue);
+                //System.out.println("prima FULLdef: "+getFullDef());
+                setFullDef(getFullDef() + newValue);
+                //System.out.println("AGGIORNAMENTO FULLdef: "+getFullDef());
                 break;
             case "specialAtk":
-                setSpecialAtk(newValue);
+                //System.out.println("prima FULLspecialatk: "+getFullSpecialAtk());
+                setFullSpecialAtk(getFullSpecialAtk() + newValue);
+                //System.out.println("AGGIORNAMENTO FULLspecialatk: "+getFullSpecialAtk());
                 break;
             case "specialDef":
-                setSpecialDef(newValue);
+                //System.out.println("prima FULLspecialdef: "+getFullSpecialDef());
+                setFullSpecialDef(getFullSpecialDef() + newValue);
+                //System.out.println("AGGIORNAMENTO FULLspecialdef: "+getFullSpecialDef());
                 break;
             case "speed":
-                setSpeed(newValue);
+                //System.out.println("prima FULLspeed: "+getFullSpeed());
+                setFullSpeed(getFullSpeed() + newValue);
+                //System.out.println("AGGIORNAMENTO FULLspeed: "+getFullSpeed());
                 break;
             default:
                 throw new IllegalArgumentException("Tipo di statistica non riconosciuto: " + statType);
@@ -500,11 +514,6 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         save();
     }
 
-    @Override
-    public void setMoves(Move[] moves) {
-        super.setMoves(moves);
-        save();
-    }
 
     @Override
     public String getID() {

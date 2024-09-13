@@ -1,10 +1,13 @@
 package it.jpokebattle.controller.leaderboard;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.jpokebattle.controller.SceneManager;
 import it.jpokebattle.model.leaderboard.LeaderboardEntry;
 import it.jpokebattle.model.player.HumanPlayer;
 import it.jpokebattle.model.player.Player;
+import it.jpokebattle.model.pokemon.Breed;
 import it.jpokebattle.model.pokemon.Pokemon;
+import it.jpokebattle.util.FileManager;
 import it.jpokebattle.util.SoundManager;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,14 +17,20 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.File;
+import java.io.FileReader;
 import java.time.LocalDateTime;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
 public class LeaderboardController {
 
     private SoundManager soundMan = SoundManager.getInstance();
-
+    @JsonIgnore
+    public static HashMap<String, LeaderboardEntry> leaderboardEntryHashMap = new HashMap<>(FileManager.readJSON("json.leaderboard", LeaderboardEntry.class));
     @FXML
     protected Button menuButton;
 
@@ -44,29 +53,23 @@ public class LeaderboardController {
     @FXML
     private TableColumn<LeaderboardEntry, String> pokemon6;
 
-    public void initialize() {
-        Date.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
-        Win.setCellValueFactory(new PropertyValueFactory<>("win"));
-        pokemon1.setCellValueFactory(new PropertyValueFactory<>("pokemon1"));
-        pokemon2.setCellValueFactory(new PropertyValueFactory<>("pokemon2"));
-        pokemon3.setCellValueFactory(new PropertyValueFactory<>("pokemon3"));
-        pokemon4.setCellValueFactory(new PropertyValueFactory<>("pokemon4"));
-        pokemon5.setCellValueFactory(new PropertyValueFactory<>("pokemon5"));
-        pokemon6.setCellValueFactory(new PropertyValueFactory<>("pokemon6"));
 
-        tableView.setItems(FXCollections.observableArrayList());
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
-        addRow(5);
+
+    @FXML
+    public void initialize() {
+        Date.setCellValueFactory(cellData -> cellData.getValue().getTimestampProperty());
+        Win.setCellValueFactory(cellData -> cellData.getValue().getWinStatusProperty());
+        pokemon1.setCellValueFactory(cellData -> cellData.getValue().getPokemon1Property());
+        pokemon2.setCellValueFactory(cellData -> cellData.getValue().getPokemon2Property());
+        pokemon3.setCellValueFactory(cellData -> cellData.getValue().getPokemon3Property());
+        pokemon4.setCellValueFactory(cellData -> cellData.getValue().getPokemon4Property());
+        pokemon5.setCellValueFactory(cellData -> cellData.getValue().getPokemon5Property());
+        pokemon6.setCellValueFactory(cellData -> cellData.getValue().getPokemon6Property());
+
+        HashMap<String, LeaderboardEntry> leaderboardEntriesHashMap = FileManager.readJSON("json.leaderboard", LeaderboardEntry.class);
+        for (LeaderboardEntry entry : leaderboardEntriesHashMap.values()) {
+            addRow(entry);
+        }
     }
 
     @FXML
@@ -77,11 +80,20 @@ public class LeaderboardController {
 
     }
 
-    public void addRow(int playerScore) {
+    public void addRow(LeaderboardEntry newEntry) {
+        tableView.getItems().add(newEntry);
+    }
+
+    public static void updateLeaderboard(int playerScore) {
+        HashMap<String, LeaderboardEntry> leaderboardEntriesHashMap = FileManager.readJSON("json.leaderboard", LeaderboardEntry.class);
         Player newPlayer = HumanPlayer.getInstance();
         LocalDateTime now = LocalDateTime.now();
-        List<Pokemon> team = newPlayer.getTeam().getPokemonList();
-        LeaderboardEntry newEntry = new LeaderboardEntry(now, String.valueOf(playerScore), team);
-        tableView.getItems().add(newEntry);
+
+        List<Pokemon> pokemonTeam = newPlayer.getTeam().getPokemonList();
+        List<String> pokemonNames = pokemonTeam.stream().map(Pokemon::getName).collect(Collectors.toList());
+
+        LeaderboardEntry newEntry = new LeaderboardEntry(now, String.valueOf(playerScore), pokemonNames);
+        leaderboardEntriesHashMap.put(now.toString(), newEntry);
+        FileManager.writeJSON(leaderboardEntriesHashMap, "json.leaderboard");
     }
 }

@@ -1,5 +1,6 @@
 package it.jpokebattle.util;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -7,6 +8,8 @@ import javafx.scene.media.MediaPlayer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.lang.reflect.Type;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +30,9 @@ public class FileManager {
     private final static ResourceBundle src = ResourceBundle.getBundle("it/jpokebattle/properties/resources");
     private final static File dataDir = new File(System.getProperty("user.dir"), "data");
     private final static String ROOT_PATH = "/it/jpokebattle/";
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule()) // Registra il modulo per gestire LocalDateTime
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Evita di scrivere le date come timestamp
+
 
 
 
@@ -83,6 +88,7 @@ public class FileManager {
             boolean dirsCreated = file.getParentFile().mkdirs();
             if (!dirsCreated) {
                 System.err.println("Errore nella creazione delle directory: " + file.getParentFile().getAbsolutePath());
+                return; // Termina l'esecuzione se la creazione della directory fallisce
             }
         }
 

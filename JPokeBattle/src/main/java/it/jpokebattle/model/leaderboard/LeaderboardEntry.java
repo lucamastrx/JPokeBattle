@@ -1,6 +1,8 @@
 package it.jpokebattle.model.leaderboard;
 
-import it.jpokebattle.model.pokemon.Pokemon;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.ObjectProperty;
@@ -9,59 +11,137 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class LeaderboardEntry {
-    private final ObjectProperty<LocalDateTime> timestamp;
-    private final SimpleStringProperty win;
-    private final SimpleStringProperty pokemon1;
-    private final SimpleStringProperty pokemon2;
-    private final SimpleStringProperty pokemon3;
-    private final SimpleStringProperty pokemon4;
-    private final SimpleStringProperty pokemon5;
-    private final SimpleStringProperty pokemon6;
 
-    private static final int MAX_POKEMON = 6;
+    @JsonProperty("timestamp")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime timestamp;
 
+    @JsonProperty("winStatus")
+    private String winStatus;
 
-    public LeaderboardEntry(LocalDateTime timestamp, String winStatus,
-                            List<Pokemon> team) {
-        this.timestamp = new SimpleObjectProperty<>(timestamp);
-        this.win = new SimpleStringProperty(winStatus);
-        this.pokemon1 = new SimpleStringProperty("-");
-        this.pokemon2 = new SimpleStringProperty("-");
-        this.pokemon3 = new SimpleStringProperty("-");
-        this.pokemon4 = new SimpleStringProperty("-");
-        this.pokemon5 = new SimpleStringProperty("-");
-        this.pokemon6 = new SimpleStringProperty("-");
+    @JsonProperty("pokemon1")
+    private String pokemon1;
+
+    @JsonProperty("pokemon2")
+    private String pokemon2;
+
+    @JsonProperty("pokemon3")
+    private String pokemon3;
+
+    @JsonProperty("pokemon4")
+    private String pokemon4;
+
+    @JsonProperty("pokemon5")
+    private String pokemon5;
+
+    @JsonProperty("pokemon6")
+    private String pokemon6;
+
+    public LeaderboardEntry() {
+        // Default constructor needed for Jackson deserialization
+    }
+
+    public LeaderboardEntry(LocalDateTime timestamp, String winStatus, List<String> team) {
+        this.timestamp = timestamp;
+        this.winStatus = winStatus;
         populatePokemons(team);
     }
 
-    private void populatePokemons(List<Pokemon> team) {
-        for (int i = 0; i < team.size() && i < MAX_POKEMON; i++) {
-            switch (i) {
-                case 0: pokemon1.set(team.get(i).getName()); break;
-                case 1: pokemon2.set(team.get(i).getName()); break;
-                case 2: pokemon3.set(team.get(i).getName()); break;
-                case 3: pokemon4.set(team.get(i).getName()); break;
-                case 4: pokemon5.set(team.get(i).getName()); break;
-                case 5: pokemon6.set(team.get(i).getName()); break;
+    // Convert to JavaFX properties for the view
+    @JsonIgnore
+    public ObjectProperty<LocalDateTime> getTimestampProperty() {
+        return new SimpleObjectProperty<>(timestamp);
+    }
+
+    @JsonIgnore
+    public SimpleStringProperty getWinStatusProperty() {
+        return new SimpleStringProperty(winStatus);
+    }
+
+    @JsonIgnore
+    public SimpleStringProperty getPokemon1Property() {
+        return new SimpleStringProperty(pokemon1);
+    }
+
+    @JsonIgnore
+    public SimpleStringProperty getPokemon2Property() {
+        return new SimpleStringProperty(pokemon2);
+    }
+
+    @JsonIgnore
+    public SimpleStringProperty getPokemon3Property() {
+        return new SimpleStringProperty(pokemon3);
+    }
+
+    @JsonIgnore
+    public SimpleStringProperty getPokemon4Property() {
+        return new SimpleStringProperty(pokemon4);
+    }
+
+    @JsonIgnore
+    public SimpleStringProperty getPokemon5Property() {
+        return new SimpleStringProperty(pokemon5);
+    }
+
+    @JsonIgnore
+    public SimpleStringProperty getPokemon6Property() {
+        return new SimpleStringProperty(pokemon6);
+    }
+
+    // Method to populate Pokémon names
+    @JsonIgnore
+    private void populatePokemons(List<String> team) {
+        if (team != null) {
+            switch (team.size()) {
+                case 6: pokemon6 = team.get(5);
+                case 5: pokemon5 = team.get(4);
+                case 4: pokemon4 = team.get(3);
+                case 3: pokemon3 = team.get(2);
+                case 2: pokemon2 = team.get(1);
+                case 1: pokemon1 = team.get(0);
+                default: break;
             }
         }
     }
 
-    // Getters and setters
-    public LocalDateTime getTimestamp() { return timestamp.get(); }
-    public void setTimestamp(LocalDateTime timestamp) { this.timestamp.set(timestamp); }
-    public String getWin() { return win.get(); }
-    public void setWin(String win) { this.win.set(win); }
-    public String getPokemon1() { return pokemon1.get(); }
-    public void setPokemon1(String pokemon1) { this.pokemon1.set(pokemon1); }
-    public String getPokemon2() { return pokemon2.get(); }
-    public void setPokemon2(String pokemon2) { this.pokemon2.set(pokemon2); }
-    public String getPokemon3() { return pokemon3.get(); }
-    public void setPokemon3(String pokemon3) { this.pokemon3.set(pokemon3); }
-    public String getPokemon4() { return pokemon4.get(); }
-    public void setPokemon4(String pokemon4) { this.pokemon4.set(pokemon4); }
-    public String getPokemon5() { return pokemon5.get(); }
-    public void setPokemon5(String pokemon5) { this.pokemon5.set(pokemon5); }
-    public String getPokemon6() { return pokemon6.get(); }
-    public void setPokemon6(String pokemon6) { this.pokemon6.set(pokemon6); }
+    // Getters and setters for standard properties
+    @JsonIgnore
+    public LocalDateTime getTimestamp() { return timestamp; }
+    @JsonIgnore
+    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+
+    @JsonIgnore
+    public String getWinStatus() { return winStatus; }
+    @JsonIgnore
+    public void setWinStatus(String winStatus) { this.winStatus = winStatus; }
+
+    @JsonIgnore
+    public String getPokemon1() { return pokemon1; }
+    @JsonIgnore
+    public void setPokemon1(String pokemon1) { this.pokemon1 = pokemon1; }
+
+    @JsonIgnore
+    public String getPokemon2() { return pokemon2; }
+    @JsonIgnore
+    public void setPokemon2(String pokemon2) { this.pokemon2 = pokemon2; }
+
+    @JsonIgnore
+    public String getPokemon3() { return pokemon3; }
+    @JsonIgnore
+    public void setPokemon3(String pokemon3) { this.pokemon3 = pokemon3; }
+
+    @JsonIgnore
+    public String getPokemon4() { return pokemon4; }
+
+    public void setPokemon4(String pokemon4) { this.pokemon4 = pokemon4; }
+
+    @JsonIgnore
+    public String getPokemon5() { return pokemon5; }
+    @JsonIgnore
+    public void setPokemon5(String pokemon5) { this.pokemon5 = pokemon5; }
+
+    @JsonIgnore
+    public String getPokemon6() { return pokemon6; }
+    @JsonIgnore
+    public void setPokemon6(String pokemon6) { this.pokemon6 = pokemon6; }
 }

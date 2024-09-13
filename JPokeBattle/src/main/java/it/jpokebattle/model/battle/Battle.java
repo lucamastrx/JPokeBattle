@@ -14,7 +14,7 @@ public class Battle {
 
     private HumanPlayer humanPlayer;
     private BotPlayer currentBotPlayer;
-    private static int battleCount = 0; // TODO se human perde bisogna rimettere a 0
+    private int battleCount = 0;
 
     private PlayerFactory botPlayerFactory;
     private List<PokemonFactory> pokemonFactories;
@@ -108,9 +108,7 @@ public class Battle {
         System.out.println(currentBotPlayer.getTeam().getActivePokemon());
     }
 
-    public int getBattleCount() {
-        return battleCount;
-    }
+
 
 
 
@@ -139,5 +137,17 @@ public class Battle {
 
         botPlayerFactory.setPokemonFactory(newFactory);
         System.out.println("Switched to " + newFactory.getClass().getSimpleName());
+    }
+
+    public int getBattleCount() {
+        return battleCount;
+    }
+
+    public void setBattleCount(int increment){
+        this.battleCount = increment;
+    }
+
+    public void resetBattleCount() {
+        battleCount = 0;
     }
 }

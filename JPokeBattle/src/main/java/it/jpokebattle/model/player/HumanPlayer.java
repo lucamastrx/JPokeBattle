@@ -30,18 +30,31 @@ public class HumanPlayer extends Player<OwnedPokemon> {
             // Inizializza la squadra di default con Charmander, Bulbasaur e Squirtle
             List<OwnedPokemon> defaultTeam = new ArrayList<>();
 
-            Breed charmander = Breed.breedsMap.get("Charmander");
-            OwnedPokemon ownedCharmander = new OwnedPokemon(charmander, "", 10);
+            Breed charmanderBreed = Breed.breedsMap.get("Charmander");
+            OwnedPokemon ownedCharmander = new OwnedPokemon(charmanderBreed, "", 10);
 
-            Breed bulbasaur = Breed.breedsMap.get("Bulbasaur");
-            OwnedPokemon ownedBulbasaur = new OwnedPokemon(bulbasaur, "", 7);
+            Breed bulbasaurBreed = Breed.breedsMap.get("Bulbasaur");
+            OwnedPokemon ownedBulbasaur = new OwnedPokemon(bulbasaurBreed, "", 7);
 
-            Breed squirtle = Breed.breedsMap.get("Squirtle");
-            OwnedPokemon ownedSquirtle = new OwnedPokemon(squirtle, "", 9);
+            Breed squirtleBreed = Breed.breedsMap.get("Squirtle");
+            OwnedPokemon ownedSquirtle = new OwnedPokemon(squirtleBreed, "", 9);
+
+            Breed tyranitarBreed = Breed.breedsMap.get("Tyranitar");
+            OwnedPokemon ownedTyranitar = new OwnedPokemon(tyranitarBreed, "", 20);
+
+            Breed garchompBreed = Breed.breedsMap.get("Garchomp");
+            OwnedPokemon ownedGarchomp = new OwnedPokemon(garchompBreed, "", 90);
+
+            Breed dragoniteBreed = Breed.breedsMap.get("Dragonite");
+            OwnedPokemon ownedDragonite = new OwnedPokemon(dragoniteBreed, "", 80);
 
             defaultTeam.add(ownedCharmander);
             defaultTeam.add(ownedBulbasaur);
             defaultTeam.add(ownedSquirtle);
+            defaultTeam.add(ownedTyranitar);
+            defaultTeam.add(ownedGarchomp);
+            defaultTeam.add(ownedDragonite);
+
 
             instance = new HumanPlayer("LucaMastrx", defaultTeam);
         }
