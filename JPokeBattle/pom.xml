@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.17.0</version> <!-- Assicurati che la versione corrisponda alla tua versione di Jackson -->
+            <version>2.17.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -33,17 +33,17 @@
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>11.2.1</version> <!-- Assicurati di usare la versione corretta -->
+            <version>11.2.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>22-ea+11</version>
+            <version>22.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>22-ea+11</version>
+            <version>22.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
