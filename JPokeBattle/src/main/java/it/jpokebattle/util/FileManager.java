@@ -23,10 +23,13 @@ import java.util.ResourceBundle;
 
 
 /**
- * Classe di utilità per il caricamento e la manipolazione di qualsiasi file esterno.
+ * Classe di utilità per il caricamento e la manipolazione di vari tipi di file esterni.
+ * Questa classe fornisce metodi per leggere e scrivere file JSON e SER, caricare file FXML, immagini e file multimediali,
+ * oltre a funzioni di utilità per gestire i percorsi e le risorse dei file.
  */
 public class FileManager {
-    // accesso al file resources.properties contenente i path a tutti i file
+
+    // accesso al file resources.properties contenente i percorsi  a tutti i file
     private final static ResourceBundle src = ResourceBundle.getBundle("it/jpokebattle/properties/resources");
     private final static File dataDir = new File(System.getProperty("user.dir"), "data");
     private final static String ROOT_PATH = "/it/jpokebattle/";
@@ -40,7 +43,10 @@ public class FileManager {
      * Legge un file JSON e restituisce una mappa degli oggetti.
      *
      * @param jsonSrcName nome della risorsa del file JSON
-     * @return            hashmap con i dati letti dal JSON
+     * @param valueType   classe dei valori contenuti nella mappa
+     * @param <K>         tipo della chiave nella mappa
+     * @param <V>         tipo del valore nella mappa
+     * @return            una mappa con i dati letti dal file JSON
      */
     public static <K, V> HashMap<K, V> readJSON(String jsonSrcName, Class<V> valueType) {
         // Ottieni il percorso dal file di proprietà
@@ -75,8 +81,10 @@ public class FileManager {
     /**
      * Scrive una mappa di oggetti su un file JSON.
      *
-     * @param map         hashmap da scrivere
+     * @param map         mappa da scrivere nel file
      * @param jsonSrcName nome della risorsa del file JSON
+     * @param <K>         tipo della chiave nella mappa
+     * @param <V>         tipo del valore nella mappa
      */
     public static <K, V> void writeJSON(HashMap<K, V> map, String jsonSrcName) {
         // Ottieni il percorso dal file di proprietà
@@ -111,13 +119,12 @@ public class FileManager {
 
 
     /**
-     * Restituisce una hashmap a partire da un file ser.
-     * Ogni hashmap è composta da stringhe e oggetti.
+     * Carica una mappa da un file serializzato (.ser).
      *
-     * @param serSrcName    nome di risorsa del file
-     * @return              hashmap caricata
-     * @see it.jpokebattle.properties
-     * */
+     * @param serSrcName nome della risorsa del file .ser
+     * @param <V>        tipo del valore nella mappa
+     * @return           una mappa con i dati letti dal file serializzato
+     */
     public static <V> HashMap<String, V> loadSER(String serSrcName) {
         String path = src.getString(serSrcName);
         HashMap<String, V> map = null;
@@ -139,13 +146,12 @@ public class FileManager {
     }
 
     /**
-     * Scrive su un file ser una hashmap.
-     * Ogni hashmap è composta da stringhe e oggetti.
+     * Scrive una mappa su un file serializzato (.ser).
      *
-     * @param map           hashmap da scrivere
-     * @param serSrcName    nome di risorsa del file
-     * @see it.jpokebattle.properties
-     * */
+     * @param map        mappa da scrivere
+     * @param serSrcName nome della risorsa del file .ser
+     * @param <V>        tipo del valore nella mappa
+     */
     public static <V> void writeSER(HashMap<String, V> map, String serSrcName) {
         String path = src.getString(serSrcName);
         File file = new File(dataDir, path);
@@ -161,9 +167,9 @@ public class FileManager {
 
 
     /**
-     * Svuota il contenuto di un file.
+     * Svuota il contenuto di un file serializzato (.ser).
      *
-     * @param serSrcName
+     * @param serSrcName nome della risorsa del file da svuotare
      */
     public static void clearSER(String serSrcName) {
         String path = src.getString(serSrcName);
@@ -177,9 +183,10 @@ public class FileManager {
     }
 
     /**
-     * A partire dal nome di risorsa ottengo il path assoluto del file aggiungendo il percorso
-     * a partire dalla radice del file e, successivamente, traducendo il path prima in URL,
-     * poi in URI e in fine in un percorso vero e prorio.
+     * Restituisce il percorso assoluto di un file a partire dal nome della risorsa.
+     *
+     * @param fileSrcName nome della risorsa del file
+     * @return            percorso assoluto del file
      */
     public static String getAbsPath(String fileSrcName) {
         String absPath = ROOT_PATH + src.getString(fileSrcName);
@@ -194,10 +201,10 @@ public class FileManager {
     }
 
     /**
-     *  A partire dal nome di risorsa aggiungo il path dalla radice del programma e
-     *  ritorno L'URL sotto forma di stringa.
+     * Restituisce l'URL di una risorsa sotto forma di stringa.
      *
-     * @return URL del file tradotto in stringa
+     * @param fileSrcName nome della risorsa
+     * @return            URL della risorsa come stringa
      */
     public static String getResource(String fileSrcName) {
         String path = ROOT_PATH + src.getString(fileSrcName);
@@ -205,12 +212,11 @@ public class FileManager {
     }
 
     /**
-     * Restituisce un file fxml a partire dal nome della risorsa.
+     * Carica un file FXML a partire dal nome della risorsa.
      *
-     * @param fxmlSrcName   nome di risorsa del file
-     * @return              FXMLLoader contenente la scena caricata
-     * @see it.jpokebattle.properties
-     * */
+     * @param fxmlSrcName nome della risorsa del file FXML
+     * @return            un FXMLLoader contenente la scena caricata
+     */
     public static FXMLLoader loadFXML(String fxmlSrcName) {
         String path =  ROOT_PATH + src.getString(fxmlSrcName);
 
@@ -218,12 +224,11 @@ public class FileManager {
     }
 
     /**
-     * Restituisce un'immagine a partire dal nome della risorsa.
+     * Carica un'immagine a partire dal nome della risorsa.
      *
-     * @param imageSrcName  nome di risorsa del file
-     * @return              immagine caricata
-     * @see it.jpokebattle.properties
-     * */
+     * @param imageSrcName nome della risorsa dell'immagine
+     * @return             l'immagine caricata
+     */
     public static Image loadImage(String imageSrcName) {
         String path = ROOT_PATH + src.getString(imageSrcName);
         URL imageUrl = FileManager.class.getResource(path);
@@ -236,11 +241,12 @@ public class FileManager {
         return new Image(imageUrl.toExternalForm());
     }
 
+
     /**
-     * Restituisce il media player di un file audio.
+     * Carica un file audio MP3 e restituisce un MediaPlayer.
      *
-     * @param mediaSrcName  nome di risorsa del file
-     * @see it.jpokebattle.properties
+     * @param mediaSrcName nome della risorsa del file audio
+     * @return             un oggetto MediaPlayer che riproduce l'audio
      */
     public static MediaPlayer loadMP3(String mediaSrcName) {
         String path = ROOT_PATH + src.getString(mediaSrcName);

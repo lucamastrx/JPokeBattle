@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.jpokebattle.model.Saveable</OriginalElement>
+  <nodes>
+    <node x="3321.7799513318664" y="3953.612337286484">it.jpokebattle.model.player.Player</node>
+    <node x="2805.1696877412833" y="3258.8079185080064">it.jpokebattle.model.Identifiable</node>
+    <node x="2092.3496008499424" y="3953.612337286484">it.jpokebattle.model.team.Team</node>
+    <node x="274.03435221098925" y="2449.7661227102044">it.jpokebattle.model.pokemon.Breed</node>
+    <node x="4017.2902241584707" y="2990.2671709655397">it.jpokebattle.model.exceptions.MoveSetException</node>
+    <node x="1182.6677223446763" y="5441.106309954344">it.jpokebattle.model.battle.BattleStatus</node>
+    <node x="1543.0669130097333" y="2358.4520181651515">it.jpokebattle.model.pokemon.OwnedPokemon</node>
+    <node x="1975.7186111089052" y="5121.836247536032">it.jpokebattle.model.pokemon.HighLevelPokemonFactory</node>
+    <node x="986.8134050662482" y="2289.4335588796484">it.jpokebattle.model.pokemon.Pokemon</node>
+    <node x="222.97223586883547" y="3543.349992726503">it.jpokebattle.model.pokemon.Move</node>
+    <node x="1666.7267166077368" y="5135.336247536032">it.jpokebattle.model.pokemon.RandomPokemonFactory</node>
+    <node x="1086.445203399479" y="6449.696670370915">it.jpokebattle.model.battle.SwitchPokemonAction</node>
+    <node x="3199.594288971373" y="2276.2531541683484">it.jpokebattle.model.leaderboard.LeaderboardEntry</node>
+    <node x="1616.4873399547043" y="5828.630380781095">it.jpokebattle.model.battle.Battle</node>
+    <node x="2161.376997335008" y="3232.8079185080064">it.jpokebattle.model.Saveable</node>
+    <node x="2967.5522778670547" y="4415.9393951697475">it.jpokebattle.model.player.HumanPlayer</node>
+    <node x="1215.7348221065686" y="5135.336247536032">it.jpokebattle.model.pokemon.SameAverageLevelRandomPokemonFactory</node>
+    <node x="-158.05939790385492" y="2848.3862315552865">it.jpokebattle.model.type.Type</node>
+    <node x="1325.7781090266471" y="6275.784834404542">it.jpokebattle.model.battle.Action</node>
+    <node x="3573.9922304651636" y="4415.9393951697475">it.jpokebattle.model.player.BotPlayer</node>
+    <node x="3810.3346464023225" y="4751.195941847277">it.jpokebattle.model.player.PlayerFactory</node>
+    <node x="3712.392254043558" y="2990.2671709655397">it.jpokebattle.model.exceptions.ForbiddenActionException</node>
+    <node x="4128.531186485743" y="4979.625316915207">it.jpokebattle.model.player.BotPlayerFactory</node>
+    <node x="2074.6964424219377" y="6332.696670370915">it.jpokebattle.model.battle.MoveAction</node>
+    <node x="-581.677676918006" y="3099.1466008633647">it.jpokebattle.model.type.TypeEffectiveness</node>
+    <node x="2242.759187060545" y="2263.200431631673">it.jpokebattle.model.pokemon.EVDrop</node>
+    <node x="1561.8035391400813" y="4795.073769425459">it.jpokebattle.model.pokemon.PokemonFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.pokemon.SameAverageLevelRandomPokemonFactory" relationship="CREATE">
+      <point x="-154.0" y="-252.5" />
+      <point x="1645.4873399547043" y="5179.336247536032" />
+      <point x="192.5" y="0.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.BotPlayerFactory" target="it.jpokebattle.model.player.BotPlayer" relationship="CREATE">
+      <point x="15.0" y="-57.5" />
+      <point x="4277.531186485743" y="4472.9393951697475" />
+      <point x="114.0" y="0.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.OwnedPokemon" target="it.jpokebattle.model.Identifiable" relationship="REALIZATION">
+      <point x="156.5" y="0.0" />
+      <point x="2873.6696877412833" y="2987.9520181651515" />
+      <point x="0.0" y="-30.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.Player" target="it.jpokebattle.model.pokemon.Pokemon" relationship="DEPENDENCY">
+      <point x="66.33333333333334" y="-109.5" />
+      <point x="3487.6132846652" y="6962.0" />
+      <point x="670.0" y="6962.0" />
+      <point x="670.0" y="4555.977622103612" />
+      <point x="1104.1884050662482" y="4555.977622103612" />
+      <point x="-39.125" y="1149.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.BotPlayer" target="it.jpokebattle.model.player.Player" relationship="GENERALIZATION">
+      <point x="0.0" y="-57.0" />
+      <point x="3687.9922304651636" y="4063.112337286484" />
+      <point x="99.5" y="0.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.pokemon.HighLevelPokemonFactory" relationship="CREATE">
+      <point x="183.79301344129226" y="-213.93577340527372" />
+      <point x="2036.7226638583209" y="5867.194607375821" />
+      <point x="2036.7226638583209" y="5822.700592885473" />
+      <point x="2102.218611108905" y="5822.700592885473" />
+      <point x="0.0" y="57.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.SameAverageLevelRandomPokemonFactory" target="it.jpokebattle.model.pokemon.PokemonFactory" relationship="GENERALIZATION">
+      <point x="-15.00049928045837" y="-44.00003502694108" />
+      <point x="1393.2343228261102" y="5114.145212509091" />
+      <point x="1671.8033228261102" y="5114.145212509091" />
+      <point x="-2.1631397112287232E-4" y="57.00044308363158" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.OwnedPokemon" target="it.jpokebattle.model.pokemon.Pokemon" relationship="GENERALIZATION">
+      <point x="-6.696052751514799" y="-618.049987926408" />
+      <point x="1692.8708602582185" y="2329.9696223728724" />
+      <point x="1692.9605462947568" y="2329.9696223728724" />
+      <point x="1692.9605462947568" y="2305.7529251253236" />
+      <point x="1025.9384050662482" y="2305.7529251253236" />
+      <point x="-117.375" y="1149.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.SwitchPokemonAction" target="it.jpokebattle.model.player.Player" relationship="TO_ONE">
+      <point x="0.0" y="96.5" />
+      <point x="1258.445203399479" y="6984.145212509091" />
+      <point x="4506.71767887847" y="6984.145212509091" />
+      <point x="4506.71767887847" y="4048.112337286484" />
+      <point x="99.5" y="-15.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.BotPlayerFactory" target="it.jpokebattle.model.player.PlayerFactory" relationship="GENERALIZATION">
+      <point x="0.0" y="-57.5" />
+      <point x="4262.531186485743" y="4834.695941847277" />
+      <point x="155.99999999999955" y="0.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.player.BotPlayer" relationship="CREATE">
+      <point x="171.7280598552561" y="-75.59097228539031" />
+      <point x="3657.992" y="6005.539408495704" />
+      <point x="-30.00023046516344" y="57.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.team.Team" target="it.jpokebattle.model.pokemon.Pokemon" relationship="DEPENDENCY">
+      <point x="-148.10494439363856" y="-228.20464209259535" />
+      <point x="1788.0270082542215" y="3977.9076951938887" />
+      <point x="1788.0270082542215" y="3978.7120254329575" />
+      <point x="151.64431471165813" y="539.778466553309" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.Move" target="it.jpokebattle.model.type.Type" relationship="TO_ONE">
+      <point x="93.25" y="-473.5" />
+      <point x="502.72223586883547" y="3569.8826230499444" />
+      <point x="-69.55939790385492" y="3569.8826230499444" />
+      <point x="0.0" y="278.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.SwitchPokemonAction" target="it.jpokebattle.model.battle.Action" relationship="REALIZATION">
+      <point x="-172.0" y="0.0" />
+      <point x="1421.778111691639" y="6546.196670370915" />
+      <point x="-14.999997335008175" y="43.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.SwitchPokemonAction" target="it.jpokebattle.model.pokemon.Pokemon" relationship="TO_ONE">
+      <point x="-172.0" y="15.0" />
+      <point x="1143.3134050662482" y="6561.196670370915" />
+      <point x="0.0" y="1149.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.MoveAction" target="it.jpokebattle.model.battle.Battle" relationship="TO_ONE">
+      <point x="0.0" y="-213.5" />
+      <point x="2271.1964424219377" y="6224.317233522496" />
+      <point x="182.98868320222346" y="143.1868527414017" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.SwitchPokemonAction" target="it.jpokebattle.model.battle.Battle" relationship="TO_ONE">
+      <point x="172.0" y="0.0" />
+      <point x="1799.4873399547043" y="6546.196670370915" />
+      <point x="0.0" y="252.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.PlayerFactory" target="it.jpokebattle.model.pokemon.PokemonFactory" relationship="TO_ONE">
+      <point x="-156.000348889595" y="4.430836315805209E-4" />
+      <point x="1671.8033228261102" y="4834.696384930909" />
+      <point x="-2.1631397112287232E-4" y="-56.99955691636842" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.HighLevelPokemonFactory" target="it.jpokebattle.model.pokemon.Pokemon" relationship="CREATE">
+      <point x="15.0" y="-57.5" />
+      <point x="2117.218611108905" y="4680.933558879648" />
+      <point x="1173.3134050662482" y="4680.933558879648" />
+      <point x="30.0" y="1149.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.HighLevelPokemonFactory" target="it.jpokebattle.model.pokemon.PokemonFactory" relationship="GENERALIZATION">
+      <point x="-126.50028828279483" y="-3.502694107737625E-5" />
+      <point x="1927.2263228261102" y="5179.336212509091" />
+      <point x="1927.2263228261102" y="5114.145212509091" />
+      <point x="1671.8033228261102" y="5114.145212509091" />
+      <point x="-2.1631397112287232E-4" y="57.00044308363158" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.HumanPlayer" target="it.jpokebattle.model.player.Player" relationship="GENERALIZATION">
+      <point x="2.597881124149808" y="-69.43774195020524" />
+      <point x="3149.1501589912045" y="4324.314113308472" />
+      <point x="3149.150158991205" y="4324.314113308472" />
+      <point x="3149.150158991205" y="4146.553202119814" />
+      <point x="3330.349675248689" y="4146.553202119814" />
+      <point x="-90.93027608317743" y="67.95654253496377" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.Move" target="it.jpokebattle.model.Identifiable" relationship="REALIZATION">
+      <point x="-171.40820730667429" y="-406.78821997301657" />
+      <point x="-145.24960099420218" y="3610.0617727534864" />
+      <point x="-145.24960099420218" y="3609.972000697412" />
+      <point x="-640.4925114463138" y="3609.972000697412" />
+      <point x="-640.4925114463138" y="2069.085366681319" />
+      <point x="2903.6696877412833" y="2069.085366681319" />
+      <point x="30.0" y="-30.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.RandomPokemonFactory" target="it.jpokebattle.model.pokemon.Pokemon" relationship="CREATE">
+      <point x="29.636459168523743" y="-44.0" />
+      <point x="1817.8631757762605" y="4529.4393951697475" />
+      <point x="156.5" y="1090.505836290099" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.player.BotPlayerFactory" relationship="CREATE">
+      <point x="183.0" y="45.0" />
+      <point x="4262.531186485743" y="6126.130380781095" />
+      <point x="0.0" y="57.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.pokemon.RandomPokemonFactory" relationship="CREATE">
+      <point x="0.0" y="-252.5" />
+      <point x="1799.4873399547043" y="5503.4620674646285" />
+      <point x="1788.2267166077368" y="5503.4620674646285" />
+      <point x="0.0" y="44.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.Player" target="it.jpokebattle.model.team.Team" relationship="TO_ONE">
+      <point x="-99.5" y="0.0" />
+      <point x="3321.7799513318664" y="4084.6046251752755" />
+      <point x="2609.0138529501505" y="4084.6046251752755" />
+      <point x="2609.0138529501505" y="4085.8613911738207" />
+      <point x="147.8701886769063" y="-120.25094611266331" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.RandomPokemonFactory" target="it.jpokebattle.model.pokemon.PokemonFactory" relationship="GENERALIZATION">
+      <point x="-3.937816268262395E-4" y="-44.00003502694108" />
+      <point x="1788.22632282611" y="5114.145212509091" />
+      <point x="1671.8033228261102" y="5114.145212509091" />
+      <point x="-2.1631397112287232E-4" y="57.00044308363158" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.HumanPlayer" target="it.jpokebattle.model.pokemon.OwnedPokemon" relationship="CREATE">
+      <point x="-179.0" y="0.0" />
+      <point x="1699.5669130097333" y="4499.4393951697475" />
+      <point x="0.0" y="629.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.pokemon.Pokemon" relationship="CREATE">
+      <point x="-183.0" y="0.0" />
+      <point x="1158.3134050662482" y="6081.130380781095" />
+      <point x="15.0" y="1149.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.Pokemon" target="it.jpokebattle.model.pokemon.EVDrop" relationship="CREATE">
+      <point x="78.25" y="-1149.5" />
+      <point x="1221.5634050662482" y="2195.9776221036113" />
+      <point x="2350.759187060545" y="2195.9776221036113" />
+      <point x="0.0" y="83.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.Saveable" target="it.jpokebattle.model.Identifiable" relationship="DEPENDENCY">
+      <point x="89.0" y="0.0" />
+      <point x="-68.5" y="0.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.OwnedPokemon" target="it.jpokebattle.model.Saveable" relationship="REALIZATION">
+      <point x="156.5" y="301.35590034285497" />
+      <point x="-89.0" y="0.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.player.HumanPlayer" relationship="TO_ONE">
+      <point x="180.57569248501613" y="-135.91574021557153" />
+      <point x="2355.4016006931643" y="5945.214640565523" />
+      <point x="2355.4016006931643" y="5245.483164919155" />
+      <point x="3146.5522778670547" y="5245.483164919155" />
+      <point x="0.0" y="83.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.SameAverageLevelRandomPokemonFactory" target="it.jpokebattle.model.pokemon.Pokemon" relationship="CREATE">
+      <point x="0.0" y="-44.0" />
+      <point x="1408.2348221065686" y="4514.4393951697475" />
+      <point x="156.5" y="1075.505836290099" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.player.PlayerFactory" relationship="TO_ONE">
+      <point x="177.35837152873955" y="-28.135488180313587" />
+      <point x="3966.3346464023225" y="6052.994892600781" />
+      <point x="0.0" y="83.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.Pokemon" target="it.jpokebattle.model.pokemon.Move" relationship="TO_MANY">
+      <point x="-127.31122340445086" y="-1096.6344871589213" />
+      <point x="847.5955378567064" y="2342.299071720727" />
+      <point x="847.5955378567064" y="3561.9238370546277" />
+      <point x="175.45920829187116" y="-454.9261556718752" />
+    </edge>
+    <edge source="it.jpokebattle.model.type.TypeEffectiveness" target="it.jpokebattle.model.type.Type" relationship="TO_MANY">
+      <point x="0.0" y="-96.5" />
+      <point x="-396.177676918006" y="2949.0062736488194" />
+      <point x="-69.55939790385492" y="2949.0062736488194" />
+      <point x="0.0" y="278.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.pokemon.PokemonFactory" relationship="TO_MANY">
+      <point x="-88.1675457315946" y="-253.8538349751334" />
+      <point x="1711.3197942231097" y="5755.965906896844" />
+      <point x="1697.6461801589348" y="5755.965906896844" />
+      <point x="1697.6461801589348" y="5409.598164927769" />
+      <point x="1649.2267166077368" y="5409.598164927769" />
+      <point x="-22.576822532344522" y="57.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.player.Player" target="it.jpokebattle.model.team.Team" relationship="CREATE">
+      <point x="-99.5" y="-15.0" />
+      <point x="147.0" y="-158.0" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.Breed" target="it.jpokebattle.model.type.Type" relationship="TO_MANY">
+      <point x="95.0" y="-473.5" />
+      <point x="559.0343522109893" y="2779.73570100084" />
+      <point x="-69.55939790385492" y="2779.73570100084" />
+      <point x="0.0" y="278.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.Breed" target="it.jpokebattle.model.Identifiable" relationship="REALIZATION">
+      <point x="0.0" y="-473.5" />
+      <point x="464.03435221098925" y="2084.085366681319" />
+      <point x="2888.6696877412833" y="2084.085366681319" />
+      <point x="15.0" y="-30.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.pokemon.Pokemon" target="it.jpokebattle.model.pokemon.Breed" relationship="TO_ONE">
+      <point x="-155.21846290101985" y="-1129.111240074385" />
+      <point x="937.2450012104573" y="2309.8223188052634" />
+      <point x="937.2450012104573" y="2312.267771903355" />
+      <point x="794.4678135258024" y="2312.267771903355" />
+      <point x="794.4678135258024" y="2474.101024616087" />
+      <point x="189.6905531517823" y="-449.1650980941172" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.MoveAction" target="it.jpokebattle.model.battle.Action" relationship="REALIZATION">
+      <point x="-196.5" y="-150.0" />
+      <point x="1436.778111691639" y="6396.196670370915" />
+      <point x="2.6649918254406657E-6" y="43.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.MoveAction" target="it.jpokebattle.model.pokemon.Move" relationship="TO_ONE">
+      <point x="0.0" y="213.5" />
+      <point x="2271.1964424219377" y="6969.145212509091" />
+      <point x="409.47223586883547" y="6969.145212509091" />
+      <point x="0.0" y="473.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.MoveAction" target="it.jpokebattle.model.player.Player" relationship="TO_ONE">
+      <point x="196.5" y="0.0" />
+      <point x="3421.2799513318664" y="6546.196670370915" />
+      <point x="0.0" y="109.5" />
+    </edge>
+    <edge source="it.jpokebattle.model.battle.Battle" target="it.jpokebattle.model.player.BotPlayer" relationship="TO_ONE">
+      <point x="178.96703200687807" y="10.472363295002651" />
+      <point x="3672.992" y="6091.602744076097" />
+      <point x="-15.00023046516344" y="57.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.7956930734578846" showDependencies="true" x="1305.3714793937454" y="4611.5120701160795" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

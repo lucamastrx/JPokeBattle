@@ -299,28 +299,38 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
 
     /**
-     * Aggiorna il valore di una statistica specifica dell'entità basandosi su IV (Individual Values),
-     * base stat (statistica di base) e il livello dell'entità.
+     * Aggiorna il valore di una statistica specifica dell'entità basandosi sui parametri IV (Valore Individuale),
+     * statistica di base e il livello dell'entità. Il metodo calcola il valore finale della statistica
+     * e aggiorna la statistica corrispondente dell'entità.
      *
-     * Il valore calcolato viene utilizzato per aggiornare la statistica corrispondente. Le statistiche
-     * che possono essere aggiornate includono punti vita (hp), attacco (atk), difesa (def), attacco speciale
-     * (specialAtk), difesa speciale (specialDef) e velocità (speed).
+     * Le statistiche che possono essere aggiornate includono:
+     * <ul>
+     *   <li>Punti vita (hp)</li>
+     *   <li>Attacco (atk)</li>
+     *   <li>Difesa (def)</li>
+     *   <li>Attacco speciale (specialAtk)</li>
+     *   <li>Difesa speciale (specialDef)</li>
+     *   <li>Velocità (speed)</li>
+     * </ul>
      *
-     * @param statType Il tipo di statistica da aggiornare. Deve essere uno dei seguenti valori:
-     *                 <ul>
-     *                   <li>"hp" - Punti vita</li>
-     *                   <li>"atk" - Attacco</li>
-     *                   <li>"def" - Difesa</li>
-     *                   <li>"specialAtk" - Attacco speciale</li>
-     *                   <li>"specialDef" - Difesa speciale</li>
-     *                   <li>"speed" - Velocità</li>
-     *                 </ul>
-     * @param iv Il valore IV (Individual Value) della statistica. Rappresenta la variabilità individuale
-     *           della statistica e influisce sul calcolo finale.
-     * @param baseStat Il valore di base della statistica. Questo valore è comune per tutte le entità
-     *                 della stessa specie e viene utilizzato come base per il calcolo del valore finale.
+     * Il calcolo della statistica utilizza i valori di IV, la statistica base e il livello dell'entità,
+     * insieme agli EV (Effort Values) specifici per la statistica.
      *
-     * @throws IllegalArgumentException Se il valore di statType non è uno dei valori previsti.
+     * @param statType  Il tipo di statistica da aggiornare. Deve essere uno dei seguenti valori:
+     *                  <ul>
+     *                    <li>"hp" - Punti vita</li>
+     *                    <li>"atk" - Attacco</li>
+     *                    <li>"def" - Difesa</li>
+     *                    <li>"specialAtk" - Attacco speciale</li>
+     *                    <li>"specialDef" - Difesa speciale</li>
+     *                    <li>"speed" - Velocità</li>
+     *                  </ul>
+     * @param iv        Il valore IV (Valore Individuale) della statistica. Questo valore rappresenta
+     *                  la variabilità individuale dell'entità e influisce sul calcolo finale della statistica.
+     * @param baseStat  Il valore base della statistica. È il valore standard della statistica per la specie
+     *                  dell'entità e viene utilizzato come base per il calcolo del valore finale.
+     *
+     * @throws IllegalArgumentException Se il parametro statType non corrisponde a uno dei valori previsti.
      */
     private void updateStat(String statType, int iv, int baseStat) {
         int usedEVs = useEVs(statType);
@@ -416,7 +426,14 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     }
 
 
-
+    /**
+     * Verifica se il Pokémon può imparare una nuova mossa al livello corrente.
+     *
+     * Il metodo controlla se il livello attuale del Pokémon è tra quelli in cui può
+     * imparare nuove mosse, e se la mossa corrispondente non è già tra le sue mosse attuali.
+     *
+     * @return true se il Pokémon può imparare una nuova mossa, false altrimenti.
+     */
     public boolean canLearnMove(){
         // Ottieni i livelli in cui il Pokémon può imparare nuove mosse
         Set<Integer> moveLevels = getBreed().getMoves().keySet();
@@ -434,12 +451,34 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
         return false;  // Il livello non è un livello in cui può imparare nuove mosse
     }
 
-
+    /**
+     * Verifica se il Pokémon ha già 4 mosse.
+     *
+     * Questo metodo controlla se il Pokémon ha già raggiunto il limite massimo
+     * di 4 mosse nel suo set di mosse.
+     *
+     * @return true se il Pokémon ha 4 mosse, false altrimenti.
+     */
     public boolean has4moves() {
         return getMoves().size() == 4;
     }
 
 
+    /**
+     * Permette al Pokémon di imparare una nuova mossa, se possibile.
+     *
+     * Se il Pokémon può imparare una nuova mossa (determinato da `canLearnMove()`),
+     * la mossa viene aggiunta al suo set di mosse, a meno che non abbia già 4 mosse.
+     * Se ha già 4 mosse, ritorna uno stato che indica che deve sostituirne una.
+     *
+     * @return Uno stato di battaglia che indica il risultato:
+     *         <ul>
+     *           <li>{@link BattleStatus#LEARN_MOVE} - se ha imparato una nuova mossa</li>
+     *           <li>{@link BattleStatus#CHANGE_MOVE} - se deve sostituire una mossa</li>
+     *           <li>{@link BattleStatus#NO_LEARN_MOVE} - se non può imparare una nuova mossa</li>
+     *         </ul>
+     * @throws MoveSetException Se c'è un errore durante l'aggiunta della mossa.
+     */
     public BattleStatus learnMove() throws MoveSetException {
         if (canLearnMove()) {
             String moveID = getBreed().getMoves().get(getLevel());
@@ -458,19 +497,30 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
 
     /**
-     * Metodo che controlla se il livello del pokemon è sufficiente a
-     * permettere l'evoluzione.
+     * Controlla se il Pokémon può evolvere in base al suo livello.
      *
-     * @return valore booleano che determina se il pokemon può evolvere
+     * Il metodo verifica se il livello del Pokémon è sufficiente per l'evoluzione
+     * e se la sua razza ha un successore disponibile per l'evoluzione.
+     *
+     * @return true se il Pokémon può evolvere, false altrimenti.
      */
     private boolean canEvolve(){
         return this.getLevel() >= this.getBreed().getEvoThreshold() && getBreed().getSuccessor() != null;
     }
 
+
     /**
-     * Metodo che evolve il pokemon.
-     * Cambia il breed del pokemon con quella del suo successore,
-     * e inoltre modifica il nome del pokemon se non ha soprannome.
+     * Evolve il Pokémon alla sua forma successiva, se possibile.
+     *
+     * Il metodo aggiorna la razza del Pokémon alla sua forma evoluta, e cambia il nome
+     * del Pokémon con quello della nuova forma, a meno che il Pokémon non abbia un soprannome.
+     * Viene inoltre ricalcolata la forza totale del Pokémon.
+     *
+     * @return Uno stato di battaglia che indica il risultato:
+     *         <ul>
+     *           <li>{@link BattleStatus#EVOLVE} - se il Pokémon è evoluto con successo</li>
+     *           <li>{@link BattleStatus#NO_EVOLVE} - se il Pokémon non può evolvere</li>
+     *         </ul>
      */
     public BattleStatus evolve() {
         if (this.canEvolve()) {
@@ -489,25 +539,57 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
 
 
 
-
+    /**
+     * Aggiunge una nuova mossa al set di mosse del Pokémon.
+     *
+     * Questo metodo sovrascrive il comportamento della superclasse aggiungendo
+     * la funzionalità di salvare lo stato del Pokémon dopo l'aggiunta della mossa.
+     *
+     * @param move La mossa da aggiungere al set di mosse del Pokémon.
+     */
     @Override
     public void addMove(Move move){
         super.addMove(move);
         save();
     }
 
+    /**
+     * Aggiunge una nuova mossa al set di mosse del Pokémon utilizzando l'ID della mossa.
+     *
+     * Questo metodo sovrascrive il comportamento della superclasse aggiungendo
+     * la funzionalità di salvare lo stato del Pokémon dopo l'aggiunta della mossa.
+     *
+     * @param moveID L'ID della mossa da aggiungere al set di mosse del Pokémon.
+     */
     @Override
     public void addMove(String moveID) {
         super.addMove(moveID);
         save();
     }
 
+    /**
+     * Rimuove una mossa dal set di mosse del Pokémon.
+     *
+     * Questo metodo sovrascrive il comportamento della superclasse aggiungendo
+     * la funzionalità di salvare lo stato del Pokémon dopo la rimozione della mossa.
+     *
+     * @param move La mossa da rimuovere dal set di mosse del Pokémon.
+     */
     @Override
     public void removeMove(Move move){
         super.removeMove(move);
         save();
     }
 
+    /**
+     * Imposta il set di mosse del Pokémon.
+     *
+     * Sovrascrive il metodo della superclasse per aggiornare l'intero set di mosse
+     * e aggiunge la funzionalità di salvare lo stato del Pokémon dopo l'aggiornamento.
+     *
+     * @param moves La mappa contenente le mosse da impostare, con le mosse come chiavi
+     *              e i relativi PP (Power Points) come valori.
+     */
     @Override
     public void setMoves(HashMap<Move, Integer> moves){
         super.setMoves(moves);
@@ -515,13 +597,23 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     }
 
 
+    /**
+     * Restituisce l'ID univoco del Pokémon.
+     *
+     * Questo metodo restituisce l'identificativo univoco del Pokémon, che può essere
+     * utilizzato per identificare in modo univoco il Pokémon nel sistema.
+     *
+     * @return L'ID del Pokémon.
+     */
     @Override
     public String getID() {
         return this.ID;
     }
 
     /**
-     * Metodo per salvare lo stato del Pokémon nel file di serializzazione.
+     * Restituisce una rappresentazione stringa del Pokémon posseduto.
+     *
+     * @return Stringa che rappresenta lo stato corrente del Pokémon.
      */
     @Override
     public String toString() {
@@ -559,9 +651,7 @@ public class OwnedPokemon extends Pokemon implements Serializable, Identifiable,
     }
 
     /**
-     * Restituisce una rappresentazione stringa del Pokémon posseduto.
-     *
-     * @return Stringa che rappresenta lo stato corrente del Pokémon.
+     * Metodo per salvare lo stato del Pokémon nel file di serializzazione.
      */
     @Override
     public void save() {
