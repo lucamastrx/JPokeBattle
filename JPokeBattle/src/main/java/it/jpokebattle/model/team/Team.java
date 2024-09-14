@@ -91,7 +91,7 @@ public class Team <T extends Pokemon> {
     public void setActivePokemon(T pokemon) {
         if (pokemonList.contains(pokemon)) {
             this.activePokemon = pokemon;
-            System.out.println(pokemon.getName() + " è ora il Pokémon attivo.");
+            // System.out.println(pokemon.getName() + " è ora il Pokémon attivo.");
         } else {
             throw new IllegalArgumentException("Il Pokémon specificato non è presente nella squadra.");
         }
@@ -144,7 +144,7 @@ public class Team <T extends Pokemon> {
      */
     public void removeAndReplacePokemon(int index, T newPokemon) {
         if (index >= 0 && index < pokemonList.size()) {
-            System.out.println(pokemonList.get(index).getName() + " sostituito da " + newPokemon.getName());
+            // System.out.println(pokemonList.get(index).getName() + " sostituito da " + newPokemon.getName());
             pokemonList.set(index, newPokemon);
             if (activePokemon.equals(pokemonList.get(index))) {
                 activePokemon = newPokemon;

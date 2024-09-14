@@ -136,7 +136,7 @@ public class BattleView {
         if (p instanceof OwnedPokemon) {
             this.yourPokemonBar.setStyle("-fx-accent: "+color+";");
             this.yourPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
-            System.out.println("HP TOTALI: "+p.getFullHp());
+            //System.out.println("HP TOTALI: "+p.getFullHp());
             this.myPokemonHP.setText("HP: "+p.getCurrentHp()+"/"+p.getFullHp());
         } else {
             this.botPokemonBar.setStyle("-fx-accent: "+color+";");
@@ -345,7 +345,7 @@ public class BattleView {
             moveButton.setOnAction(e -> handleMoveAction(move, popup));
             grid.add(moveButton, i % 2, i / 2);
         }
-        System.out.println("E FINO A QUA");
+        // System.out.println("E FINO A QUA");
         return grid;
     }
 
@@ -357,7 +357,7 @@ public class BattleView {
      * @param popup Il popup da chiudere dopo la selezione.
      */
     private void handleMoveAction(Move move, Popup popup) {
-        System.out.println("INIZIO TURNO");
+        // System.out.println("INIZIO TURNO");
         Action moveAction = new MoveAction(humanPlayer, move, currentBattle.getCurrentBotPlayer(), currentBattle);
         Action botAction = new MoveAction(currentBattle.getCurrentBotPlayer(), currentBattle.getCurrentBotPlayer().smartPokemonMove(), humanPlayer, currentBattle);
         try {
@@ -375,9 +375,9 @@ public class BattleView {
             }
             OwnedPokemon p1 = humanPlayer.getTeam().getActivePokemon();
             Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
-            System.out.println("PRIMA DI EXECUTEMOVE");
+            // System.out.println("PRIMA DI EXECUTEMOVE");
             battleController.executeMoveAction(status, p1, p2);
-            System.out.println("DOPO EXECUTEMOVE");
+            // System.out.println("DOPO EXECUTEMOVE");
         } catch (MoveSetException | IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -623,12 +623,12 @@ public class BattleView {
      * @param event L'evento che ha scatenato l'azione.
      */
     public void returnToBattleScene(ActionEvent event) {
-        System.out.println("RETURN TO BATTLE");
+        // System.out.println("RETURN TO BATTLE");
         if (battleStage != null && battleScene != null) {
             currentBattle.newBotPlayer();
             Pokemon p1 = humanPlayer.getTeam().getActivePokemon();
             Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
-            System.out.println("ACTIVE POKEMON: "+p2);
+            // System.out.println("ACTIVE POKEMON: "+p2);
             updatePokemonInBattle(p1);
             updatePokemonInBattle(p2);
             updatePokemonImages(p1);

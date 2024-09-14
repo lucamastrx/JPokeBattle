@@ -82,11 +82,4 @@ module it.jpokebattle {
     exports it.jpokebattle.view;
     opens it.jpokebattle.view;
 
-
-
-
-
-
-
-
 }

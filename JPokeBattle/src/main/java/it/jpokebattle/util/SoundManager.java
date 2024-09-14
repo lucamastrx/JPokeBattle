@@ -53,7 +53,7 @@ public class SoundManager {
      */
     public void switchTrack(String srcName) {
         AudioTrack newTrack = AudioTrack.fromSrcName(srcName);
-        System.out.println(srcName);
+        System.out.println("Traccia Audio: " + srcName);
         currentTrack.switchToTrack(newTrack);
         currentTrack = newTrack;
     }
