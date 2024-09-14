@@ -344,19 +344,19 @@ public class BattleController implements Initializable {
                     List<BattleStatus> status = new ArrayList<>();
                     if (currentBattle.humanStarts(moveAction, botAction)) {
                         System.out.println("IL MIO E' PIU' VELOCE");
-                        status.addAll(currentBattle.executeBattle(moveAction));
+                        status.addAll(moveAction.execute());
                         if (status.stream().noneMatch(x -> x==BattleStatus.CHANGE_BOT_FAINTED_POKEMON)){
                             System.out.println("FINEEEE");
-                            status.addAll(currentBattle.executeBattle(botAction));
+                            status.addAll(botAction.execute());
                         }
 
 
                     } else {
                         System.out.println("IL SUO E' PIU' VELOCE");
-                        status.addAll(currentBattle.executeBattle(botAction));
+                        status.addAll(botAction.execute());
                         if (status.stream().noneMatch(x -> x==BattleStatus.CHANGE_YOUR_FAINTED_POKEMON)){
                             System.out.println("FINEEEE");
-                            status.addAll(currentBattle.executeBattle(moveAction));
+                            status.addAll(moveAction.execute());
                         }
 
 
@@ -364,7 +364,7 @@ public class BattleController implements Initializable {
                     OwnedPokemon p1 = HumanPlayer.getInstance().getTeam().getActivePokemon();
                     Pokemon p2 = currentBattle.getCurrentBotPlayer().getTeam().getActivePokemon();
                     executeMoveAction(status, p1, p2);
-                } catch (MoveSetException | IOException | ForbiddenActionException ex) {
+                } catch (MoveSetException | IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 changePokemonPopup.hide();  // Close the popup after selecting a move

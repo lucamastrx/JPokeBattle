@@ -1,21 +1,15 @@
 package it.jpokebattle.model.battle;
 
-import it.jpokebattle.model.exceptions.ForbiddenActionException;
-import it.jpokebattle.model.exceptions.MoveSetException;
 import it.jpokebattle.model.player.*;
 import it.jpokebattle.model.pokemon.*;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * La classe Battle rappresenta una battaglia tra un giocatore umano e un bot,
- * permettendo di eseguire azioni di battaglia, determinare i turni, gestire i cambiamenti
- * dei Pokémon e determinare il vincitore.
- * Ogni battaglia contiene informazioni sui giocatori, sulle fabbriche di Pokémon e sulla gestione
- * degli stati della battaglia.
+ * La classe {@code Battle} gestisce una battaglia Pokémon tra un giocatore umano e un bot.
+ * La classe gestisce la creazione dei giocatori, l'inizializzazione dei Pokémon, e determina
+ * le condizioni di vittoria o sconfitta durante il combattimento.
  */
 public class Battle {
 
@@ -28,9 +22,9 @@ public class Battle {
 
 
     /**
-     * Costruttore della classe Battle.
-     * Inizializza il giocatore umano, il bot e le fabbriche di Pokémon, oltre a configurare il bot
-     * con i suoi Pokémon iniziali.
+     * Costruttore della classe {@code Battle}.
+     * Inizializza il giocatore umano, il giocatore bot, e le fabbriche di Pokémon.
+     * Configura un bot predefinito con i suoi Pokémon iniziali.
      */
     public Battle() {
         this.humanPlayer = HumanPlayer.getInstance();
@@ -52,57 +46,13 @@ public class Battle {
         Breed garchompBreed = Breed.breedsMap.get("Garchomp");
         Pokemon garchompPokemon = new Pokemon(garchompBreed, 14);
         currentBotPlayer.getTeam().addPokemon(garchompPokemon);
-
-
     }
 
 
 
-
     /**
-     * Esegue l'azione fornita nel contesto della battaglia e aggiorna lo stato della battaglia.
-     * Gestisce cambiamenti di Pokémon e controlla se qualcuno ha vinto.
-     *
-     * @param action L'azione da eseguire.
-     * @return Una lista di stati della battaglia risultanti dall'azione.
-     * @throws MoveSetException Se si verifica un errore relativo alle mosse dei Pokémon.
-     * @throws IOException Se si verifica un errore di I/O durante l'esecuzione.
-     * @throws ForbiddenActionException Se l'azione eseguita non è consentita.
-     */
-    public List<BattleStatus> executeBattle(Action action) throws MoveSetException, IOException, ForbiddenActionException {
-
-        List<BattleStatus> result = action.execute();
-        for (BattleStatus battleStatus : result) {
-            System.out.println(battleStatus);
-            switch (battleStatus) {
-                case CHANGE_BOT_FAINTED_POKEMON:
-                    currentBotPlayer.smartPokemonChange();
-                    break;
-
-                case CONTINUE_WITH_BOT_CHANGE_POKEMON:
-                    currentBotPlayer.smartPokemonChange();
-                    break;
-
-
-                case YOU_WIN:
-                    break;
-
-
-                case CONTINUE_DAMAGE_TO_BOT_POKEMON:
-                    break;
-
-                case CONTINUE_DAMAGE_TO_YOUR_POKEMON:
-                    break;
-
-            }
-        }
-        return result;
-    }
-
-
-    /**
-     * Determina se il giocatore umano agisce per primo nel turno in base alla priorità
-     * dell'azione e alla velocità dei Pokémon.
+     * Determina se il giocatore umano agisce per primo nel turno in base alla priorità delle azioni
+     * e alla velocità dei Pokémon coinvolti.
      *
      * @param action L'azione del giocatore umano.
      * @param botAction L'azione del bot.
@@ -118,7 +68,7 @@ public class Battle {
 
 
     /**
-     * Verifica se il giocatore umano ha perso la battaglia.
+     * Verifica se il giocatore umano ha perso la battaglia. Un giocatore ha perso se tutti i suoi Pokémon sono esausti.
      *
      * @return {@code true} se il giocatore umano ha perso, {@code false} altrimenti.
      */
@@ -126,7 +76,7 @@ public class Battle {
 
 
     /**
-     * Verifica se il bot ha perso la battaglia.
+     * Verifica se il bot ha perso la battaglia. Un bot ha perso se tutti i suoi Pokémon sono esausti.
      *
      * @return {@code true} se il bot ha perso, {@code false} altrimenti.
      */
@@ -149,7 +99,8 @@ public class Battle {
 
 
     /**
-     * Crea un nuovo giocatore bot con una factory configurata casualmente.
+     * Crea un nuovo giocatore bot con una factory configurata in base a una probabilità casuale.
+     * Questo cambia il set di Pokémon che il bot utilizzerà.
      */
     public void newBotPlayer(){
         setPokemonFactoryWithProbability();
@@ -158,11 +109,9 @@ public class Battle {
     }
 
 
-
-
-
     /**
-     * Inizializza la lista di fabbriche di Pokémon che possono essere utilizzate per creare i Pokémon dei bot.
+     * Inizializza la lista di fabbriche di Pokémon che possono essere utilizzate per creare
+     * i Pokémon del bot durante le battaglie.
      *
      * @return Una lista di fabbriche di Pokémon.
      */
@@ -176,7 +125,8 @@ public class Battle {
 
 
     /**
-     * Configura la factory dei Pokémon del bot in base a una probabilità casuale.
+     * Configura la factory dei Pokémon del bot in base a una probabilità casuale, determinando
+     * quali Pokémon il bot utilizzerà.
      */
     private void setPokemonFactoryWithProbability() {
         double random = Math.random();
@@ -197,7 +147,7 @@ public class Battle {
     /**
      * Restituisce il numero di battaglie attualmente combattute.
      *
-     * @return Il numero di battaglie.
+     * @return Il numero di battaglie attualmente combattute.
      */
     public int getBattleCount() {
         return battleCount;

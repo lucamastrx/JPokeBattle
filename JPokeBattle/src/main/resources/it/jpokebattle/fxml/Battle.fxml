@@ -22,7 +22,7 @@
       <Button fx:id="menuButton" layoutX="43.0" layoutY="605.0" mnemonicParsing="false" onAction="#runAway" style="-fx-background-color: red;" text="Run Away!" />
       <Button fx:id="attackButton" layoutX="273.0" layoutY="599.0" mnemonicParsing="false" onAction="#showMoveSelectionPopup" prefHeight="37.0" prefWidth="194.0" style="-fx-background-color: orange;" text="Attack" />
       <Button fx:id="levelupButton" layoutX="900.0" layoutY="605.0" mnemonicParsing="false" onAction="#addlevel" style="-fx-background-color: lightblue;" text="EXPs!" />
-      <Button fx:id="gameOverButton" layoutX="886.0" layoutY="643.0" mnemonicParsing="false" onAction="#switchToGameOver" style="-fx-background-color: black;" text="GameOver" textFill="WHITE" />
+      <Button fx:id="gameOverButton" layoutX="886.0" layoutY="643.0" mnemonicParsing="false" onAction="#switchToGameOver" style="-fx-background-color: black; -fx-border-color: white;" text="GameOver" textFill="WHITE" />
       <ImageView fx:id="yourImage" fitHeight="182.0" fitWidth="170.0" layoutX="143.0" layoutY="199.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/TrainerYou.png" />

@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-public class BattleView {
+public class BattleView { 
 
     private Stage battleStage;
     private Scene battleScene;

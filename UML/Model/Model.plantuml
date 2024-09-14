@@ -1,0 +1,499 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface Action << interface >> {
+  + getPriority(): int
+  + execute(): List<BattleStatus>
+}
+class Battle {
+  + Battle(): 
+  - currentBotPlayer: BotPlayer
+  - humanPlayer: HumanPlayer
+  - pokemonFactories: List<PokemonFactory>
+  - battleCount: int
+  - botPlayerFactory: PlayerFactory
+  + humanStarts(Action, Action): boolean
+  + botLost(): boolean
+  - initializePokemonFactories(): List<PokemonFactory>
+  + resetBattleCount(): void
+  + getBattleCount(): int
+  + setBattleCount(int): void
+  + getCurrentBotPlayer(): BotPlayer
+  + getHumanPlayer(): HumanPlayer
+  + newBotPlayer(): void
+  - setPokemonFactoryWithProbability(): void
+  + humanLost(): boolean
+}
+enum BattleStatus << enumeration >> {
+  + BattleStatus(): 
+  + YOU_LOST: 
+  + CONTINUE_WITH_NO_DAMAGE: 
+  + CONTINUE_WITH_BOT_CHANGE_POKEMON: 
+  + EVOLVE: 
+  + NO_LEARN_MOVE: 
+  + YOU_WIN: 
+  + YES_LEVEL_UP: 
+  + NO_LEVEL_UP: 
+  + CHANGE_BOT_FAINTED_POKEMON: 
+  + CONTINUE_DAMAGE_TO_BOT_POKEMON: 
+  + LEARN_MOVE: 
+  + CHANGE_YOUR_FAINTED_POKEMON: 
+  + CONTINUE_WITH_YOUR_CHANGE_POKEMON: 
+  + NO_EVOLVE: 
+  + CHANGE_MOVE: 
+  + CONTINUE_DAMAGE_TO_YOUR_POKEMON: 
+  + values(): BattleStatus[]
+  + valueOf(String): BattleStatus
+}
+class BotPlayer {
+  + BotPlayer(String, Pokemon): 
+  + smartPokemonMove(): Move
+  + smartPokemonChange(): void
+}
+class BotPlayerFactory {
+  + BotPlayerFactory(PokemonFactory): 
+  - random: Random
+  + createPlayer(): BotPlayer
+}
+class Breed {
+  + Breed(String, Set<Type>, int, Breed, String, int, int, int, int, int, int, int, HashMap<Integer, String>): 
+  - totalBaseStat: int
+  - speedBaseStat: int
+  - evTypeDropped: String
+  - moves: HashMap<Integer, String>
+  - hpBaseStat: int
+  - name: String
+  - specialAtkBaseStat: int
+  - defBaseStat: int
+  - evoThreshold: int
+  - types: HashSet<Type>
+  + breedsMap: HashMap<String, Breed>
+  - atkBaseStat: int
+  - specialDefBaseStat: int
+  - evAmountDropped: int
+  - successor: Breed
+  + getSpecialAtkBaseStat(): int
+  + getEvTypeDropped(): String
+  + getSuccessor(): Breed
+  + getSpecialDefBaseStat(): int
+  + getEvoThreshold(): int
+  + getAtkBaseStat(): int
+  + toString(): String
+  + hashCode(): int
+  + getHpBaseStat(): int
+  + getMoves(): HashMap<Integer, String>
+  + getName(): String
+  + getTotalBaseStat(): int
+  + getTypes(): HashSet<Type>
+  + getDefBaseStat(): int
+  + getSpeedBaseStat(): int
+  + getEvAmountDropped(): int
+  + equals(Object): boolean
+  + getID(): String
+  - setTypes(Set<Type>): void
+}
+class EVDrop {
+  + EVDrop(String, int): 
+  - evTypeDropped: String
+  - evAmountDropped: int
+  + getEvTypeDropped(): String
+  + getEvAmountDropped(): int
+}
+class ForbiddenActionException {
+  + ForbiddenActionException(): 
+}
+class HighLevelPokemonFactory {
+  + HighLevelPokemonFactory(): 
+  - HIGH_LEVEL: int
+  + createPokemon(): Pokemon
+}
+class HumanPlayer {
+  - HumanPlayer(String, List<OwnedPokemon>): 
+  - instance: HumanPlayer
+  + getInstance(List<OwnedPokemon>): HumanPlayer
+  + getInstance(): HumanPlayer
+  - initializeTeam(List<OwnedPokemon>): void
+}
+interface Identifiable << interface >> {
+  + getID(): String
+}
+class LeaderboardEntry {
+  + LeaderboardEntry(LocalDateTime, String, List<String>): 
+  + LeaderboardEntry(): 
+  - timestamp: LocalDateTime
+  - pokemon3: String
+  - pokemon2: String
+  - pokemon6: String
+  - winStatus: String
+  - pokemon1: String
+  - pokemon4: String
+  - pokemon5: String
+  + setPokemon1(String): void
+  + setPokemon4(String): void
+  + getPokemon6Property(): SimpleStringProperty
+  + setPokemon3(String): void
+  + getPokemon6(): String
+  + getPokemon2(): String
+  + getTimestamp(): LocalDateTime
+  + getPokemon1(): String
+  + getWinStatusProperty(): SimpleStringProperty
+  + setWinStatus(String): void
+  + getPokemon1Property(): SimpleStringProperty
+  + getTimestampProperty(): ObjectProperty<LocalDateTime>
+  + getPokemon4(): String
+  + getPokemon3Property(): SimpleStringProperty
+  + getPokemon4Property(): SimpleStringProperty
+  + getWinStatus(): String
+  + getPokemon3(): String
+  + setPokemon6(String): void
+  + setTimestamp(LocalDateTime): void
+  + setPokemon2(String): void
+  + getPokemon2Property(): SimpleStringProperty
+  + getPokemon5(): String
+  - populatePokemons(List<String>): void
+  + setPokemon5(String): void
+  + getPokemon5Property(): SimpleStringProperty
+}
+class Move {
+  + Move(String, Type, String, int, int, int, boolean, int, String, int, String, int): 
+  - description: String
+  - priority: int
+  - personalModificatorValue: int
+  - precision: int
+  - isSpecial: boolean
+  - personalModificatorType: String
+  - name: String
+  - type: Type
+  - utilizzi: int
+  - power: int
+  - opponentModificatorType: String
+  + movesMap: HashMap<String, Move>
+  - opponentModificatorValue: int
+  + setType(Type): void
+  + setDescription(String): void
+  + getUtilizzi(): int
+  + getPrecision(): int
+  + setPower(int): void
+  + hashCode(): int
+  + getDescription(): String
+  + getPersonalModificatorType(): String
+  + getPower(): int
+  + toString(): String
+  + getOpponentModificatorType(): String
+  + equals(Object): boolean
+  + getName(): String
+  + setPrecision(int): void
+  + getID(): String
+  + setSpecial(boolean): void
+  + getOpponentModificatorValue(): int
+  + isSpecial(): boolean
+  + getPriority(): int
+  + getPersonalModificatorValue(): int
+  + getType(): Type
+}
+class MoveAction {
+  + MoveAction(Player, Move, Player, Battle): 
+  - playerOpponent: Player
+  - actor: Player
+  - battle: Battle
+  - move: Move
+  - calculateDamage(Pokemon, Move, Pokemon): int
+  - isHit(Pokemon, Move, Pokemon): boolean
+  - RNG(): double
+  + getPriority(): int
+  - applyMoveEffects(Pokemon, Move, Pokemon, List<BattleStatus>): void
+  - handleLevelUp(OwnedPokemon, List<BattleStatus>): void
+  - applyEffect(String, int, Pokemon): void
+  - calculateModifier(Pokemon, Move, Pokemon): double
+  + toString(): String
+  - STAB(Pokemon, Move): double
+  + execute(): List<BattleStatus>
+  - handleFaintedTarget(Pokemon, Pokemon, List<BattleStatus>): void
+  - critical(): boolean
+  - handlePokemonChange(List<BattleStatus>): void
+  - specialEffects(Pokemon, Move, Pokemon): void
+}
+class MoveSetException {
+  + MoveSetException(): 
+}
+class OwnedPokemon {
+  + OwnedPokemon(Breed, String, int): 
+  - exp: int
+  - speedEV: int
+  - SER_SRC_NAME: String
+  - expForNextLevel: int
+  - nickname: String
+  - hpEV: int
+  - specialDefEV: int
+  - totalEVsUsed: int
+  - defEV: int
+  - ID: String
+  - atkEV: int
+  - specialAtkEV: int
+  - addSpecialAtkEV(int): void
+  - setExpForNextLevel(int): void
+  - addHpEV(int): void
+  - addSpeedEV(int): void
+  + levelUpAndStatsUp(): void
+  + getExpForNextLevel(): int
+  - addDefEV(int): void
+  + canLevelUp(): boolean
+  + learnMove(): BattleStatus
+  + hashCode(): int
+  + addMove(Move): void
+  - addSpecialDefEV(int): void
+  + getNickname(): String
+  - calculateRequiredExpForNextLevel(int): int
+  + getID(): String
+  + toString(): String
+  - updateStat(String, int, int): void
+  + canLearnMove(): boolean
+  - addAtkEV(int): void
+  - levelUp(): void
+  + addMove(String): void
+  - canEvolve(): boolean
+  + getName(): String
+  + setMoves(HashMap<Move, Integer>): void
+  + collectExp(int): void
+  + evolve(): BattleStatus
+  + save(): void
+  + has4moves(): boolean
+  + getExp(): int
+  - useEVs(String): int
+  + collectEVs(EVDrop): void
+  - addToTotalEVsUsed(int): void
+  + removeMove(Move): void
+  + equals(Object): boolean
+}
+class Player<T> {
+  + Player(String, T): 
+  - name: String
+  - team: Team<T>
+  + setName(String): void
+  + setTeam(Team<T>): void
+  + getName(): String
+  + getTeam(): Team<T>
+}
+class PlayerFactory {
+  + PlayerFactory(PokemonFactory): 
+  # pokemonFactory: PokemonFactory
+  + createPlayer(): Player
+  + setPokemonFactory(PokemonFactory): void
+  + randomNameRole(): String
+}
+class Pokemon {
+  + Pokemon(Breed, int): 
+  # Pokemon(): 
+  - hpIV: int
+  - def: int
+  - fullSpecialAtk: int
+  - fullSpecialDef: int
+  - evasion: int
+  - fullSpeed: int
+  - specialDefIV: int
+  - fullHp: int
+  - speed: int
+  - level: int
+  - breed: Breed
+  - atkIV: int
+  - atk: int
+  - accuracy: int
+  - specialAtkIV: int
+  - specialAtk: int
+  - moves: HashMap<Move, Integer>
+  - speedIV: int
+  - fullDef: int
+  - name: String
+  - strength: int
+  - currentHp: int
+  - defIV: int
+  - fullAtk: int
+  - specialDef: int
+  - setEvasion(int): void
+  + getSpecialDef(): int
+  + setFullSpecialDef(int): void
+  + setAtk(int): void
+  + setFullAtk(int): void
+  + hashCode(): int
+  + takeDamage(int): void
+  + setName(String): void
+  + setFullHp(int): void
+  + getDefIV(): int
+  + heal(): void
+  + setBreed(Breed): void
+  + getLevel(): int
+  + getMoves(): HashMap<Move, Integer>
+  - setRandomIVs(): void
+  + getSpecialDefIV(): int
+  + setSpecialDef(int): void
+  + getCurrentHp(): int
+  + getFullSpeed(): int
+  + getName(): String
+  + getFullSpecialAtk(): int
+  + isFainted(): boolean
+  + getDef(): int
+  - setMovesFromLevel(int): void
+  - setAccuracy(int): void
+  + getStrength(): int
+  + getFullAtk(): int
+  + addMove(Move): void
+  + getSpeed(): int
+  + setDef(int): void
+  + getFullHp(): int
+  + setFullDef(int): void
+  + getSpecialAtkIV(): int
+  + useMove(Move): void
+  + setLevel(int): void
+  + getBreed(): Breed
+  + setFullSpeed(int): void
+  + toString(): String
+  + getFullSpecialDef(): int
+  + setSpecialAtk(int): void
+  + setFullSpecialAtk(int): void
+  + setMoves(HashMap<Move, Integer>): void
+  + getHpIV(): int
+  + addMove(String): void
+  + getAccuracy(): int
+  + getSpeedIV(): int
+  + dropEVs(): EVDrop
+  + equals(Object): boolean
+  + setCurrentHp(int): void
+  + removeMove(Move): void
+  + getAtk(): int
+  + modifyAccuracy(int): void
+  + getEvasion(): int
+  + setSpeed(int): void
+  + modifyEvasion(int): void
+  + getAtkIV(): int
+  + getFullDef(): int
+  + getSpecialAtk(): int
+  + setStrength(int): void
+  - setStatsFromLevel(int): void
+}
+class PokemonFactory {
+  + PokemonFactory(): 
+  # createRandomBreed(): Breed
+  + createPokemon(): Pokemon
+}
+class RandomPokemonFactory {
+  + RandomPokemonFactory(): 
+  + createPokemon(): Pokemon
+}
+class SameAverageLevelRandomPokemonFactory {
+  + SameAverageLevelRandomPokemonFactory(): 
+  + createPokemon(): Pokemon
+}
+interface Saveable<V> << interface >> {
+  + save(String, V): void
+  + delete(String, V): void
+  + save(): void
+}
+class SwitchPokemonAction {
+  + SwitchPokemonAction(Player, Pokemon, Battle): 
+  - substitutePokemon: Pokemon
+  - battle: Battle
+  - actor: Player
+  + getPriority(): int
+  + execute(): List<BattleStatus>
+}
+class Team<T> {
+  + Team(T): 
+  - activePokemon: T
+  - pokemonList: List<T>
+  + getPokemonList(): List<T>
+  + getPokemonByName(String): T
+  + healAllPokemon(): void
+  + clearTeamExceptActivePokemon(): void
+  + isFull(): boolean
+  + setActivePokemon(T): void
+  + swapPokemon(int, int): void
+  + removePokemon(T): void
+  + toString(): String
+  + getAverageLevel(): double
+  + getAvailablePokemon(): List<T>
+  + removeAndReplacePokemon(int, T): void
+  + addPokemon(T): void
+  + allPokemonFainted(): boolean
+  + getActivePokemon(): T
+}
+enum Type << enumeration >> {
+  + Type(): 
+  + DRAGON: 
+  + ICE: 
+  + GROUND: 
+  + FIGHTING: 
+  + STEEL: 
+  + PSYCHIC: 
+  + ROCK: 
+  + WATER: 
+  + FLYING: 
+  + BUG: 
+  + DARK: 
+  + NORMAL: 
+  + FIRE: 
+  + GRASS: 
+  + ELECTRIC: 
+  + POISON: 
+  + GHOST: 
+  + valueOf(String): Type
+  + values(): Type[]
+}
+class TypeEffectiveness {
+  - TypeEffectiveness(): 
+  - instance: TypeEffectiveness
+  - effectivenessMap: Map<Type, Map<Type, Double>>
+  + getEffectiveness(Type, Set<Type>): double
+  + getInstance(): TypeEffectiveness
+  - getEffectiveness(Type, Type): double
+}
+
+Battle                                -[#595959,dashed]->  BotPlayer                            : "«create»"
+Battle                               "1" *-[#595959,plain]-> "currentBotPlayer\n1" BotPlayer                            
+Battle                                -[#595959,dashed]->  BotPlayerFactory                     : "«create»"
+Battle                                -[#595959,dashed]->  HighLevelPokemonFactory              : "«create»"
+Battle                               "1" *-[#595959,plain]-> "humanPlayer\n1" HumanPlayer                          
+Battle                               "1" *-[#595959,plain]-> "botPlayerFactory\n1" PlayerFactory                        
+Battle                                -[#595959,dashed]->  Pokemon                              : "«create»"
+Battle                               "1" *-[#595959,plain]-> "pokemonFactories\n*" PokemonFactory                       
+Battle                                -[#595959,dashed]->  RandomPokemonFactory                 : "«create»"
+Battle                                -[#595959,dashed]->  SameAverageLevelRandomPokemonFactory : "«create»"
+BotPlayer                             -[#000082,plain]-^  Player                               
+BotPlayerFactory                      -[#595959,dashed]->  BotPlayer                            : "«create»"
+BotPlayerFactory                      -[#000082,plain]-^  PlayerFactory                        
+Breed                                 -[#008200,dashed]-^  Identifiable                         
+Breed                                "1" *-[#595959,plain]-> "types\n*" Type                                 
+HighLevelPokemonFactory               -[#595959,dashed]->  Pokemon                              : "«create»"
+HighLevelPokemonFactory               -[#000082,plain]-^  PokemonFactory                       
+HumanPlayer                           -[#595959,dashed]->  OwnedPokemon                         : "«create»"
+HumanPlayer                           -[#000082,plain]-^  Player                               
+Move                                  -[#008200,dashed]-^  Identifiable                         
+Move                                 "1" *-[#595959,plain]-> "type\n1" Type                                 
+MoveAction                            -[#008200,dashed]-^  Action                               
+MoveAction                           "1" *-[#595959,plain]-> "battle\n1" Battle                               
+MoveAction                           "1" *-[#595959,plain]-> "move\n1" Move                                 
+MoveAction                           "1" *-[#595959,plain]-> "actor\n1" Player                               
+OwnedPokemon                          -[#008200,dashed]-^  Identifiable                         
+OwnedPokemon                          -[#000082,plain]-^  Pokemon                              
+OwnedPokemon                          -[#008200,dashed]-^  Saveable                             
+Player                                -[#595959,dashed]->  Pokemon                              
+Player                                -[#595959,dashed]->  Team                                 : "«create»"
+Player                               "1" *-[#595959,plain]-> "team\n1" Team                                 
+PlayerFactory                        "1" *-[#595959,plain]-> "pokemonFactory\n1" PokemonFactory                       
+Pokemon                              "1" *-[#595959,plain]-> "breed\n1" Breed                                
+Pokemon                               -[#595959,dashed]->  EVDrop                               : "«create»"
+Pokemon                              "1" *-[#595959,plain]-> "moves\n*" Move                                 
+RandomPokemonFactory                  -[#595959,dashed]->  Pokemon                              : "«create»"
+RandomPokemonFactory                  -[#000082,plain]-^  PokemonFactory                       
+SameAverageLevelRandomPokemonFactory  -[#595959,dashed]->  Pokemon                              : "«create»"
+SameAverageLevelRandomPokemonFactory  -[#000082,plain]-^  PokemonFactory                       
+Saveable                              -[#595959,dashed]->  Identifiable                         
+SwitchPokemonAction                   -[#008200,dashed]-^  Action                               
+SwitchPokemonAction                  "1" *-[#595959,plain]-> "battle\n1" Battle                               
+SwitchPokemonAction                  "1" *-[#595959,plain]-> "actor\n1" Player                               
+SwitchPokemonAction                  "1" *-[#595959,plain]-> "substitutePokemon\n1" Pokemon                              
+Team                                  -[#595959,dashed]->  Pokemon                              
+TypeEffectiveness                    "1" *-[#595959,plain]-> "effectivenessMap\n*" Type                                 
+@enduml
