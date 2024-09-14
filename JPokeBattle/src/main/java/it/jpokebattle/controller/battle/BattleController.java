@@ -3,38 +3,26 @@ package it.jpokebattle.controller.battle;
 import it.jpokebattle.controller.SceneManager;
 import it.jpokebattle.controller.leaderboard.LeaderboardController;
 import it.jpokebattle.model.battle.*;
-import it.jpokebattle.model.exceptions.ForbiddenActionException;
 import it.jpokebattle.model.exceptions.MoveSetException;
 import it.jpokebattle.model.player.HumanPlayer;
 import it.jpokebattle.model.pokemon.*;
-import it.jpokebattle.util.FileManager;
 import it.jpokebattle.util.SoundManager;
 import it.jpokebattle.view.BattleView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 
 
 /**
