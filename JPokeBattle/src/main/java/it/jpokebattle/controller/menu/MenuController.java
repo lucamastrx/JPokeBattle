@@ -17,7 +17,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-
+/**
+ * Controller per la gestione del menu principale del gioco.
+ * Questa classe si occupa di gestire le interazioni dell'utente con il menu principale,
+ * inclusi i cambi di scena, la cura del team di Pokémon e il controllo del volume.
+ */
 public class MenuController {
 
     private SoundManager soundMan = SoundManager.getInstance();
@@ -35,7 +39,12 @@ public class MenuController {
     protected Line leftSeparatorLn, rightSeparatorLn;
 
 
-
+    /**
+     * Passa alla scena di battaglia.
+     *
+     * @param event L'evento che ha scatenato questa azione.
+     * @throws IOException Se si verifica un errore durante il caricamento della nuova scena.
+     */
     @FXML
     public void switchToBattle(ActionEvent event) throws IOException {
         soundMan.buttonClick();
@@ -44,6 +53,12 @@ public class MenuController {
     }
 
 
+    /**
+     * Passa alla scena della classifica.
+     *
+     * @param event L'evento che ha scatenato questa azione.
+     * @throws IOException Se si verifica un errore durante il caricamento della nuova scena.
+     */
     @FXML
     public void switchToLeaderboard(ActionEvent event) throws IOException {
         soundMan.buttonClick();
@@ -52,8 +67,14 @@ public class MenuController {
     }
 
 
+    /**
+     * Cura tutti i Pokémon nel team del giocatore.
+     *
+     * @param event L'evento che ha scatenato questa azione.
+     * @throws InterruptedException Se il thread viene interrotto durante l'operazione.
+     */
     @FXML
-    public void cureTeam(ActionEvent event) throws IOException, InterruptedException {
+    public void cureTeam(ActionEvent event) throws InterruptedException {
         soundMan.buttonClick();
         soundMan.cureTeamClick();
         HumanPlayer.getInstance().getTeam().healAllPokemon();
@@ -61,7 +82,9 @@ public class MenuController {
 
     /**
      * Chiude la finestra e termina il programma.
-     * */
+     *
+     * @param event L'evento che ha scatenato questa azione.
+     */
     @FXML
     public void quit(ActionEvent event){
         soundMan.buttonClick();

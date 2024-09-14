@@ -28,17 +28,25 @@ import java.util.stream.Collectors;
 
 
 /**
- * Controller della leaderboard che gestisce la visualizzazione della classifica
- * e l'interazione con l'utente, inclusa la lettura e la scrittura dei dati JSON.
+ * Controller per la gestione della classifica (leaderboard) del gioco.
+ * Questa classe si occupa di visualizzare, aggiornare e gestire la classifica dei giocatori.
  */
 public class LeaderboardController {
 
     private SoundManager soundMan = SoundManager.getInstance();
+
+    /**
+     * Mappa che contiene le voci della classifica, lette da un file JSON.
+     * L'annotazione @JsonIgnore indica che questo campo non deve essere serializzato/deserializzato da Jackson.
+     */
     @JsonIgnore
     public static HashMap<String, LeaderboardEntry> leaderboardEntryHashMap = new HashMap<>(FileManager.readJSON("json.leaderboard", LeaderboardEntry.class));
     @FXML
     protected Button menuButton;
 
+    /**
+     * Colonne della tabella che visualizzano i dettagli di ogni voce della classifica.
+     */
     @FXML
     private TableView<LeaderboardEntry> tableView;
     @FXML
@@ -61,6 +69,7 @@ public class LeaderboardController {
 
     /**
      * Inizializza la tabella della leaderboard leggendo i dati da un file JSON e ordinandoli.
+     * Questo metodo viene chiamato automaticamente da JavaFX dopo che tutti gli elementi @FXML sono stati iniettati.
      */
     @FXML
     public void initialize() {
@@ -132,8 +141,10 @@ public class LeaderboardController {
         tableView.getItems().add(newEntry);
     }
 
+
     /**
      * Aggiorna la leaderboard aggiungendo un nuovo giocatore e il suo punteggio.
+     * Questo metodo legge la classifica esistente, aggiunge la nuova voce e salva il risultato.
      *
      * @param playerScore Il punteggio del giocatore da aggiungere alla leaderboard.
      */

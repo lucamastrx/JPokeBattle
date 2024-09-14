@@ -10,8 +10,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 /**
- * This class handles the setup and display of the main menu.
+ * Classe responsabile della creazione e gestione della vista del menu principale.
+ * Questa classe si occupa di caricare il file FXML, impostare la scena e configurare la finestra principale.
  */
 public class MenuView {
 
@@ -20,13 +22,25 @@ public class MenuView {
     private Scene mainScene;
     private static Parent root;
 
+
+    /**
+     * Costruttore della classe MenuView.
+     * Inizializza la vista del menu per lo stage fornito.
+     *
+     * @param stage Lo stage principale dell'applicazione.
+     * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
+     */
     public MenuView(Stage stage) throws IOException {
         this.mainStage = stage;
         setupMenu();
     }
 
+
     /**
-     * Setup and display the menu.
+     * Configura e visualizza il menu.
+     * Questo metodo carica il file FXML, imposta la scena e lo stage, e inizializza il gestore del suono.
+     *
+     * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
      */
     private void setupMenu() throws IOException {
         loader = FileManager.loadFXML("fxml.menu");
@@ -36,8 +50,12 @@ public class MenuView {
         SoundManager.getInstance();
     }
 
+
     /**
-     * Set up the initial scene.
+     * Imposta la scena iniziale.
+     * Crea una nuova scena con la radice fornita e aggiunge il foglio di stile CSS.
+     *
+     * @param root La radice della scena.
      */
     private void setScene(Parent root) {
         mainScene = new Scene(root);
@@ -46,7 +64,8 @@ public class MenuView {
     }
 
     /**
-     * Set parameters, logo, images, and values for the main window.
+     * Imposta i parametri, il logo, le immagini e i valori per la finestra principale.
+     * Configura lo stage principale con il titolo, l'icona e altre proprietà.
      */
     private void setStage() {
         Image icon = FileManager.loadImage("img.logo");
@@ -58,10 +77,12 @@ public class MenuView {
         mainStage.show();
     }
 
+
     /**
-     * Save the root of the main scene.
+     * Salva la radice della scena principale.
+     * Questo metodo statico permette di aggiornare la radice della scena da altre parti dell'applicazione.
      *
-     * @param sceneRoot The root of the scene.
+     * @param sceneRoot La radice della scena da salvare.
      */
     public static void setRoot(Parent sceneRoot) {
         root = sceneRoot;
