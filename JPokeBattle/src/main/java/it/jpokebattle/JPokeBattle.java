@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * @author Luca Mastrantonio
  * @version 1.0
  */
-public class Main extends Application {
+public class JPokeBattle extends Application {
 
 
     public static void main(String[] args) {

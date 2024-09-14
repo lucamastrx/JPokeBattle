@@ -1,0 +1,17 @@
+module:it.jpokebattle
+it.jpokebattle
+it.jpokebattle.controller
+it.jpokebattle.controller.battle
+it.jpokebattle.controller.gameover
+it.jpokebattle.controller.leaderboard
+it.jpokebattle.controller.menu
+it.jpokebattle.model
+it.jpokebattle.model.battle
+it.jpokebattle.model.exceptions
+it.jpokebattle.model.leaderboard
+it.jpokebattle.model.player
+it.jpokebattle.model.pokemon
+it.jpokebattle.model.team
+it.jpokebattle.model.type
+it.jpokebattle.util
+it.jpokebattle.view

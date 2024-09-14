@@ -65,7 +65,7 @@ public class Pokemon {
     protected Pokemon(){}   // serve solo per la serializzazione di java
 
     /**
-     * Controlla se il Pokémon è svenuto (HP <= 0).
+     * Controlla se il Pokémon è svenuto (HP minore di 0).
      *
      * @return {@code true} se il Pokémon è svenuto, altrimenti {@code false}.
      */
