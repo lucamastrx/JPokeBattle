@@ -23,6 +23,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 
 /**
@@ -110,8 +111,9 @@ public class BattleController implements Initializable {
         battleView.updatePokemonImages(pokemon);
         battleView.updatePokemonLevel(pokemon);
         battleView.updatePokemonInBattle(pokemon);
-        System.out.println(pokemon.getMoves());
-        System.out.println(pokemon.getLevel());
+        System.out.println("Mosse conosciute: " + pokemon.getMoves());
+        System.out.println("Livello: " + pokemon.getLevel());
+        System.out.println();
 
         if (pokemon.canLearnMove()) {
             if (pokemon.has4moves()){
@@ -216,7 +218,7 @@ public class BattleController implements Initializable {
                     break;
                 case YOU_WIN:
                     currentBattle.setBattleCount(getCurrentBattle().getBattleCount() + 1);
-                    System.out.println("VINTOOOO");
+                    System.out.println("Hai vinto la sfida!");
                     battleView.switchToYouWin();
 
                     break;
@@ -240,11 +242,11 @@ public class BattleController implements Initializable {
                     } else {
                         pokemon = (OwnedPokemon)p2;
                     }
-                    System.out.println(pokemon);
+                    // System.out.println(pokemon);
                     moveID = pokemon.getBreed().getMoves().get(pokemon.getLevel());
-                    System.out.println(moveID);
+                    // System.out.println(moveID);
                     Move move = Move.movesMap.get(moveID);
-                    System.out.println(move);
+                    // System.out.println(move);
                     battleView.showLearnMovePopup(move);
                     break;
                 case LEARN_MOVE:

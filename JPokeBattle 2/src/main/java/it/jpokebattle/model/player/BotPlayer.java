@@ -105,7 +105,7 @@ public class BotPlayer extends Player<Pokemon> {
             }
             if (bestMove != null) return bestMove;
         }
-        System.out.println("NOT A STATE ACTION");
+        // System.out.println("NOT A STATE ACTION");
         // Variabili per tenere traccia della mossa migliore
         Move bestMove = null;
         double bestEffectiveness = 0;
@@ -125,10 +125,10 @@ public class BotPlayer extends Player<Pokemon> {
                 highestPower = move.getPower();
             }
         }
-        System.out.println("bestEffectiveness: "+bestEffectiveness);
+        // System.out.println("bestEffectiveness: "+bestEffectiveness);
         // Ritorna la mossa migliore trovata
         if (bestMove != null) {
-            System.out.println("Il Bot ha scelto la mossa: " + bestMove.getName());
+            // System.out.println("Il Bot ha scelto la mossa: " + bestMove.getName());
         } else {
             System.out.println("Nessuna mossa disponibile. Potrebbe esserci un errore.");
         }

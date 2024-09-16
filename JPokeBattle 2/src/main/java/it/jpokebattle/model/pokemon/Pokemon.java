@@ -99,7 +99,7 @@ public class Pokemon {
             moves.put(move, currentValue - 1);
         } else {
             // Gestione del caso in cui la mossa non esiste o il valore è già 0
-            System.out.println("Impossibile usare la mossa: " + move);
+            System.out.println("Impossibile usare la mossa: " + move + ", il Pokemon non ha più forze!");
         }
     }
 
@@ -332,7 +332,7 @@ public class Pokemon {
             System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una...");
             // click per rimuovere una mossa                                               // in GUI
             // removeMove(Move mossaDaDimenticare)
-            System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!");
+            // System.out.println(getName() + "ha imparato la mossa: " + move + "\nFantastico!");
             // oppure "non ha imparato la mossa"!
         }
         else {
@@ -346,7 +346,7 @@ public class Pokemon {
             System.out.println(getName() + "conosce già 4 mosse, deve dimenticarne una...");
             // click per rimuovere una mossa                                               // in GUI
             // removeMove(Move mossaDaDimenticare)
-            System.out.println(getName() + "ha imparato la mossa: " + moveID + "\nFantastico!");
+            // System.out.println(getName() + "ha imparato la mossa: " + moveID + "\nFantastico!");
             // oppure "non ha imparato la mossa"!
 
         }

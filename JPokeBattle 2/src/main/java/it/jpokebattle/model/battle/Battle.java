@@ -105,7 +105,7 @@ public class Battle {
     public void newBotPlayer(){
         setPokemonFactoryWithProbability();
         currentBotPlayer = (BotPlayer) botPlayerFactory.createPlayer();
-        System.out.println(currentBotPlayer.getTeam().getActivePokemon());
+        // System.out.println("Pokemon attivo del bot: " + currentBotPlayer.getTeam().getActivePokemon().getName());
     }
 
 
@@ -141,7 +141,7 @@ public class Battle {
         }
 
         botPlayerFactory.setPokemonFactory(newFactory);
-        System.out.println("New Bot switched to " + newFactory.getClass().getSimpleName());
+        System.out.println("New BotFactory switched to " + newFactory.getClass().getSimpleName());
     }
 
     /**

@@ -71,6 +71,7 @@ public class MoveAction implements Action{
 
         // Verifica se la mossa colpisce
         if (isHit(user, move, target)) {
+            System.out.println("HIT!");
             applyMoveEffects(user, move, target, status);
         } else {
             System.out.println("MISS!");
@@ -180,7 +181,7 @@ public class MoveAction implements Action{
      */
     private boolean isHit(Pokemon user, Move move, Pokemon target) {
         double hitProbability = move.getPrecision() * ((double)user.getAccuracy() / 100) * (1 - ((double)target.getEvasion() / 100));
-        System.out.println(move.getPrecision()+" "+user.getAccuracy()+ " "+target.getEvasion());
+        // System.out.println(move.getPrecision()+" "+user.getAccuracy()+ " "+target.getEvasion());
         System.out.println("HIT PROB: "+hitProbability);
         double random = Math.random() * 100;
         return random <= hitProbability;
@@ -211,13 +212,34 @@ public class MoveAction implements Action{
         if (effectType == null || effectType.isBlank()) return;
 
         switch (effectType) {
-            case "atk" -> pokemon.setAtk(pokemon.getAtk() + value);
-            case "def" -> pokemon.setDef(pokemon.getDef() + value);
-            case "specialAtk" -> pokemon.setSpecialAtk(pokemon.getSpecialAtk() + value);
-            case "specialDef" -> pokemon.setSpecialDef(pokemon.getSpecialDef() + value);
-            case "speed" -> pokemon.setSpeed(pokemon.getSpeed() + value);
-            case "accuracy" -> pokemon.modifyAccuracy(value);
-            case "evasion" -> pokemon.modifyEvasion(value);
+            case "atk" -> {
+                pokemon.setAtk(pokemon.getAtk() + value);
+                System.out.println("Attacco di " + pokemon.getName() + " modificato di " + value + " punti!");
+            }
+            case "def" -> {
+                pokemon.setDef(pokemon.getDef() + value);
+                System.out.println("Difesa di " + pokemon.getName() + " modificata di " + value + " punti!");
+            }
+            case "specialAtk" -> {
+                pokemon.setSpecialAtk(pokemon.getSpecialAtk() + value);
+                System.out.println("Attacco Speciale di " + pokemon.getName() + " modificato di " + value + " punti!");
+            }
+            case "specialDef" -> {
+                pokemon.setSpecialDef(pokemon.getSpecialDef() + value);
+                System.out.println("Difesa Speciale di " + pokemon.getName() + " modificata di " + value + " punti!");
+            }
+            case "speed" -> {
+                pokemon.setSpeed(pokemon.getSpeed() + value);
+                System.out.println("Velocità di " + pokemon.getName() +  " modificata di " + value + " punti!");
+            }
+            case "accuracy" -> {
+                pokemon.modifyAccuracy(value);
+                System.out.println("Precisione di " + pokemon.getName() + " modificata di " + value + " punti!");
+            }
+            case "evasion" -> {
+                pokemon.modifyEvasion(value);
+                System.out.println("Elusione di " + pokemon.getName() + " modificata di " + value + " punti!");
+            }
             default -> throw new IllegalArgumentException("Unrecognized effect: " + effectType);
         }
     }

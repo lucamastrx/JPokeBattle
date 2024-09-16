@@ -70,7 +70,7 @@ public class SwitchPokemonAction implements Action{
 
         // Esegui l'azione di sostituzione
         actor.getTeam().setActivePokemon(substitutePokemon);
-        System.out.println("Il Pokémon è stato sostituito con successo.");
+        System.out.println("È stato mandato in campo " + substitutePokemon.getName());
         return null;
     }
 }

@@ -136,7 +136,7 @@ public class BattleView {
         if (p instanceof OwnedPokemon) {
             this.yourPokemonBar.setStyle("-fx-accent: "+color+";");
             this.yourPokemonBar.setProgress(1.0 * p.getCurrentHp() / p.getFullHp());
-            //System.out.println("HP TOTALI: "+p.getFullHp());
+            // System.out.println("HP TOTALI: "+p.getFullHp());
             this.myPokemonHP.setText("HP: "+p.getCurrentHp()+"/"+p.getFullHp());
         } else {
             this.botPokemonBar.setStyle("-fx-accent: "+color+";");
@@ -363,11 +363,13 @@ public class BattleView {
         try {
             List<BattleStatus> status = new ArrayList<>();
             if (currentBattle.humanStarts(moveAction, botAction)) {
+                System.out.println(HumanPlayer.getInstance().getTeam().getActivePokemon().getName() + " è più veloce!");
                 status.addAll(moveAction.execute());
                 if (status.stream().noneMatch(x -> x == BattleStatus.CHANGE_BOT_FAINTED_POKEMON)) {
                     status.addAll(botAction.execute());
                 }
             } else {
+                System.out.println("Il pokemon avversario è più veloce!");
                 status.addAll(botAction.execute());
                 if (status.stream().noneMatch(x -> x == BattleStatus.CHANGE_YOUR_FAINTED_POKEMON)) {
                     status.addAll(moveAction.execute());
